@@ -2,10 +2,13 @@ package com.dsource.idc.jellowintl;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +16,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
 
 /**
  * Created by Sumeet on 19-04-2016.
@@ -28,14 +37,11 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
     private SessionManager mSession;
     private ArrayList<String> mIconList = new ArrayList<>();
     private ArrayList<String> mBelowTextList = new ArrayList<>();
-    private String path;
 
     LevelThreeAdapter(Context context, int levelOneItemPos, int levelTwoItemPos, int sort[]){
         mContext = context;
         mSession = new SessionManager(mContext);
         loadArraysFromResources(levelOneItemPos, levelTwoItemPos, sort);
-        File en_dir = mContext.getDir(mSession.getLanguage(), Context.MODE_PRIVATE);
-        path = en_dir.getAbsolutePath()+"/drawables";
     }
 
     @Override
@@ -59,12 +65,31 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
         if (mSession.getPictureViewMode() == MODE_PICTURE_ONLY)
             holder.menuItemBelowText.setVisibility(View.INVISIBLE);
         holder.menuItemBelowText.setText(mBelowTextList.get(position));
+
         GlideApp.with(mContext)
-                .load(path+"/"+ mIconList.get(position)+".png")
+                .load(getIconPath(mContext,mIconList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(false)
                 .centerCrop()
                 .dontAnimate()
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        GlideApp.with(mContext)
+                                .load(getIconPath(mContext,mIconList.get(position)))
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(false)
+                                .centerCrop()
+                                .dontAnimate()
+                                .into(holder.menuItemImage);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
                 .into(holder.menuItemImage);
         holder.menuItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -84,7 +109,43 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
     }
 
     private void loadArraysFromResources(int levelOneItemPos, int levelTwoItemPos, int[] sort) {
-        if (levelOneItemPos == 0) {
+
+        String[] icons = IconFactory.getL3Icons(
+                PathFactory.getIconDirectory(mContext),
+                LanguageFactory.getCurrentLanguageCode(mContext),
+                getLevel2_3IconCode(levelOneItemPos),
+                getLevel2_3IconCode(levelTwoItemPos)
+        );
+
+        for (String a : icons)
+            Log.d("level3", a);
+
+        Icon[] iconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(mContext),
+                IconFactory.removeFileExtension(icons)
+        );
+
+        String[] iconsText = TextFactory.getDisplayText(iconObjects);
+
+        if(levelOneItemPos == 3 && (levelTwoItemPos == 3 || levelTwoItemPos == 4)){
+
+            loadAdapterMenuTextIconsWithoutSort(icons,iconsText);
+
+        } else if(levelOneItemPos == 4 && levelTwoItemPos == 9){
+
+            loadAdapterMenuTextIconsWithoutSort(icons,iconsText);
+
+        } else if(levelOneItemPos == 7 && (levelTwoItemPos == 0 || levelTwoItemPos == 1 ||
+                levelTwoItemPos == 2 || levelTwoItemPos == 3 || levelTwoItemPos == 4)){
+
+            loadAdapterMenuTextIconsWithoutSort(icons,iconsText);
+
+        } else {
+            loadAdapterMenuTextIconsWithSort(icons,iconsText,sort);
+        }
+
+
+        /*if (levelOneItemPos == 0) {
             switch(levelTwoItemPos){
                 case 0: loadAdapterMenuTextIconsWithSort(mContext.getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingIconAdapter),
                         mContext.getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingAdapterText), sort);
@@ -273,7 +334,7 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
                         mContext.getResources().getStringArray(R.array.arrLevelThreeTimeWeaBirthdaysAdapterText), sort);
                     break;
             }
-        }
+        }*/
     }
 
     private void loadAdapterMenuTextIconsWithoutSort(String[] typeIconArray, String[] stringBelowTextArray) {
@@ -315,6 +376,14 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
             menuItemBelowText.setTextColor(Color.rgb(64, 64, 64));
             GradientDrawable gd = (GradientDrawable) view.findViewById(R.id.borderView).getBackground();
             gd.setColor(ContextCompat.getColor(mContext, android.R.color.transparent));
+        }
+    }
+
+    private String getLevel2_3IconCode(int level2_3Position){
+        if(level2_3Position+1 <= 9){
+            return "0" + Integer.toString(level2_3Position+1);
+        } else {
+            return Integer.toString(level2_3Position+1);
         }
     }
 }

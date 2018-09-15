@@ -21,6 +21,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
+
 /**
  * Created by HP on 22/01/2017.
  */
@@ -29,14 +31,12 @@ class PeoplePlacesAdapter extends android.support.v7.widget.RecyclerView.Adapter
     private SessionManager mSession;
     private ArrayList<String> mIconNameList = new ArrayList<>();
     private ArrayList<String> mBelowTextList = new ArrayList<>();
-    private String path;
+
 
     PeoplePlacesAdapter(Context context, int levelOneItemPos, String[] mArrAdapterTxt, Integer[] arrSort) {
         mContext = context;
         mSession = new SessionManager(mContext);
         loadArraysFromResources(levelOneItemPos, mArrAdapterTxt, arrSort);
-        File en_dir = mContext.getDir(mSession.getLanguage(), Context.MODE_PRIVATE);
-        path = en_dir.getAbsolutePath()+"/drawables";
     }
 
     @Override
@@ -62,7 +62,7 @@ class PeoplePlacesAdapter extends android.support.v7.widget.RecyclerView.Adapter
             holder.menuItemBelowText.setVisibility(View.INVISIBLE);
         holder.menuItemBelowText.setText(mBelowTextList.get(position));
         GlideApp.with(mContext)
-                .load(path+"/"+ mIconNameList.get(position)+".png")
+                .load(getIconPath(mContext, mIconNameList.get(position)))
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .skipMemoryCache(false)
                 .centerCrop()
@@ -86,15 +86,24 @@ class PeoplePlacesAdapter extends android.support.v7.widget.RecyclerView.Adapter
     private void loadArraysFromResources(int levelOneItemPos, String[] mArrAdapterTxt, Integer[] arrSort) {
         ArrayList<String> tempIconList = new ArrayList<>();
         mBelowTextList.addAll(Arrays.asList(mArrAdapterTxt));
-        if(levelOneItemPos == 5)                    //levelOneItemPos is either 5(People) or 6 (Places)
-            tempIconList.addAll(Arrays.asList(mContext.getResources().getStringArray(
-                    R.array.arrLevelTwoPeopleIcon)));
-        else
-            tempIconList.addAll(Arrays.asList(mContext.getResources().getStringArray(
-                    R.array.arrLevelTwoPlacesIcon)));
+
+        tempIconList.addAll(Arrays.asList(IconFactory.getL2Icons(
+                    PathFactory.getIconDirectory(mContext),
+                    LanguageFactory.getCurrentLanguageCode(mContext),
+                    getLevel2IconCode(levelOneItemPos)
+        )));
+
 
         for (int i = 0; i < tempIconList.size(); i++) {
             mIconNameList.add(tempIconList.get(arrSort[i]));
+        }
+    }
+
+    private String getLevel2IconCode(int level1Position){
+        if(level1Position+1 <= 9){
+            return "0" + Integer.toString(level1Position+1);
+        } else {
+            return Integer.toString(level1Position+1);
         }
     }
 

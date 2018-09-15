@@ -1,5 +1,6 @@
 package com.dsource.idc.jellowintl;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -37,6 +38,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
 import static com.dsource.idc.jellowintl.UserRegistrationActivity.LCODE;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
@@ -116,7 +118,7 @@ public class LanguageSelectActivity extends AppCompatActivity{
                 isOpenedTtsSett = true;
                 Intent intent = new Intent();
                 intent.setAction("com.android.settings.TTS_SETTINGS");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -304,7 +306,7 @@ public class LanguageSelectActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent();
                 intent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -519,10 +521,22 @@ public class LanguageSelectActivity extends AppCompatActivity{
         setUserProperty("UserLanguage", LangMap.get(selectedLanguage));
         setCrashlyticsCustomKey("UserLanguage",  LangMap.get(selectedLanguage));
         Toast.makeText(this, mLangChanged, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
         mSession.setLanguageChange(1);
-        startActivity(intent);
+        /*Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        startActivity(intent);*/
         finishAffinity();
+        triggerRebirth(getApplicationContext());
+    }
+
+    public static void triggerRebirth(Context context) {
+        Intent intent = new Intent(context, SplashActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        if (context instanceof Activity) {
+            ((Activity) context).finish();
+        }
+
+        Runtime.getRuntime().exit(0);
     }
 
     private void setSpeechLanguage(String speechLang){

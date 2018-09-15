@@ -18,6 +18,8 @@ public class SessionManager {
     public final static String ENG_UK = "en-rGB";
     public final static String ENG_IN = "en-rIN";
     public final static String HI_IN = "hi-rIN";
+    public final static String MR_IN = "mr-rIN";
+    public final static String BN_IN = "bn-rIN";
 
     public final static HashMap<String,String> LangMap = new HashMap<String,String>(){
         {

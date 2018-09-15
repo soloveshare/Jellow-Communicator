@@ -46,6 +46,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<View> mRecyclerItemsViewList;
     /*Below list stores the verbiage that are spoken when category icon + expression buttons
     pressed in conjunction*/
-    private ArrayList<ArrayList<String>> mLayerOneSpeech;
+    //private ArrayList<ArrayList<String>> mLayerOneSpeech;
     /*Below array stores the speech text, below text, expressive button speech text,
      navigation button speech text respectively.*/
     private String[] mSpeechTxt, mExprBtnTxt, mNavigationBtnTxt, mActionBarTitle;
@@ -106,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
     boolean isLanguageSame = true;
     String jellow_lang;
     Locale deviceLangLocale;
+
+    private Icon[] level1IconObjects;
 
 
     @Override
@@ -120,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         // Initialize default exception handler for this activity.
         // If any exception occurs during this activity usage,
         // handle it using default exception handler.
-        Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler(this));
+        //Thread.setDefaultUncaughtExceptionHandler(new DefaultExceptionHandler(this));
         loadArraysFromResources();
         // Set the capacity of mRecyclerItemsViewList list to total number of category icons to be
         // populated on the screen.
@@ -773,21 +776,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgLike is 1 then speak associated really like expression
                     // verbiage for selected category icon.
                     if (mFlgLike == 1) {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(1));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].LL);
                         mFlgLike = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyLike");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(1));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].LL);
                     // if value of mFlgLike is 0 then Speak associated like expression
                     // verbiage to selected category icon.
                     } else {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(0));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].L);
                         mFlgLike = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon","Like");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(0));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].L);
                     }
                 }
             }
@@ -845,21 +846,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgDntLike is 1 then speak associated really don't like expression
                     // verbiage for selected category icon.
                     if (mFlgDntLike == 1) {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(7));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].DD);
                         mFlgDntLike = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyDon'tLike");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(7));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].DD);
                     // if value of mFlgDntLike is 0 then Speak associated don't like expression
                     // verbiage to selected category icon.
                     } else {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(6));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].D);
                         mFlgDntLike = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon","Don'tLike");
-                        singleEvent("ExpressiveGridIcon", mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(6));
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].D);
                     }
                 }
             }
@@ -917,21 +916,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgYes is 1 then speak associated really yes expression
                     // verbiage for selected category icon.
                     if (mFlgYes == 1) {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(3));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].YY);
                         mFlgYes = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyYes");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(3));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].YY);
                     // if value of mFlgYes is 0 then speak associated yes expression
                     // verbiage for selected category icon.
                     } else {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(2));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].Y);
                         mFlgYes = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon","Yes");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(2));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].Y);
                     }
                 }
             }
@@ -989,21 +986,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgNo is 1 then speak associated really no expression
                     // verbiage for selected category icon.
                     if (mFlgNo == 1) {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(9));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].NN);
                         mFlgNo = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyNo");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(9));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].NN);
                     // if value of mFlgNo is 0 then Speak associated no expression
                     // verbiage to selected category icon.
                     } else {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(8));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].N);
                         mFlgNo = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon","No");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(8));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].N);
                     }
                 }
             }
@@ -1061,21 +1056,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgMore is 1, then should speak "really more" expression
                     // verbiage associated to selected category icon.
                     if (mFlgMore == 1) {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(5));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].MM);
                         mFlgMore = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyMore");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(5));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].MM);
                     // if value of mFlgMore is 0, then should speak "more" expression
                     // verbiage associated to selected category icon.
                     } else {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(4));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].M);
                         mFlgMore = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon","More");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(4));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].M);
                     }
                 }
             }
@@ -1133,21 +1126,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgLess is 1 then speak associated really less expression
                     // verbiage for selected category icon.
                     if (mFlgLess == 1) {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(11));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].SS);
                         mFlgLess = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyLess");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(11));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].SS);
                     // if value of mFlgLess is 0 then Speak associated less expression
                     // verbiage to selected category icon.
                     } else {
-                        speakSpeech(mLayerOneSpeech.get(mLevelOneItemPos).get(10));
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].S);
                         mFlgLess = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon","Less");
-                        singleEvent("ExpressiveGridIcon",mLayerOneSpeech.
-                                get(mLevelOneItemPos).get(10));
+                        singleEvent("ExpressiveGridIcon",level1IconObjects[mLevelOneItemPos].S);
                     }
                 }
             }
@@ -1240,7 +1231,7 @@ public class MainActivity extends AppCompatActivity {
             SessionManager session = new SessionManager(this);
             // Get icon set directory path
             File langDir = new File(getApplicationInfo().dataDir + "/app_"+
-                    session.getLanguage()+"/drawables");
+                    session.getLanguage());
             // If icon sets are available for level two then open selected category in level two
             if(langDir.exists() && langDir.isDirectory()) {
                 // create event bundle for firebase
@@ -1447,13 +1438,53 @@ public class MainActivity extends AppCompatActivity {
      *     d) Read speech text from arrays for navigation buttons.</p>
      * */
     private void loadArraysFromResources() {
-        LevelOneVerbiageModel verbiageModel = new Gson()
-                .fromJson(getString(R.string.levelOneVerbiage), LevelOneVerbiageModel.class);
-        mLayerOneSpeech = verbiageModel.getVerbiageModel();
-        mSpeechTxt = getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
-        mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
-        mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);
-        mActionBarTitle = getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
+        //LevelOneVerbiageModel verbiageModel = new Gson()
+        //        .fromJson(getString(R.string.levelOneVerbiage), LevelOneVerbiageModel.class);
+        //mLayerOneSpeech = verbiageModel.getVerbiageModel();
+        //mSpeechTxt = getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
+        //mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
+        //mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);
+
+
+        String[] level1Icons =  IconFactory.getL1Icons(
+                getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this)
+        );
+
+        level1IconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(this),
+                IconFactory.removeFileExtension(level1Icons)
+        );
+
+        mSpeechTxt = TextFactory.getSpeechText(level1IconObjects);
+
+        mActionBarTitle = TextFactory.getDisplayText(level1IconObjects);
+
+
+        String[] miscellaneousIcons = IconFactory.getMiscellaneousIcons(
+                PathFactory.getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this)
+        );
+
+        MiscellaneousIcon[] miscellaneousIconObjects = TextFactory.getMiscellaneousIconObjects(
+                PathFactory.getJSONFile(this),
+                IconFactory.removeFileExtension(miscellaneousIcons)
+        );
+
+        mNavigationBtnTxt = TextFactory.getTitle(miscellaneousIconObjects);
+
+        String[] expressiveIcons = IconFactory.getExpressiveIcons(
+                PathFactory.getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this)
+        );
+
+        ExpressiveIcon[] expressiveIconObjects = TextFactory.getExpressiveIconObjects(
+                PathFactory.getJSONFile(this),
+                IconFactory.removeFileExtension(expressiveIcons)
+        );
+
+        mExprBtnTxt = TextFactory.getExpressiveSpeechText(expressiveIconObjects);
+
     }
 
     /**

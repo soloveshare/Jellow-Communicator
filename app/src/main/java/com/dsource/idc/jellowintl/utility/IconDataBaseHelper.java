@@ -7,10 +7,18 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.dsource.idc.jellowintl.Icon;
+import com.dsource.idc.jellowintl.IconFactory;
+import com.dsource.idc.jellowintl.LanguageFactory;
+import com.dsource.idc.jellowintl.PathFactory;
 import com.dsource.idc.jellowintl.R;
+import com.dsource.idc.jellowintl.TextFactory;
 
 import java.util.ArrayList;
+
+import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
 
 /**
  * Created by Ayaz Alam on 31/05/2018.
@@ -42,6 +50,11 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
                     + KEY_P2 + " INTEGER, " //Level 2 parent
                     + KEY_P3 +" INTEGER  );";//Level 3 parent
     private SQLiteDatabase mReadableDB;
+
+    String[] thirdLevelIcons=null;
+    String[] thirdLevelTitles=null;
+    private boolean noChildInThird =false;
+
     public IconDataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context=context;
@@ -49,6 +62,7 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
     }
 
 
@@ -67,22 +81,32 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         // Create a container for the data.
         ContentValues values = new ContentValues();
         //Filling the database for level 1 JellowIcon
-        String[] levelOneIcon = context.getResources().getStringArray(R.array.arrLevelOneIconAdapter);
-        String[] levelOneTitles = context.getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
+        String[] level1Icons =  IconFactory.getL1Icons(
+                getIconDirectory(context),
+                LanguageFactory.getCurrentLanguageCode(context)
+        );
+
+        Icon[] level1IconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(context),
+                IconFactory.removeFileExtension(level1Icons)
+        );
+
+        String[] levelOneTitles = TextFactory.getDisplayText(level1IconObjects);
+
         //Level 1 JellowIcon
-        for (int i = 0; i < levelOneIcon.length; i++) {
+        for (int i = 0; i < level1Icons.length; i++) {
             // Put column/value pairs into the container. put() overwrites existing values.
             values.put(ICON_TITLE, levelOneTitles[i]);
-            values.put(ICON_DRAWABLE, levelOneIcon[i]);
+            values.put(ICON_DRAWABLE, level1Icons[i]);
             values.put(KEY_P1, i);
             values.put(KEY_P2, -1);
             values.put(KEY_P3, -1);
             db.insert(ICON_LIST_TABLE, null, values);
         }
         //Filling the database for Level 2
-        for (int i = 0; i < levelOneIcon.length; i++) {
-            String[] levelTwoIcons = getIconLevel2(i);
-            String[] levelTwoTitles = getIconTitleLevel2(i);
+        for (int i = 0; i < level1Icons.length; i++) {
+            String[] levelTwoIcons = getIconLevel2(i,context);
+            String[] levelTwoTitles = getIconTitleLevel2(i,context);
             for (int j = 0; j < levelTwoIcons.length; j++) {
                 // Put column/value pairs into the container. put() overwrites existing values.
                 values.put(ICON_TITLE, levelTwoTitles[j]);
@@ -95,11 +119,11 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
             }
         }
         //Filling the database for Level Three
-        for (int i = 0; i < levelOneIcon.length; i++) {
-            String[] levelTwoIcons = getIconLevel2(i);
+        for (int i = 0; i < level1Icons.length; i++) {
+            String[] levelTwoIcons = getIconLevel2(i,context);
             for (int j = 0; j < levelTwoIcons.length; j++) {
                 noChildInThird = false;
-                if (loadArraysFromResources(i, j)) {
+                if (loadArraysFromResources(i, j,context)) {
                     if (thirdLevelTitles != null) {
                         String[] levelThreeIcons = thirdLevelIcons;
                         String[] levelThreeTitle = thirdLevelTitles;
@@ -129,10 +153,17 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
      *
      * */
 
-    private String[] getIconLevel2(int pos)
+    private String[] getIconLevel2(int pos,Context mContext)
     {
-        String arr[]=null;
-     switch (pos)
+
+        return IconFactory.getL2Icons(
+                PathFactory.getIconDirectory(mContext),
+                LanguageFactory.getCurrentLanguageCode(mContext),
+                getLevel2_3IconCode(pos)
+        );
+
+
+     /*switch (pos)
      {
          case 0:arr=context.getResources().getStringArray(R.array.arrLevelTwoGreetFeelIconAdapter);
              break;
@@ -153,18 +184,25 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
          case 8:arr=context.getResources().getStringArray(R.array.arrLevelTwoHelpIconAdapter);
              break;
          default:
-     }
-     return arr;
+     }*/
+
     }
 
     /**
      * A function to return array of Titles of level 2
      *
      * */
-    private String[] getIconTitleLevel2(int pos)
+    private String[] getIconTitleLevel2(int pos,Context mContext)
     {
-        String arr[]=null;
-        switch (pos)
+
+        Icon[] iconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(mContext),
+                IconFactory.removeFileExtension(getIconLevel2(pos,mContext))
+        );
+
+        return TextFactory.getDisplayText(iconObjects);
+
+        /*switch (pos)
         {
             case 0:arr=context.getResources().getStringArray(R.array.arrLevelTwoGreetFeelAdapterText);
                 break;
@@ -185,8 +223,7 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
             case 8:arr=context.getResources().getStringArray(R.array.arrLevelTwoHelpAdapterText);
                 break;
             default:
-        }
-        return arr;
+        }*/
     }
 
     /**
@@ -266,10 +303,38 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    private boolean noChildInThird =false;
-    private boolean loadArraysFromResources(int levelOneItemPos, int levelTwoItemPos)
+
+    private boolean loadArraysFromResources(int levelOneItemPos, int levelTwoItemPos, Context mContext)
     {
-        if (levelOneItemPos == 0) {
+        if(levelOneItemPos == 1 && (levelTwoItemPos == 0 || levelTwoItemPos == 1 || levelTwoItemPos == 2 ||
+        levelTwoItemPos == 7 || levelTwoItemPos == 8)){
+            noChildInThird =true;
+        } else if(levelOneItemPos == 5){
+            noChildInThird =true;
+        } else if(levelOneItemPos == 8){
+            noChildInThird =true;
+        } else {
+
+            String[] icons = IconFactory.getL3Icons(
+                    PathFactory.getIconDirectory(mContext),
+                    LanguageFactory.getCurrentLanguageCode(mContext),
+                    getLevel2_3IconCode(levelOneItemPos),
+                    getLevel2_3IconCode(levelTwoItemPos)
+            );
+
+            Icon[] iconObjects = TextFactory.getIconObjects(
+                    PathFactory.getJSONFile(mContext),
+                    IconFactory.removeFileExtension(icons)
+            );
+
+            String[] iconsText = TextFactory.getDisplayText(iconObjects);
+
+            loadAdapterMenuTextIconsWithoutSort(icons,iconsText);
+        }
+
+        return true;
+
+        /*if (levelOneItemPos == 0) {
             switch(levelTwoItemPos){
                 case 0: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingIconAdapter),
                         context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingAdapterText));
@@ -478,17 +543,24 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         else if(levelOneItemPos==8)
         {
             noChildInThird =true;
-        }
+        }*/
 
-        return true;
     }//End of the function
 
-    String[] thirdLevelIcons=null;
-    String[] thirdLevelTitles=null;
+
+
     private void loadAdapterMenuTextIconsWithoutSort(String[] typeIconArray, String[] stringBelowTextArray)
     {
-    thirdLevelIcons=typeIconArray;
-    thirdLevelTitles=stringBelowTextArray;
+        thirdLevelIcons=typeIconArray;
+        thirdLevelTitles=stringBelowTextArray;
+    }
+
+    private String getLevel2_3IconCode(int level1Position){
+        if(level1Position+1 <= 9){
+            return "0" + Integer.toString(level1Position+1);
+        } else {
+            return Integer.toString(level1Position+1);
+        }
     }
 
 }

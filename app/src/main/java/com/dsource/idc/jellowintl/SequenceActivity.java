@@ -35,12 +35,11 @@ import com.dsource.idc.jellowintl.models.SeqActivityVerbiageModel;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
-import com.google.gson.Gson;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
+import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
@@ -66,7 +65,7 @@ public class SequenceActivity extends AppCompatActivity {
     /* This flag indicates keyboard is open or not, 0 indicates is not open.*/
     private int mFlgKeyboard = 0;
     /*This variable indicates index of category icon selected in level one*/
-    private int mLevelTwoItemPos, count = 0;
+    private int mLevelOneItemPos, mLevelTwoItemPos, count = 0;
     /*Image views which are visible on the layout such as six expressive buttons, below navigation
       buttons, speak button when keyboard is open and 3 category icons from left to right.*/
     private ImageView mIvLike, mIvDontLike, mIvMore, mIvLess, mIvYes, mIvNo,
@@ -82,7 +81,7 @@ public class SequenceActivity extends AppCompatActivity {
     private RelativeLayout mRelativeLayCategory;
     /*navigation next, back button in category*/
     private Button mBtnNext, mBtnBack;
-    private String mStrPath, mStrNext, mStrBack, mActionBarTitleTxt;
+    private String  mStrNext, mStrBack, mActionBarTitleTxt;
     String[] mCategoryIconText;
     /*Below array stores the speech text, below text, expressive button speech text, heading,
      navigation button speech text, category navigation text respectively.*/
@@ -92,6 +91,8 @@ public class SequenceActivity extends AppCompatActivity {
     pressed in conjunction*/
     private ArrayList<ArrayList<ArrayList<String>>> mSeqActSpeech;
     private SessionManager mSession;
+    private Icon[] level3SeqIconObjects;
+    private String[] l3SeqIcons;
 
     @SuppressLint("ResourceType")
     @Override
@@ -107,6 +108,8 @@ public class SequenceActivity extends AppCompatActivity {
                 .getString(getString(R.string.intent_menu_path_tag)));
 
         mSession = new SessionManager(this);
+
+        mLevelOneItemPos = getIntent().getExtras().getInt(getString(R.string.level_one_intent_pos_tag));
         /*get position of category icon selected in level two*/
         mLevelTwoItemPos = getIntent().getExtras().getInt(getString(R.string.level_2_item_pos_tag));
 
@@ -117,9 +120,9 @@ public class SequenceActivity extends AppCompatActivity {
         else if(mLevelTwoItemPos == 8)
             mLevelTwoItemPos = 4;
 
-        // Get icon set directory path
+        /* Get icon set directory path
         File en_dir = this.getDir(mSession.getLanguage(), Context.MODE_PRIVATE);
-        mStrPath = en_dir.getAbsolutePath()+"/drawables";
+        mStrPath = en_dir.getAbsolutePath()+"/drawables";*/
 
         loadArraysFromResources();
         initializeLayoutViews();
@@ -170,7 +173,7 @@ public class SequenceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSeqActSpeech = null;
+        //mSeqActSpeech = null;
         mCategoryIconText = null;
         mRelativeLayCategory = null;
         mCategoryIconSpeechText = null;
@@ -354,9 +357,9 @@ public class SequenceActivity extends AppCompatActivity {
                     // If activity sequence is "Brushing" or "Bathing", then in its last sequences
                     // only 2 items needed to load
                     if (mLevelTwoItemPos == 0 || mLevelTwoItemPos == 2) {
-                        setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count]+".png",
+                        setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count]),
                                 mIvCategoryIcon1);
-                        setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count+1]+".png",
+                        setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count+1]),
                                 mIvCategoryIcon2);
 
                         mIvCategoryIcon1.setContentDescription(mCategoryIconBelowText[count]);
@@ -373,7 +376,7 @@ public class SequenceActivity extends AppCompatActivity {
                     // If activity sequence is "Toilet", "Morning routine" or "Bedtime routine"
                     // then in its last sequences only 1 category item needs to be loaded
                     } else if (mLevelTwoItemPos == 1 || mLevelTwoItemPos == 4 || mLevelTwoItemPos == 3) {
-                        setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count]+".png",
+                        setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count]),
                                 mIvCategoryIcon1);
 
                         mIvCategoryIcon1.setContentDescription(mCategoryIconBelowText[count]);
@@ -396,13 +399,13 @@ public class SequenceActivity extends AppCompatActivity {
                     mTvCategory2Caption.setText(mCategoryIconBelowText[count + 1]);
                     mTvCategory3Caption.setText(mCategoryIconBelowText[count + 2]);
 
-                    setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count]+".png",
+                    setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count]),
                             mIvCategoryIcon1);
 
-                    setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count+1]+".png",
+                    setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count+1]),
                             mIvCategoryIcon2);
 
-                    setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count+2]+".png",
+                    setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count+2]),
                             mIvCategoryIcon3);
 
                     mIvCategoryIcon1.setContentDescription(mCategoryIconBelowText[count]);
@@ -462,13 +465,13 @@ public class SequenceActivity extends AppCompatActivity {
                 mTvCategory2Caption.setText(mCategoryIconBelowText[count + 1]);
                 mTvCategory3Caption.setText(mCategoryIconBelowText[count + 2]);
                 //load images to category icons
-                setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count]+".png",
+                setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count]),
                         mIvCategoryIcon1);
 
-                setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count+1]+".png",
+                setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count+1]),
                         mIvCategoryIcon2);
 
-                setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[count+2]+".png",
+                setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[count+2]),
                         mIvCategoryIcon3);
 
                 mIvCategoryIcon1.setContentDescription(mCategoryIconBelowText[count]);
@@ -836,19 +839,15 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyLike");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(1));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(1));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].LL);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].LL);
                         mFlgLike = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Like");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(0));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(0));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].L);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].L);
                         mFlgLike = 1;
                     }
                 }
@@ -897,19 +896,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyDon'tLike");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(7));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(7));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].DD);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].DD);
                         mFlgDontLike = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Don'tLike");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(6));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(6));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].D);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].D);
                         mFlgDontLike = 1;
                     }
                 }
@@ -959,19 +956,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyYes");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(3));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(3));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].YY);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].YY);
                         mFlgYes = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Yes");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(2));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(2));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].Y);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].Y);
                         mFlgYes = 1;
                     }
                 }
@@ -1020,19 +1015,19 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyNo");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(9));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(9));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].NN);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].NN);
+
                         mFlgNo = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","No");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(8));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(8));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].N);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].N);
+
                         mFlgNo = 1;
                     }
                 }
@@ -1081,19 +1076,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyMore");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(5));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(5));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].MM);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].MM);
                         mFlgMore = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","More");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(4));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(4));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].M);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].M);
                         mFlgMore = 1;
                     }
                 }
@@ -1142,19 +1135,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyLess");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(11));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(11));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].SS);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].SS);
                         mFlgLess = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Less");
                         singleEvent("ExpressiveGridIcon",
-                                mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                        .get(10));
-                        speakSpeech(mSeqActSpeech.get(mLevelTwoItemPos).get(count + mFlgHideExpBtn - 1)
-                                .get(10));
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].S);
+
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].S);
                         mFlgLess = 1;
                     }
                 }
@@ -1236,13 +1227,67 @@ public class SequenceActivity extends AppCompatActivity {
      *     d) Read verbiage lines into {@link SeqActivityVerbiageModel} model.</p>
      * */
     private void loadArraysFromResources() {
-        mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
-        mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);
+
+        l3SeqIcons = IconFactory.getL3SeqIcons(
+                PathFactory.getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this),
+                getLevel2_3IconCode(mLevelOneItemPos),
+                getLevel2_3IconCode(mLevelTwoItemPos)
+        );
+
+        for (String a : l3SeqIcons)
+            Log.d("level3Seq", a);
+
+        level3SeqIconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(this),
+                IconFactory.removeFileExtension(l3SeqIcons)
+        );
+
+
+        mCategoryIconBelowText = TextFactory.getDisplayText(level3SeqIconObjects);
+        mCategoryIconSpeechText = TextFactory.getSpeechText(level3SeqIconObjects);
+        mCategoryIconText = mCategoryIconSpeechText;
+
+        String[] expressiveIcons = IconFactory.getExpressiveIcons(
+                PathFactory.getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this)
+        );
+
+        for(String a: expressiveIcons)
+            Log.d("level3Seq",a);
+
+        ExpressiveIcon[] expressiveIconObjects = TextFactory.getExpressiveIconObjects(
+                PathFactory.getJSONFile(this),
+                IconFactory.removeFileExtension(expressiveIcons)
+        );
+
+        mExprBtnTxt = TextFactory.getExpressiveSpeechText(expressiveIconObjects);
+
+
+        String[] miscellaneousIcons = IconFactory.getMiscellaneousIcons(
+                PathFactory.getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this)
+        );
+
+        MiscellaneousIcon[] miscellaneousIconObjects = TextFactory.getMiscellaneousIconObjects(
+                PathFactory.getJSONFile(this),
+                IconFactory.removeFileExtension(miscellaneousIcons)
+        );
+
+        mNavigationBtnTxt = TextFactory.getTitle(miscellaneousIconObjects);
+
         mCategoryNav = getResources().getStringArray(R.array.arrSeqActivityNavigationText);
         mHeading = getResources().getStringArray(R.array.arrSeqActivityHeadingText);
         mStrBack = mCategoryNav[0].substring(2, mCategoryNav[0].length());
         mStrNext = mCategoryNav[1].substring(0, mCategoryNav[1].length()-2);
-        String verbString = getString(R.string.sequenceActVerbiage1) +
+
+
+        /*mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
+        mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);*/
+        
+
+
+        /*String verbString = getString(R.string.sequenceActVerbiage1) +
                 getString(R.string.sequenceActVerbiage2);
         SeqActivityVerbiageModel verbiageModel = new Gson()
                 .fromJson(verbString, SeqActivityVerbiageModel.class);
@@ -1289,7 +1334,7 @@ public class SequenceActivity extends AppCompatActivity {
                 mCategoryIconText = getResources().getStringArray
                         (R.array.arrSeqActivityBedtimeRoutineIcon);
                 break;
-        }
+        }*/
     }
 
     /**
@@ -1319,9 +1364,9 @@ public class SequenceActivity extends AppCompatActivity {
         mTvCategory2Caption.setText(mCategoryIconBelowText[1]);
         mTvCategory3Caption.setText(mCategoryIconBelowText[2]);
 
-        setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[0]+".png",mIvCategoryIcon1);
-        setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[1]+".png", mIvCategoryIcon2);
-        setImageUsingGlide(mStrPath +"/"+ mCategoryIconText[2]+".png", mIvCategoryIcon3);
+        setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[0]),mIvCategoryIcon1);
+        setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[1]), mIvCategoryIcon2);
+        setImageUsingGlide(getIconPath(SequenceActivity.this,l3SeqIcons[2]), mIvCategoryIcon3);
 
         final int MODE_PICTURE_ONLY = 1;
         if(mSession.getPictureViewMode() == MODE_PICTURE_ONLY){
@@ -1484,4 +1529,13 @@ public class SequenceActivity extends AppCompatActivity {
         gd = (GradientDrawable) (findViewById(R.id.borderView3)).getBackground();
         gd.setColor(ContextCompat.getColor(this, android.R.color.transparent));
     }
+
+    private String getLevel2_3IconCode(int level2_3Position){
+        if(level2_3Position+1 <= 9){
+            return "0" + Integer.toString(level2_3Position+1);
+        } else {
+            return Integer.toString(level2_3Position+1);
+        }
+    }
+
 }

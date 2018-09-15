@@ -30,6 +30,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
+import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
+import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
@@ -214,7 +216,7 @@ public class SearchActivity extends AppCompatActivity {
 }
 
 /**
- * This is a different class namde {@link SearchViewIconAdapter}
+ * This is a different class name {@link SearchViewIconAdapter}
  * {@link SearchViewIconAdapter} This class is responsible for populating and managing the recycler view of
  * the {@link SearchActivity}
  * */
@@ -323,7 +325,19 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
      * @return the actionbarTitle string.</p>
      * */
     private String getActionBarTitle(int position) {
-        String[] tempTextArr = mContext.getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
+
+        String[] level1Icons =  IconFactory.getL1Icons(
+                getIconDirectory(mContext),
+                LanguageFactory.getCurrentLanguageCode(mContext)
+        );
+
+        Icon[] level1IconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(mContext),
+                IconFactory.removeFileExtension(level1Icons)
+        );
+
+
+        String[] tempTextArr = TextFactory.getDisplayText(level1IconObjects);;
         return tempTextArr[position]+"/";
     }
     public SearchViewIconAdapter(Context context, ArrayList<JellowIcon> items) {
@@ -361,24 +375,14 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
         holder.speakIcon.setVisibility(View.VISIBLE);
         holder.iconDir.setVisibility(View.VISIBLE);
         holder.iconTitle.setText(thisIcon.IconTitle.replace("…",""));
-        if(thisIcon.parent1==-1)
-        {
-            TypedArray mArray=mContext.getResources().obtainTypedArray(R.array.arrLevelOneIconAdapter);
-            holder.iconImage.setImageDrawable(mArray.getDrawable(thisIcon.parent0));
-        }
-        else
-        {
-            SessionManager mSession = new SessionManager(mContext);
-            File en_dir = mContext.getDir(mSession.getLanguage(), Context.MODE_PRIVATE);
-            String path = en_dir.getAbsolutePath() + "/drawables";
+
             GlideApp.with(mContext)
-                    .load(path+"/"+ thisIcon.IconDrawable+".png")
+                    .load(getIconPath(mContext,thisIcon.IconDrawable))
                     .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .skipMemoryCache(false)
                     .centerCrop()
                     .dontAnimate()
                     .into(holder.iconImage);
-        }
 
         /*
         * Adding the directory hint in the search list item
@@ -396,9 +400,13 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
             dir=arr[thisIcon.parent0];
         }
         else {
-            String levelTitle = getIconTitleLevel2(thisIcon.parent0)[thisIcon.parent1].
-                    replace("…", "");
-            dir=arr[thisIcon.parent0] + "->" + levelTitle;
+            try {
+                String levelTitle = getIconTitleLevel2(thisIcon.parent0)[thisIcon.parent1].
+                        replace("…", "");
+                dir=arr[thisIcon.parent0] + "->" + levelTitle;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
         holder.iconDir.setText(dir);
@@ -410,32 +418,16 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
      * */
     private String[] getIconTitleLevel2(int pos)
     {
-        String arr[]=null;
-        switch (pos)
-        {
-            case 0:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoGreetFeelAdapterText);
-                break;
-            case 1:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoDailyActAdapterText);
-                break;
-            case 2:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoEatAdapterText);
-                break;
-            case 3:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoFunAdapterText);
-                break;
-            case 4:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoLearningAdapterText);
-                break;
-            case 5:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoPeopleAdapterText);
-                break;
-            case 6:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoPlacesAdapterText);
-                break;
-            case 7:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoTimeWeatherAdapterText);
-                break;
-            case 8:arr=mContext.getResources().getStringArray(R.array.arrLevelTwoHelpAdapterText);
-                break;
-            default:
-        }
+        Icon[] iconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(mContext),
+                IconFactory.removeFileExtension(IconFactory.getL2Icons(
+                        PathFactory.getIconDirectory(mContext),
+                        LanguageFactory.getCurrentLanguageCode(mContext),
+                        getLevel2_3IconCode(pos)
+                ))
+        );
 
-
-        return arr;
+        return TextFactory.getDisplayText(iconObjects);
     }
 
     @Override
@@ -454,4 +446,13 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
         intent.putExtra("speechText", speechText.toLowerCase());
         mContext.sendBroadcast(intent);
     }
+
+    private String getLevel2_3IconCode(int level1Position){
+        if(level1Position+1 <= 9){
+            return "0" + Integer.toString(level1Position+1);
+        } else {
+            return Integer.toString(level1Position+1);
+        }
+    }
+
 }
