@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingStart="10dp"
+    android:background="@drawable/bg"
+    tools:ignore="RtlSymmetry">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:fadeScrollbars="false"
+        android:layout_marginLeft="9dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="RtlSymmetry">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/childName"
+                android:fontFamily="@font/mukta_semibold"
+                style="@style/defaultTextViewStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_registration_jellowCalluDesc"
+                style="@style/defaultTextViewStyle"/>
+
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:imeOptions="actionDone"
+                style="@style/defaultTextViewStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/careGiverContact"
+                android:fontFamily="@font/mukta_semibold"
+                style="@style/defaultTextViewStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_registration_emergencynoDesc"
+                style="@style/defaultTextViewStyle"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:ccp_textSize="14sp"
+                    app:ccpDialog_textColor="@color/black_eighty"
+                    app:ccpDialog_showCloseIcon="true"
+                    app:ccp_countryPreference="IN,US,GB"
+                    app:ccp_autoDetectCountry="true"
+                    app:ccp_autoFormatNumber="false"
+                    app:ccpDialog_keyboardAutoPopup="false"
+                    app:ccpDialog_backgroundColor="@color/colorIntro"/>
+                <EditText
+                    android:id="@+id/etEmergencyContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:inputType="phone"
+                    android:maxLength="12"
+                    android:imeOptions="actionDone"
+                    style="@style/defaultTextViewStyle"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/emailAddress"
+                android:fontFamily="@font/mukta_semibold"
+                style="@style/defaultTextViewStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_registration_emailDesc"
+                style="@style/defaultTextViewStyle"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:id="@+id/etEmailId"
+                android:inputType="textEmailAddress"
+                android:imeOptions="actionDone"
+                style="@style/defaultTextViewStyle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/userGroup"
+                android:fontFamily="@font/mukta_semibold"
+                style="@style/defaultTextViewStyle"/>
+
+            <RadioGroup
+                android:id="@+id/radioUserGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp">
+                <RadioButton
+                    android:id="@+id/radioTherapist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/groupTeacher"
+                    style="@style/defaultTextViewStyle"/>
+                <RadioButton
+                    android:id="@+id/radioParent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/groupParent"
+                    style="@style/defaultTextViewStyle"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txt_registration_selectLangDesc"
+                android:layout_marginBottom="4dp"
+                android:fontFamily="@font/mukta_semibold"
+                style="@style/defaultTextViewStyle"/>
+
+            <Spinner
+                android:id="@+id/langSelectSpinner"
+                android:layout_width="112dp"
+                android:layout_height="30dp"
+                android:background="@drawable/custom_spinner_view"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/bRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="@string/txt_registration_registerBtn"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>
