@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="arrLevelOneActionBarTitle">
+        <item>शुभकामना और भावना</item>
+        <item>रोज़ के काम</item>
+        <item>खाना</item>
+        <item>मज़े</item>
+        <item>सीखना</item>
+        <item>लोग</item>
+        <item>जगह</item>
+        <item>समय और मौसम</item>
+        <item>मदद</item>
+    </string-array>
+    <string-array name="arrSequenceActivityHeadingText">
+        <item>ब्रश करना</item>
+        <item>शौचालय </item>
+        <item>नहाना</item>
+        <item>सुबह के कार्य</item>
+        <item>रात के कार्य</item>
+    </string-array>
+
+    <string-array name="arrSequenceActivityNavigationText">
+        <item>&lt;&lt; पीछे</item>
+        <item>आगे &gt;&gt;</item>
+    </string-array>
+</resources>
