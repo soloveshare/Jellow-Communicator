@@ -39,7 +39,6 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:id="@+id/tvtop"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     style="@style/defaultTextViewStyle"
@@ -54,7 +53,6 @@
                     android:src="@drawable/gtts1"
                     tools:ignore="ContentDescription" />
                 <Button
-                    android:id="@+id/tvbottom"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:gravity="center"
@@ -87,7 +85,6 @@
                     android:layout_marginBottom="8dp"
                     android:src="@drawable/gtts2"/>
                 <Button
-                    android:id="@+id/tvbottom1"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:gravity="center"
@@ -119,7 +116,6 @@
                     android:layout_marginBottom="8dp"
                     android:src="@drawable/gtts3"/>
                 <Button
-                    android:id="@+id/tvbottom3"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:gravity="center"
@@ -132,7 +128,6 @@
         </LinearLayout>
     </LinearLayout>
     <ImageView
-        android:id="@+id/btnMoveRight"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:onClick="changeDemoScreen"

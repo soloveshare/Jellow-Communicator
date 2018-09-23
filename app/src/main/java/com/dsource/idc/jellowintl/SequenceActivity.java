@@ -1276,8 +1276,8 @@ public class SequenceActivity extends AppCompatActivity {
 
         mNavigationBtnTxt = TextFactory.getTitle(miscellaneousIconObjects);
 
-        mCategoryNav = getResources().getStringArray(R.array.arrSeqActivityNavigationText);
-        mHeading = getResources().getStringArray(R.array.arrSeqActivityHeadingText);
+        mCategoryNav = getResources().getStringArray(R.array.arrSequenceActivityNavigationText);
+        mHeading = getResources().getStringArray(R.array.arrSequenceActivityHeadingText);
         mStrBack = mCategoryNav[0].substring(2, mCategoryNav[0].length());
         mStrNext = mCategoryNav[1].substring(0, mCategoryNav[1].length()-2);
 

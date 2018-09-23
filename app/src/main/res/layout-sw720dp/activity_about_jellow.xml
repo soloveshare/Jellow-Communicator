@@ -3,7 +3,6 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/ll"
     android:background="#F7F3C6"
     android:weightSum="1"
     >
@@ -16,7 +15,6 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:layout_weight=".7"
-        android:id="@+id/sv"
         android:fadeScrollbars="false"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="8dp"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:id="@+id/menuGroupInfo">
+    <group>
 
         <item
             android:id="@+id/profile"
@@ -20,7 +20,7 @@
             android:title="@string/menuKeyboardInput"
             app:showAsAction="never"/>
     </group>
-    <group android:id="@+id/menuGroupSettings">
+    <group>
         <item
             android:id="@+id/languageSelect"
             android:title="@string/Language"
@@ -34,7 +34,7 @@
             android:title="@string/menuResetPref"
             app:showAsAction="never"/>
     </group>
-    <group android:id="@+id/menuFeedback">
+    <group>
         <item
             android:id="@+id/feedback"
             android:title="@string/menuFeedback"

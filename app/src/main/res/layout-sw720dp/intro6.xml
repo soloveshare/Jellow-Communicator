@@ -40,7 +40,6 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
                 <TextView
-                    android:id="@+id/tvtop"
                     android:layout_width="420dp"
                     android:layout_height="wrap_content"
                     android:minLines="2"
@@ -137,7 +136,6 @@
         </LinearLayout>
     </LinearLayout>
     <ImageView
-        android:id="@+id/btnMoveRight"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:onClick="changeDemoScreen"

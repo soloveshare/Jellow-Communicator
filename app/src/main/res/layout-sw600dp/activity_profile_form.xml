@@ -30,7 +30,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/childName"
@@ -48,7 +47,6 @@
                     android:inputType="textPersonName"
                     style="@style/defaultTextViewStyle"/>
                 <TextView
-                    android:id="@+id/tvCaregiverName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/careGiveName"
@@ -65,7 +63,6 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPersonName"/>
                 <TextView
-                    android:id="@+id/tvCaregiverNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/careGiverContact"
@@ -98,7 +95,6 @@
                     android:imeOptions="actionDone"/>
             </LinearLayout>
                 <TextView
-                    android:id="@+id/tvHomeAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/homeAddress"
@@ -115,7 +111,6 @@
                     android:imeOptions="actionDone"
                     android:inputType="textPostalAddress"/>
                 <TextView
-                    android:id="@+id/tvEmailAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/emailAddress"
@@ -135,7 +130,6 @@
                     android:textSize="18sp"/>
 
                 <TextView
-                    android:id="@+id/tvUserGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/userGroup"
@@ -163,7 +157,6 @@
                 </RadioGroup>
 
                 <TextView
-                    android:id="@+id/tvBloodGrp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/bloodGroup"
@@ -182,7 +175,6 @@
         </ScrollView>
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="58dp"
         android:background="#F7E2AC"

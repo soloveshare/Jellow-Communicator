@@ -17,7 +17,6 @@
             android:layout_alignParentTop="true">
 
             <LinearLayout
-                android:id="@+id/expressiveOne"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -51,7 +50,6 @@
 
 
             <LinearLayout
-                android:id="@+id/expressiveTwo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -84,7 +82,6 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:id="@+id/relativeLayoutNavigation"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
                 android:layout_alignParentBottom="true"

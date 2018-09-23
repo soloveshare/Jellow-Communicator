@@ -32,8 +32,7 @@
             android:layout_weight="1"
             android:paddingRight="32dp"
             android:textSize="12sp"
-            android:text="@string/txt_intro7_getStartedDesc"
-            android:id="@+id/tvtop"/>
+            android:text="@string/txt_intro7_getStartedDesc" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

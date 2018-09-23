@@ -17,7 +17,6 @@
         android:text="On a scale of 1 to 5, please rate the following"
         android:layout_marginStart="32dp" />
     <ScrollView
-        android:id="@+id/scrollView2"
         android:layout_below="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -56,7 +56,6 @@
                     android:max="100"
                     android:theme="@style/CustomSeekbar"/>
                 <TextView
-                    android:id="@+id/voiceVolume"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/txtVoiceVolume"
