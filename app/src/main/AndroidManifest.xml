@@ -42,9 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity"
-            android:label="Test">
-        </activity>
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenLayout"

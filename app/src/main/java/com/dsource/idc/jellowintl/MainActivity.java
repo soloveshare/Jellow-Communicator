@@ -36,11 +36,9 @@ import android.widget.Toast;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_DoubleClick;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
 import com.dsource.idc.jellowintl.models.LevelOneVerbiageModel;
-import com.dsource.idc.jellowintl.utility.DefaultExceptionHandler;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -56,10 +54,29 @@ import static com.dsource.idc.jellowintl.utility.Analytics.stopMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.validatePushId;
 
 public class MainActivity extends AppCompatActivity {
-    boolean isAccessibilityEnabled, isExploreByTouchEnabled;
     private final int REQ_HOME = 0;
     private final boolean DISABLE_EXPR_BTNS = true;
-
+    /*Recycler view which will populate category icons.*/
+    public RecyclerView mRecyclerView;
+    boolean isAccessibilityEnabled, isExploreByTouchEnabled;
+    TextToSpeech tts;
+    String deviceLangCode;
+    boolean isLanguageSame = true;
+    String jellow_lang;
+    Locale deviceLangLocale;
+    /**
+     * This function is responsible for the Highlighting of the searched item from the
+     * search activity
+     * @Author Ayaz Alam
+     * **/
+    RecyclerView.OnScrollListener scrollListener;
+    /**
+     * This function is responsible for highlighting the view
+     * @param pos
+     *
+     *
+     * */
+    ViewTreeObserver.OnGlobalLayoutListener populationDoneListener;
     /* This flags are used to identify respective expressive button is pressed either
       once or twice. eg. mFlgLike used to identify Like expressive button pressed once or twice.*/
     private int mFlgLike = 0, mFlgYes = 0, mFlgMore = 0, mFlgDntLike = 0, mFlgNo = 0,
@@ -75,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
     /*Input text view to speak custom text.*/
     private EditText mEtTTs;
     private KeyListener originalKeyListener;
-    /*Recycler view which will populate category icons.*/
-    public RecyclerView mRecyclerView;
     /*This variable indicates index of category icon selected in level one*/
     private int mLevelOneItemPos = -1;
     /*This variable indicates index of category icon in adapter in level 1. This variable is
@@ -102,14 +117,61 @@ public class MainActivity extends AppCompatActivity {
     private String[] mSpeechTxt, mExprBtnTxt, mNavigationBtnTxt, mActionBarTitle;
     private String mActionBarTitleTxt;
     private String mCheckVoiceData, mHome;
-    TextToSpeech tts;
-    String current_lang, deviceLangCode;
-    boolean isLanguageSame = true;
-    String jellow_lang;
-    Locale deviceLangLocale;
-
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(final Context context, Intent intent) {
+            switch (intent.getAction()){
+                case "com.dsource.idc.jellowintl.SPEECH_TTS_ERROR":
+                    // Text synthesize process failed third time then show TTs error.
+                    if(++mTTsNotWorkingCount > 2)
+                        Toast.makeText(context, mCheckVoiceData, Toast.LENGTH_LONG).show();
+                    break;
+                case "com.dsource.idc.jellowintl.SPEECH_SYSTEM_LANG_RES":
+                    SessionManager session = new SessionManager(context);
+                    String userLang = session.getLanguage();
+                    session.setLangSettingIsCorrect(true);
+                    String mSysTtsReg = intent.getStringExtra("systemTtsRegion");
+                    //Below if is true when
+                    //      1) app language is english India and tts language is hindi India
+                    // or   2) app language is not english India and
+                    //         app language and Text-to-speech language are different then
+                    //         show error toast.
+                    if(((userLang.equals("en-rIN") && !mSysTtsReg.equals("hi-rIN"))
+                            || (!userLang.equals("en-rIN") && !userLang.equals(mSysTtsReg)))) {
+                        Toast.makeText(context, getString(R.string.speech_engin_lang_sam),
+                                Toast.LENGTH_LONG).show();
+                        session.setLangSettingIsCorrect(false);
+                    }
+                    break;
+            }
+        }
+    };
     private Icon[] level1IconObjects;
 
+    /**
+     * <p>This function check whether Text-to-speech service is running? It will
+     * return true if service is running else false is service is closed.</p>
+     * */
+    public static boolean isTTSServiceRunning(ActivityManager manager) {
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            // JellowTTSService is name of TTS service class.
+            if (JellowTTSService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * <p>This function check whether user device is not wifi only and
+     * has sim card inserted into SIM slot and user can make a call.
+     * @return true if device can able to make phone calls.</p>
+     * */
+    public static boolean isDeviceReadyToCall(TelephonyManager tm){
+        return tm != null
+            && tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE
+                && tm.getSimState() == TelephonyManager.SIM_STATE_READY;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,12 +219,7 @@ public class MainActivity extends AppCompatActivity {
             //Not from Search Activity
         }
     }
-    /**
-     * This function is responsible for the Highlighting of the searched item from the
-     * search activity
-     * @Author Ayaz Alam
-     * **/
-    RecyclerView.OnScrollListener scrollListener;
+
     private void highlightSearchedItem() {
         //Referring to the Intent that invoked the activity
         final int iconIndex = getIntent().getExtras().getInt(getString(R.string.search_parent_0));
@@ -186,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
     }
+
     /**
      * This functions returns a scroll scrollListener which triggers the setHighlight function
      * when the scrolling is done
@@ -207,13 +265,7 @@ public class MainActivity extends AppCompatActivity {
         };
         return scrollListener;
     }
-    /**
-     * This function is responsible for highlighting the view
-     * @param pos
-     *
-     *
-     * */
-    ViewTreeObserver.OnGlobalLayoutListener populationDoneListener;
+
     public void setSearchHighlight(final int pos)
     {
         mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -325,7 +377,6 @@ public class MainActivity extends AppCompatActivity {
             session.setToastMessage("");
         }
     }
-
 
     private void checkLanguages(boolean isAccessibilityEnabled, boolean isExploreByTouchEnabled) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -1438,13 +1489,6 @@ public class MainActivity extends AppCompatActivity {
      *     d) Read speech text from arrays for navigation buttons.</p>
      * */
     private void loadArraysFromResources() {
-        //LevelOneVerbiageModel verbiageModel = new Gson()
-        //        .fromJson(getString(R.string.levelOneVerbiage), LevelOneVerbiageModel.class);
-        //mLayerOneSpeech = verbiageModel.getVerbiageModel();
-        //mSpeechTxt = getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
-        //mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
-        //mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);
-
 
         String[] level1Icons =  IconFactory.getL1Icons(
                 getIconDirectory(this),
@@ -1619,60 +1663,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_SYSTEM_LANG_REQ");
         intent.putExtra("saveSelectedLanguage", saveLanguage);
         sendBroadcast(intent);
-    }
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(final Context context, Intent intent) {
-            switch (intent.getAction()){
-                case "com.dsource.idc.jellowintl.SPEECH_TTS_ERROR":
-                    // Text synthesize process failed third time then show TTs error.
-                    if(++mTTsNotWorkingCount > 2)
-                        Toast.makeText(context, mCheckVoiceData, Toast.LENGTH_LONG).show();
-                    break;
-                case "com.dsource.idc.jellowintl.SPEECH_SYSTEM_LANG_RES":
-                    SessionManager session = new SessionManager(context);
-                    String userLang = session.getLanguage();
-                    session.setLangSettingIsCorrect(true);
-                    String mSysTtsReg = intent.getStringExtra("systemTtsRegion");
-                    //Below if is true when
-                    //      1) app language is english India and tts language is hindi India
-                    // or   2) app language is not english India and
-                    //         app language and Text-to-speech language are different then
-                    //         show error toast.
-                    if(((userLang.equals("en-rIN") && !mSysTtsReg.equals("hi-rIN"))
-                            || (!userLang.equals("en-rIN") && !userLang.equals(mSysTtsReg)))) {
-                        Toast.makeText(context, getString(R.string.speech_engin_lang_sam),
-                                Toast.LENGTH_LONG).show();
-                        session.setLangSettingIsCorrect(false);
-                    }
-                    break;
-            }
-        }
-    };
-
-    /**
-     * <p>This function check whether Text-to-speech service is running? It will
-     * return true if service is running else false is service is closed.</p>
-     * */
-    public static boolean isTTSServiceRunning(ActivityManager manager) {
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            // JellowTTSService is name of TTS service class.
-            if (JellowTTSService.class.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * <p>This function check whether user device is not wifi only and
-     * has sim card inserted into SIM slot and user can make a call.
-     * @return true if device can able to make phone calls.</p>
-     * */
-    public static boolean isDeviceReadyToCall(TelephonyManager tm){
-        return tm != null
-            && tm.getPhoneType() != TelephonyManager.PHONE_TYPE_NONE
-                && tm.getSimState() == TelephonyManager.SIM_STATE_READY;
     }
 }

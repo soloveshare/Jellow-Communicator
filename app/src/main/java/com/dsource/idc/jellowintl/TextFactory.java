@@ -21,6 +21,8 @@ public class TextFactory {
      * @param file - the JSON file location
      * @param iconNames - iconNames without extension
      * @return
+     *
+     *  Returns the JSON text from disk
      */
 
     public static Icon[] getIconObjects(@NonNull File file,@NonNull String[] iconNames) {

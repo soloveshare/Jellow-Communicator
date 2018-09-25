@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +33,11 @@ class LevelTwoAdapter extends android.support.v7.widget.RecyclerView.Adapter<Lev
     private SessionManager mSession;
     private String[] icons;
     private String[] mBelowTextArray;
-    //private String path;
 
     LevelTwoAdapter(Context context, int levelTwoItemPos){
         mContext = context;
         mSession = new SessionManager(mContext);
         loadArraysFromResources(levelTwoItemPos);
-        /*File en_dir = mContext.getDir(mSession.getLanguage(), Context.MODE_PRIVATE);
-        path = en_dir.getAbsolutePath()+"/drawables";*/
     }
 
     @Override
@@ -102,19 +98,11 @@ class LevelTwoAdapter extends android.support.v7.widget.RecyclerView.Adapter<Lev
 
     private void loadArraysFromResources(int levelTwoItemPos) {
 
-           /* Log.d("level2", levelTwoItemPos+"");
-
-            Log.d("level2", getLevel2IconCode(levelTwoItemPos));*/
-
         icons = IconFactory.getL2Icons(
                 PathFactory.getIconDirectory(mContext),
                 LanguageFactory.getCurrentLanguageCode(mContext),
                 getLevel2IconCode(levelTwoItemPos)
         );
-
-
-        /*for (String a : icons)
-            Log.d("level2", a);*/
 
 
         Icon[] iconObjects = TextFactory.getIconObjects(
@@ -123,34 +111,6 @@ class LevelTwoAdapter extends android.support.v7.widget.RecyclerView.Adapter<Lev
         );
 
         mBelowTextArray = TextFactory.getDisplayText(iconObjects);
-
-
-
-        /*if (levelTwoItemPos == 0){
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoGreetFeelIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoGreetFeelAdapterText);
-        } else if (levelTwoItemPos == 1){
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoDailyActIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoDailyActAdapterText);
-        } else if (levelTwoItemPos == 2){
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoEatingIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoEatAdapterText);
-        } else if (levelTwoItemPos == 3){
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoFunIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoFunAdapterText);
-        } else if (levelTwoItemPos == 4) {
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoLearningIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoLearningAdapterText);
-        }  else if (levelTwoItemPos == 6) {
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoPlacesIcon);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoPlacesAdapterText);
-        }else if (levelTwoItemPos == 7) {
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoTimeIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoTimeWeatherAdapterText);
-        } else if (levelTwoItemPos == 8) {
-            icons = mContext.getResources().getStringArray(R.array.arrLevelTwoHelpIconAdapter);
-            mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelTwoHelpAdapterText);
-        }*/
 
     }
 

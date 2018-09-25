@@ -37,7 +37,6 @@ import com.dsource.idc.jellowintl.utility.IndexSorter;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -59,7 +58,10 @@ public class LevelTwoActivity extends AppCompatActivity {
     private final int CATEGORY_ICON_PEOPLE = 5;
     private final int CATEGORY_ICON_HELP = 8;
     private final boolean DISABLE_EXPR_BTNS = true;
-
+    //A scrollListener field to listen when recycler view have done populating the data
+    RecyclerView.OnScrollListener scrollListener;
+    //This scrollListener fields listens the callback from recycler finished laying out the views
+    ViewTreeObserver.OnGlobalLayoutListener populationDoneListener;
     /* This flags are used to identify respective expressive button is pressed either
       once or twice. eg. mFlgLike used to identify Like expressive button pressed once or twice.*/
     private int mFlgLike = 0, mFlgYes = 0, mFlgMore = 0, mFlgDntLike = 0, mFlgNo = 0,
@@ -96,7 +98,6 @@ public class LevelTwoActivity extends AppCompatActivity {
     /*This variable store current action bar title.*/
     private String mActionBarTitle;
     private SessionManager mSession;
-
     /*Below list stores the verbiage that are spoken when category icon + expression buttons
     pressed in conjunction*/
     //private ArrayList<ArrayList<ArrayList<String>>> mLayerTwoSpeech;
@@ -108,7 +109,6 @@ public class LevelTwoActivity extends AppCompatActivity {
      only, when in level one people or places category is
       selected.*/
     private Integer[] mArrPeoplePlaceTapCount, mArrSort;
-
     private String end, actionBarTitleTxt, mCallPermDeny;
     private Icon[] level2IconObjects;
 
@@ -157,8 +157,7 @@ public class LevelTwoActivity extends AppCompatActivity {
             }
         }
     }
-    //A scrollListener field to listen when recycler view have done populating the data
-    RecyclerView.OnScrollListener scrollListener;
+
     private void highlightSearchedItem() {
         //Referring to the Intent that invoked the activity
             final int p1 = getIntent().getExtras().getInt(getString(R.string.level_one_intent_pos_tag));
@@ -211,8 +210,7 @@ public class LevelTwoActivity extends AppCompatActivity {
         };
         return scrollListener;
     }
-    //This scrollListener fields listens the callback from recycler finished laying out the views
-    ViewTreeObserver.OnGlobalLayoutListener populationDoneListener;
+
     public void setSearchHighlight(final int pos)
     {
         mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -1626,36 +1624,6 @@ public class LevelTwoActivity extends AppCompatActivity {
 
         int size = mArrAdapterTxt.length;
 
-        /*int size = -1;
-        switch (mLevelOneItemPos) {
-            case 0:
-                size = getResources().getStringArray(R.array.arrLevelTwoGreetFeelSpeechText).length;
-                break;
-            case 1:
-                size = getResources().getStringArray(R.array.arrLevelTwoDailyActSpeechText).length;
-                break;
-            case 2:
-                size = getResources().getStringArray(R.array.arrLevelTwoEatSpeechText).length;
-                break;
-            case 3:
-                size = getResources().getStringArray(R.array.arrLevelTwoFunSpeechText).length;
-                break;
-            case 4:
-                size = getResources().getStringArray(R.array.arrLevelTwoLearningSpeechText).length;
-                break;
-            case 5:
-                size = getResources().getStringArray(R.array.arrLevelTwoPeopleSpeechText).length;
-                break;
-            case 6:
-                size = getResources().getStringArray(R.array.arrLevelTwoPlacesSpeechText).length;
-                break;
-            case 7:
-                size = getResources().getStringArray(R.array.arrLevelTwoTimeWeatherSpeechText).length;
-                break;
-            case 8:
-                size = getResources().getStringArray(R.array.arrLevelTwoHelpSpeechText).length;
-                break;
-        }*/
         // Set the capacity of mRecyclerItemsViewList list to total number of category icons to be
         // populated on the screen.
         mRecyclerItemsViewList = new ArrayList<>(size);
@@ -1714,9 +1682,6 @@ public class LevelTwoActivity extends AppCompatActivity {
 
         mExprBtnTxt = TextFactory.getExpressiveSpeechText(expressiveIconObjects);
 
-        //mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
-
-
         String[] miscellaneousIcons = IconFactory.getMiscellaneousIcons(
                 PathFactory.getIconDirectory(this),
                 LanguageFactory.getCurrentLanguageCode(this)
@@ -1730,18 +1695,6 @@ public class LevelTwoActivity extends AppCompatActivity {
         mNavigationBtnTxt = TextFactory.getTitle(miscellaneousIconObjects);
 
         retrieveSpeechAndAdapterArrays(mLevelOneItemPos);
-
-
-        //mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);
-
-        /*String verbString = getString(R.string.levelTwoVerbiage1) +
-                getString(R.string.levelTwoVerbiage2) +
-                getString(R.string.levelTwoVerbiage3) +
-                getString(R.string.levelTwoVerbiage4);
-        LevelTwoVerbiageModel verbiageModel = new Gson().
-                fromJson(verbString, LevelTwoVerbiageModel.class);
-        mLayerTwoSpeech = verbiageModel.getVerbiageModel();*/
-        // fill speech and adapter text arrays
 
     }
 
@@ -2009,48 +1962,6 @@ public class LevelTwoActivity extends AppCompatActivity {
             mArrSpeechText = TextFactory.getSpeechText(level2IconObjects);
 
         }
-
-
-        /*switch (levelOneItemPos){
-            case 0:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoGreetFeelSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoGreetFeelAdapterText);
-                break;
-            case 1:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoDailyActSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoDailyActAdapterText);
-                break;
-            case 2:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoEatSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoEatAdapterText);
-                break;
-            case 3:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoFunSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoFunAdapterText);
-                break;
-            case 4:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoLearningSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoLearningAdapterText);
-                break;
-            case 5:
-                // As People category uses preferences, speech and text arrays are sorted using
-                // preference algorithm.
-                useSortToLoadArray(getResources().getStringArray(R.array.arrLevelTwoPeopleSpeechText),
-                        getResources().getStringArray(R.array.arrLevelTwoPeopleAdapterText));
-                break;
-            case 6:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoPlacesSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoPlacesAdapterText);
-                break;
-            case 7:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoTimeWeatherSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoTimeWeatherAdapterText);
-                break;
-            case 8:
-                mArrSpeechText = getResources().getStringArray(R.array.arrLevelTwoHelpSpeechText);
-                mArrAdapterTxt = getResources().getStringArray(R.array.arrLevelTwoHelpAdapterText);
-                break;
-        }*/
     }
 
     /**

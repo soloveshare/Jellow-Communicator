@@ -120,10 +120,6 @@ public class SequenceActivity extends AppCompatActivity {
         else if(mLevelTwoItemPos == 8)
             mLevelTwoItemPos = 4;
 
-        /* Get icon set directory path
-        File en_dir = this.getDir(mSession.getLanguage(), Context.MODE_PRIVATE);
-        mStrPath = en_dir.getAbsolutePath()+"/drawables";*/
-
         loadArraysFromResources();
         initializeLayoutViews();
         initializeViewListeners();
@@ -1235,8 +1231,6 @@ public class SequenceActivity extends AppCompatActivity {
                 getLevel2_3IconCode(mLevelTwoItemPos)
         );
 
-        for (String a : l3SeqIcons)
-            Log.d("level3Seq", a);
 
         level3SeqIconObjects = TextFactory.getIconObjects(
                 PathFactory.getJSONFile(this),
@@ -1252,9 +1246,6 @@ public class SequenceActivity extends AppCompatActivity {
                 PathFactory.getIconDirectory(this),
                 LanguageFactory.getCurrentLanguageCode(this)
         );
-
-        for(String a: expressiveIcons)
-            Log.d("level3Seq",a);
 
         ExpressiveIcon[] expressiveIconObjects = TextFactory.getExpressiveIconObjects(
                 PathFactory.getJSONFile(this),
@@ -1280,61 +1271,6 @@ public class SequenceActivity extends AppCompatActivity {
         mHeading = getResources().getStringArray(R.array.arrSequenceActivityHeadingText);
         mStrBack = mCategoryNav[0].substring(2, mCategoryNav[0].length());
         mStrNext = mCategoryNav[1].substring(0, mCategoryNav[1].length()-2);
-
-
-        /*mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
-        mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);*/
-        
-
-
-        /*String verbString = getString(R.string.sequenceActVerbiage1) +
-                getString(R.string.sequenceActVerbiage2);
-        SeqActivityVerbiageModel verbiageModel = new Gson()
-                .fromJson(verbString, SeqActivityVerbiageModel.class);
-        mSeqActSpeech = verbiageModel.getVerbiageModel();
-
-        switch(mLevelTwoItemPos){
-            case 0:
-                mCategoryIconBelowText = getResources().getStringArray
-                        (R.array.arrSeqActivityBrushingBelowText);
-                mCategoryIconSpeechText = getResources().getStringArray
-                        (R.array.arrSeqActivityBrushingSpeechText);
-                mCategoryIconText = getResources().getStringArray
-                        (R.array.arrSeqActivityBrushingIcon);
-                break;
-            case 1:
-                mCategoryIconBelowText = getResources().getStringArray
-                        (R.array.arrSeqActivityToiletBelowText);
-                mCategoryIconSpeechText = getResources().getStringArray
-                        (R.array.arrSeqActivityToiletSpeechText);
-                mCategoryIconText = getResources().getStringArray
-                        (R.array.arrSeqActivityToiletIcon);
-                break;
-            case 2:
-                mCategoryIconBelowText = getResources().getStringArray
-                        (R.array.arrSeqActivityBathingBelowText);
-                mCategoryIconSpeechText = getResources().getStringArray
-                        (R.array.arrSeqActivityBathingSpeechText);
-                mCategoryIconText = getResources().getStringArray
-                        (R.array.arrSeqActivityBathingIcon);
-                break;
-            case 3:
-                mCategoryIconBelowText = getResources().getStringArray
-                        (R.array.arrSeqActivityMorningRoutineBelowText);
-                mCategoryIconSpeechText = getResources().getStringArray
-                        (R.array.arrSeqActivityMorningRoutineSpeechText);
-                mCategoryIconText = getResources().getStringArray
-                        (R.array.arrSeqActivityMorningRoutineIcon);
-                break;
-            case 4:
-                mCategoryIconBelowText = getResources().getStringArray
-                        (R.array.arrSeqActivityBedtimeRoutineBelowText);
-                mCategoryIconSpeechText = getResources().getStringArray
-                        (R.array.arrSeqActivityBedtimeRoutineSpeechText);
-                mCategoryIconText = getResources().getStringArray
-                        (R.array.arrSeqActivityBedtimeRoutineIcon);
-                break;
-        }*/
     }
 
     /**

@@ -25,12 +25,6 @@ import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
  */
 public class IconDataBaseHelper extends SQLiteOpenHelper {
 
-    Context context;
-    // Declaring all these as constants makes code a lot more readable, and looking like SQL.
-    // Versions has to be 1 first time or app will crash.
-    private static final int DATABASE_VERSION = 1;
-    private static final String ICON_LIST_TABLE = "icons";
-    private static final String DATABASE_NAME = "level3.db";
     // Column names...
     public static final String ICON_ID = "_id";//Icon Primary key ID
     public static final String ICON_TITLE = "icon_title";//Icon Title
@@ -38,6 +32,11 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
     public static final String KEY_P1 = "icon_p1";//First Level Parent
     public static final String KEY_P2 = "icon_p2";//Second Level Parent
     public static final String KEY_P3 = "icon_p3";//Third Level Parent
+    // Declaring all these as constants makes code a lot more readable, and looking like SQL.
+    // Versions has to be 1 first time or app will crash.
+    private static final int DATABASE_VERSION = 1;
+    private static final String ICON_LIST_TABLE = "icons";
+    private static final String DATABASE_NAME = "level3.db";
     // ... and a string array of columns.
     private static final String[] COLUMNS =
             {ICON_ID, ICON_TITLE,ICON_DRAWABLE,KEY_P1,KEY_P2,KEY_P3};
@@ -49,10 +48,10 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
                     + KEY_P1 + " INTERGER,"//Level 1 parent
                     + KEY_P2 + " INTEGER, " //Level 2 parent
                     + KEY_P3 +" INTEGER  );";//Level 3 parent
-    private SQLiteDatabase mReadableDB;
-
+    Context context;
     String[] thirdLevelIcons=null;
     String[] thirdLevelTitles=null;
+    private SQLiteDatabase mReadableDB;
     private boolean noChildInThird =false;
 
     public IconDataBaseHelper(Context context) {
@@ -162,30 +161,6 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
                 getLevel2_3IconCode(pos)
         );
 
-
-     /*switch (pos)
-     {
-         case 0:arr=context.getResources().getStringArray(R.array.arrLevelTwoGreetFeelIconAdapter);
-             break;
-         case 1:arr=context.getResources().getStringArray(R.array.arrLevelTwoDailyActIconAdapter);
-             break;
-         case 2:arr=context.getResources().getStringArray(R.array.arrLevelTwoEatingIconAdapter);
-             break;
-         case 3:arr=context.getResources().getStringArray(R.array.arrLevelTwoFunIconAdapter);
-             break;
-         case 4:arr=context.getResources().getStringArray(R.array.arrLevelTwoLearningIconAdapter);
-             break;
-         case 5:arr=context.getResources().getStringArray(R.array.arrLevelTwoPeopleIcon);
-             break;
-         case 6:arr=context.getResources().getStringArray(R.array.arrLevelTwoPlacesIcon);
-             break;
-         case 7:arr=context.getResources().getStringArray(R.array.arrLevelTwoTimeIconAdapter);
-             break;
-         case 8:arr=context.getResources().getStringArray(R.array.arrLevelTwoHelpIconAdapter);
-             break;
-         default:
-     }*/
-
     }
 
     /**
@@ -201,29 +176,6 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         );
 
         return TextFactory.getDisplayText(iconObjects);
-
-        /*switch (pos)
-        {
-            case 0:arr=context.getResources().getStringArray(R.array.arrLevelTwoGreetFeelAdapterText);
-                break;
-            case 1:arr=context.getResources().getStringArray(R.array.arrLevelTwoDailyActAdapterText);
-                break;
-            case 2:arr=context.getResources().getStringArray(R.array.arrLevelTwoEatAdapterText);
-                break;
-            case 3:arr=context.getResources().getStringArray(R.array.arrLevelTwoFunAdapterText);
-                break;
-            case 4:arr=context.getResources().getStringArray(R.array.arrLevelTwoLearningAdapterText);
-                break;
-            case 5:arr=context.getResources().getStringArray(R.array.arrLevelTwoPeopleAdapterText);
-                break;
-            case 6:arr=context.getResources().getStringArray(R.array.arrLevelTwoPlacesAdapterText);
-                break;
-            case 7:arr=context.getResources().getStringArray(R.array.arrLevelTwoTimeWeatherAdapterText);
-                break;
-            case 8:arr=context.getResources().getStringArray(R.array.arrLevelTwoHelpAdapterText);
-                break;
-            default:
-        }*/
     }
 
     /**
@@ -333,219 +285,7 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         }
 
         return true;
-
-        /*if (levelOneItemPos == 0) {
-            switch(levelTwoItemPos){
-                case 0: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingAdapterText));
-                    break;
-                case 1: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelFeelingIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelFeelingsAdapterText));
-                    break;
-                case 2: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelRequestsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelRequestsAdapterText));
-                    break;
-                case 3: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelQuestionsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeGreetFeelQuestionsAdapterText));
-                    break;
-            }
-        } else if (levelOneItemPos == 1) {
-            switch(levelTwoItemPos){
-                case 0:
-                    noChildInThird =true;break;
-                case 1:
-                    noChildInThird =true;break;
-                case 2:
-                    noChildInThird =true;break;
-                case 3: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeDailyActClothesIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeDailyActClothesAccAdapterText));
-                    break;
-                case 4: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeDailyActGetReadyIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeDailyActGetReadyAdapterText));
-                    break;
-                case 5: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeDailyActSleepIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeDailyActSleepAdapterText));
-                    break;
-                case 6: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeDailyActTherapyIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeDailyActTherapyAdapterText));
-                    break;
-                case 7:
-                    noChildInThird =true;break;
-                case 8:
-                    noChildInThird =true;break;
-                case 9: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeDailyActHabitsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeDailyActHabitsAdapterText));
-                    break;
-            }
-        } else if (levelOneItemPos == 2) {
-            switch(levelTwoItemPos) {
-                case 0: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksBreakfastIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksBreakfastAdapterText));
-                    break;
-                case 1: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksLunchDinIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksLunchDinnerAdapterText));
-                    break;
-                case 2: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksSweetsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksSweetsAdapterText));
-                    break;
-                case 3: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksSnacksIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksSnacksAdapterText));
-                    break;
-                case 4: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksFruitsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksFruitsAdapterText));
-                    break;
-                case 5: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksDrinksIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksDrinksAdapterText));
-                    break;
-                case 6: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksCutleryIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksCutleryAdapterText));
-                    break;
-                case 7: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksAddonsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFoodDrinksAddonAdapterText));
-                    break;
-            }
-        } else if (levelOneItemPos == 3) {
-            switch(levelTwoItemPos){
-                case 0: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFunInDGamesIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFunInDGamesAdapterText));
-                    break;
-                case 1: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFunOutDGamesIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFunOutDGamesAdapterText));
-                    break;
-                case 2: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFunSportsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFunSportsAdapterText));
-                    break;
-                case 3: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFunTvIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFunTvAdapterText));
-                    break;
-                case 4: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFunMusicIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFunMusicAdapterText));
-                    break;
-                case 5: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeFunActivitiesIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeFunActivitiesAdapterText));
-                    break;
-            }
-        } else if (levelOneItemPos == 4) {
-            switch(levelTwoItemPos) {
-                case 0: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningAnimBirdsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningAnimBirdsAdapterText));
-                    break;
-                case 1: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningBodyPartsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningBodyPartsAdapterText));
-                    break;
-                case 2: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningBooksIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningBooksAdapterText));
-                    break;
-                case 3: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningColorsIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningColorsAdapterText));
-                    break;
-                case 4: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningShapesIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningShapesAdapterText));
-                    break;
-                case 5: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningStationaryIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningStationaryAdapterText));
-                    break;
-                case 6: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningSchoolIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningSchoolObjAdapterText));
-                    break;
-                case 7: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningHomeIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningHomeObjAdapterText));
-                    break;
-                case 8: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningTransportationIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningTransportAdapterText));
-                    break;
-                case 9: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeLearningMoneyIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeLearningMoneyAdapterText));
-                    break;
-            }
-        }
-        else if(levelOneItemPos==5)
-        {
-            noChildInThird =true;
-        }
-        else if(levelOneItemPos==6){
-            switch(levelTwoItemPos) {
-                case 0: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesMyHouseIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesMyHouseAdapterText);
-                    break;
-                case 1: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesSchoolIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesSchoolAdapterText);
-                    break;
-                case 2: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesMallIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesMallAdapterText);
-                    break;
-                case 3: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesMuseumIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesMuseumAdapterText);
-                    break;
-                case 4: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesRestaurantIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesRestaurantAdapterText);
-                    break;
-                case 5: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesTheatreIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesTheatreAdapterText);
-                    break;
-                case 6: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesPlaygroundIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesPlaygroundAdapterText);
-                    break;
-                case 7: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesParkIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesParkAdapterText);
-                    break;
-                case 8: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesStoreIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesStoreAdapterText);
-                    break;
-                case 9: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesFriendHouseIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesFriendHouseAdapterText);
-                    break;
-                case 10: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesRelativeHouseIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesRelativeHouseAdapterText);
-                    break;
-                case 11: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesHospitalIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesHospitalAdapterText);
-                    break;
-                case 12: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesClinicIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesClinicAdapterText);
-                    break;
-                case 13: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesLibraryIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesLibraryAdapterText);
-                    break;
-                case 14: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesZooIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesZooAdapterText);
-                    break;
-                case 15: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreePlacesWorshipIconAdapter);
-                    thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreePlacesWorshipAdapterText);
-                    break;
-            }
-        }
-        else if (levelOneItemPos == 7) {
-            switch(levelTwoItemPos) {
-                case 0: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaTimeIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaTimeAdapterText);
-                    break;
-                case 1: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaDayIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaDayAdapterText);
-                    break;
-                case 2: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaMonthIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaMonthAdapterText);
-                    break;
-                case 3: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaWeatherIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaWeatherAdapterText);
-                    break;
-                case 4: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaSeasonsIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaSeasonsAdapterText);
-                    break;
-                case 5: thirdLevelIcons=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaHoliFestIconAdapter);
-                        thirdLevelTitles=context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaHoliFestAdapterText);
-                    break;
-                case 6: loadAdapterMenuTextIconsWithoutSort(context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaBirthdaysIconAdapter),
-                        context.getResources().getStringArray(R.array.arrLevelThreeTimeWeaBirthdaysAdapterText));
-                    break;
-            }
-        }
-        else if(levelOneItemPos==8)
-        {
-            noChildInThird =true;
-        }*/
-
-    }//End of the function
+        }//End of the function
 
 
 

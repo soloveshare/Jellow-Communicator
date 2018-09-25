@@ -36,7 +36,6 @@ import com.dsource.idc.jellowintl.utility.IndexSorter;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -1346,8 +1345,6 @@ public class LevelThreeActivity extends AppCompatActivity {
      *     c) Read verbiage lines into {@link LevelThreeVerbiageModel} model.</p>
      * */
     private void loadArraysFromResources() {
-        /*mExprBtnTxt = getResources().getStringArray(R.array.arrActionSpeech);
-        mNavigationBtnTxt = getResources().getStringArray(R.array.arrNavigationSpeech);*/
 
         String[] expressiveIcons = IconFactory.getExpressiveIcons(
                 PathFactory.getIconDirectory(this),
@@ -1376,36 +1373,6 @@ public class LevelThreeActivity extends AppCompatActivity {
         );
 
         mNavigationBtnTxt = TextFactory.getTitle(miscellaneousIconObjects);
-
-        /*String verbString = getString(R.string.levelThreeVerbiage1) +
-                getString(R.string.levelThreeVerbiage2) +
-                getString(R.string.levelThreeVerbiage3)+
-                getString(R.string.levelThreeVerbiage4) +
-                getString(R.string.levelThreeVerbiage5) +
-                getString(R.string.levelThreeVerbiage6) +
-                getString(R.string.levelThreeVerbiage7) +
-                getString(R.string.levelThreeVerbiage8) +
-                getString(R.string.levelThreeVerbiage9) +
-                getString(R.string.levelThreeVerbiage10) +
-                getString(R.string.levelThreeVerbiage11) +
-                getString(R.string.levelThreeVerbiage12) +
-                getString(R.string.levelThreeVerbiage13) +
-                getString(R.string.levelThreeVerbiage14) +
-                getString(R.string.levelThreeVerbiage15) +
-                getString(R.string.levelThreeVerbiage16) +
-                getString(R.string.levelThreeVerbiage17) +
-                getString(R.string.levelThreeVerbiage18) +
-                getString(R.string.levelThreeVerbiage19) +
-                getString(R.string.levelThreeVerbiage20) +
-                getString(R.string.levelThreeVerbiage21) +
-                getString(R.string.levelThreeVerbiage22) +
-                getString(R.string.levelThreeVerbiage23) +
-                getString(R.string.levelThreeVerbiage24) +
-                getString(R.string.levelThreeVerbiage25);
-        LevelThreeVerbiageModel mLevelThreeVerbiageModel = new Gson().
-                fromJson(verbString, LevelThreeVerbiageModel.class);
-        mNewVerbTxt = mLevelThreeVerbiageModel.getVerbiageModel()
-                                         .get(mLevelOneItemPos).get(mLevelTwoItemPos);*/
     }
 
     /**
@@ -1649,9 +1616,6 @@ public class LevelThreeActivity extends AppCompatActivity {
                 getLevel2_3IconCode(levelTwoItemPos)
         );
 
-        for (String a : icons)
-            Log.d("level3A", a);
-
         level3IconObjects = TextFactory.getIconObjects(
                 PathFactory.getJSONFile(this),
                 IconFactory.removeFileExtension(icons)
@@ -1659,197 +1623,6 @@ public class LevelThreeActivity extends AppCompatActivity {
 
         mSpeechTxt = TextFactory.getDisplayText(level3IconObjects);
 
-
-        /*if (levelOneItemPos == 0) {
-            switch(levelTwoItemPos){
-                case 0:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeGreetFeelGreetingSpeechText);
-                    break;
-                case 1:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeGreetFeelFeelingsSpeechText);
-                    break;
-                case 2:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeGreetFeelRequestsSpeechText);
-                    break;
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeGreetFeelQuestionsSpeechText);
-                    break;
-            }
-        } else if (levelOneItemPos == 1) {
-            switch(levelTwoItemPos){
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeDailyActClothesAccSpeechText);
-                    break;
-                case 4:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeDailyActGetReadySpeechText);
-                    break;
-                case 5:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeDailyActSleepSpeechText);
-                    break;
-                case 6:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeDailyActTherapySpeechText);
-                    break;
-                case 9:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeDailyActHabitsSpeechText);
-                    break;
-            }
-        } else if (levelOneItemPos == 2) {
-            switch(levelTwoItemPos){
-                case 0:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksBreakfastSpeechText);
-                    break;
-                case 1:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksLunchDinnerSpeechText);
-                    break;
-                case 2:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksSweetsSpeechText);
-                    break;
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksSnacksSpeechText);
-                    break;
-                case 4:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksFruitsSpeechText);
-                    break;
-                case 5:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksDrinksSpeechText);
-                    break;
-                case 6:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksCutlerySpeechText);
-                    break;
-                case 7:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFoodDrinksAddonSpeechText);
-                    break;
-            }
-        } else if (levelOneItemPos == 3){
-            switch(levelTwoItemPos){
-                case 0:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFunInDGamesSpeechText);
-                    break;
-                case 1:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFunOutDGamesSpeechText);
-                    break;
-                case 2:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFunSportsSpeechText);
-                    break;
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFunTvSpeechText);
-                    break;
-                case 4:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFunMusicSpeechText);
-                    break;
-                case 5:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeFunActivitiesSpeechText);
-                    break;
-            }
-        } else if (levelOneItemPos == 4) {
-            switch(levelTwoItemPos){
-                case 0:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningAnimBirdsSpeechText);
-                    break;
-                case 1:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningBodyPartsSpeechText);
-                    break;
-                case 2:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningBooksSpeechText);
-                    break;
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningColorsSpeechText);
-                    break;
-                case 4:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningShapesSpeechText);
-                    break;
-                case 5:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningStationarySpeechText);
-                    break;
-                case 6:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningSchoolObjSpeechText);
-                    break;
-                case 7:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningHomeObjSpeechText);
-                    break;
-                case 8:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningTransportSpeechText);
-                    break;
-                case 9:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeLearningMoneySpeechText);
-                    break;
-            }
-        } else if (levelOneItemPos == 6) {
-            switch(levelTwoItemPos){
-                case 0:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesMyHouseSpeechText);
-                    break;
-                case 1:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesSchoolSpeechText);
-                    break;
-                case 2:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesMallSpeechText);
-                    break;
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesMuseumSpeechText);
-                    break;
-                case 4:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesRestaurantSpeechText);
-                    break;
-                case 5:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesTheatreSpeechText);
-                    break;
-                case 6:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesPlaygroundSpeechText);
-                    break;
-                case 7:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesParkSpeechText);
-                    break;
-                case 8:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesStoreSpeechText);
-                    break;
-                case 9:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesFriendHouseSpeechText);
-                    break;
-                case 10:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesRelativeHouseSpeechText);
-                    break;
-                case 11:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesHospitalSpeechText);
-                    break;
-                case 12:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesClinicSpeechText);
-                    break;
-                case 13:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesLibrarySpeechText);
-                    break;
-                case 14:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesZooSpeechText);
-                    break;
-                case 15:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreePlacesWorshipSpeechText);
-                    break;
-            }
-        } else if (levelOneItemPos == 7) {
-            switch(levelTwoItemPos){
-                case 0:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaTimeSpeechText);
-                    break;
-                case 1:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaDaySpeechText);
-                    break;
-                case 2:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaMonthSpeechText);
-                    break;
-                case 3:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaWeatherSpeechText);
-                    break;
-                case 4:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaSeasonsSpeechText);
-                    break;
-                case 5:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaHoliFestSpeechText);
-                    break;
-                case 6:
-                    mSpeechTxt = getResources().getStringArray(R.array.arrLevelThreeTimeWeaBirthdaysSpeechText);
-                    break;
-            }
-        }*/
     }
 
 

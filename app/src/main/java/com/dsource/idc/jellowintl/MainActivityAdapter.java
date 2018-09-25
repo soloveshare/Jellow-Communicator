@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -40,32 +38,18 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
     private String[] icons;
     private String[] mBelowTextArray;
 
-    //private TypedArray mIconArray;
-
     public MainActivityAdapter(Context context) {
         mContext = context;
         mSession = new SessionManager(mContext);
-
-
-        /*mIconArray = mContext.getResources().obtainTypedArray(R.array.arrLevelOneIconAdapter);
-        mBelowTextArray = mContext.getResources().getStringArray(R.array.arrLevelOneBelowText);*/
-
 
         icons = IconFactory.getL1Icons(
                 getIconDirectory(context),
                 LanguageFactory.getCurrentLanguageCode(context)
         );
 
-        for (String a : icons)
-            Log.d("regex", a);
-
         File map = getJSONFile(context);
         Icon[] iconObjects = TextFactory.getIconObjects(map, IconFactory.removeFileExtension(icons));
         mBelowTextArray = TextFactory.getDisplayText(iconObjects);
-
-        for (String a : icons)
-            Log.d("regex", a);
-
 
     }
 
@@ -116,8 +100,6 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
                     }
                 })
                 .into(holder.menuItemImage);
-
-        //holder.menuItemImage.setImageDrawable(mIconArray.getDrawable(position));
 
         holder.menuItemLinearLayout.setContentDescription(mBelowTextArray[position]);
         holder.menuItemLinearLayout.setOnClickListener(new View.OnClickListener() {
