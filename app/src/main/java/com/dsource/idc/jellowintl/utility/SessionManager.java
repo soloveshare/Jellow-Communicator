@@ -11,33 +11,41 @@ import android.content.SharedPreferences.Editor;
 import com.dsource.idc.jellowintl.R;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class SessionManager {
 
-    public final static String ENG_US = "en-rUS";
-    public final static String ENG_UK = "en-rGB";
-    public final static String ENG_IN = "en-rIN";
-    public final static String HI_IN = "hi-rIN";
-    public final static String MR_IN = "mr-rIN";
-    public final static String BN_IN = "bn-rIN";
+    public final static String ENG_US = "en-rUS";   // ENG_US -> English (United States)
+    public final static String ENG_UK = "en-rGB";   // ENG_UK -> English (United Kingdom)
+    public final static String ENG_IN = "en-rIN";   // ENG_IN -> English (India)
+    public final static String HI_IN = "hi-rIN";    // HI_IN -> Hindi
+    public final static String MR_IN = "mr-rIN";    // MR_IN -> Marathi
+    public final static String BN_IN = "bn-rIN";    // BN_IN -> Bengali
+    public final static String BE_IN = "be-rIN";    // BE_IN -> Bengali (for some old API devices which return be-rIN)
 
-    public final static HashMap<String,String> LangMap = new HashMap<String,String>(){
+
+    public final static LinkedHashMap<String,String> LangMap = new LinkedHashMap<String,String>(){
         {
-            put("English (India)", ENG_IN);
+            put("English (IN)", ENG_IN);
             put("हिंदी", HI_IN);
-            put("English (United Kingdom)", ENG_UK);
-            put("English (United States)", ENG_US);
+            put("ববাঙালি",BN_IN);
+            put("English (UK)", ENG_UK);
+            put("English (US)", ENG_US);
         }
     };
 
-    public final static HashMap<String,String> LangValueMap = new HashMap<String,String>(){
+    public final static LinkedHashMap<String,String> LangValueMap = new LinkedHashMap<String,String>(){
         {
-            put(ENG_IN,"English (India)");
+            put(ENG_IN,"English (IN)");
             put(HI_IN,"हिंदी");
-            put(ENG_UK,"English (United Kingdom)");
-            put(ENG_US,"English (United States)");
+            put(BN_IN,"ববাঙালি");
+            put(ENG_UK,"English (UK)");
+            put(ENG_US,"English (US)");
         }
     };
+
+
+    public final static int LANGUAGE_COUNT = LangMap.size();
 
 
 
@@ -47,7 +55,7 @@ public class SessionManager {
     private Context mContext;
 
 
-    private final String PREF_NAME = "AndroidHiveLogin";
+    private final String PREF_NAME = "Login";
     private final String KEY_IS_LOGGEDIN = "isLoggedIn";
     public final String Name = "name";
     private final String EmergencyContact = "number";

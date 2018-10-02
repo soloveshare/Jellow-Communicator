@@ -18,7 +18,6 @@
         <item>सुबह के कार्य</item>
         <item>रात के कार्य</item>
     </string-array>
-
     <string-array name="arrSequenceActivityNavigationText">
         <item>&lt;&lt; पीछे</item>
         <item>आगे &gt;&gt;</item>

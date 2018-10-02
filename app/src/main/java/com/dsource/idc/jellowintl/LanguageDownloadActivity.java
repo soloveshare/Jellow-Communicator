@@ -72,10 +72,10 @@ public class LanguageDownloadActivity extends AppCompatActivity {
                 mSession.setDownloaded(langCode);
                 if(!tutorial)
                     mSession.setToastMessage(strLanguageDownloaded
-                        .replace("_", getShortenLangName(LangValueMap.get(langCode))));
+                        .replace("_", LangValueMap.get(langCode)));
                 if(tutorial) {
                     Toast.makeText(LanguageDownloadActivity.this, strLanguageDownloaded
-                            .replace("_", getShortenLangName(LangValueMap.get(langCode))),
+                            .replace("_", LangValueMap.get(langCode)),
                             Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LanguageDownloadActivity.this, Intro.class));
                 }else if(finish)
@@ -88,7 +88,7 @@ public class LanguageDownloadActivity extends AppCompatActivity {
         };
 
         Toast.makeText(this, strLanguageDownloading.replace("_",
-                getShortenLangName(LangValueMap.get(langCode))), Toast.LENGTH_SHORT).show();
+               LangValueMap.get(langCode)), Toast.LENGTH_SHORT).show();
 
         if(langCode != null) {
             try {
@@ -156,18 +156,5 @@ public class LanguageDownloadActivity extends AppCompatActivity {
         super.onPause();
         if(manager != null)
             manager.pause();
-    }
-
-    private String getShortenLangName(String langFullName) {
-        switch(langFullName){
-            case "English (India)":
-                return "English (IN)";
-            case "English (United Kingdom)":
-                return "English (UK)";
-            case "English (United States)":
-                return "English (US)";
-            default:
-                return  langFullName;
-        }
     }
 }

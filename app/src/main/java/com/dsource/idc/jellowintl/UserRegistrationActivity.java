@@ -54,7 +54,9 @@ import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.getAnalytics;
 import static com.dsource.idc.jellowintl.utility.Analytics.maskNumber;
 import static com.dsource.idc.jellowintl.utility.Analytics.setUserProperty;
+import static com.dsource.idc.jellowintl.utility.SessionManager.LANGUAGE_COUNT;
 import static com.dsource.idc.jellowintl.utility.SessionManager.LangMap;
+import static com.dsource.idc.jellowintl.utility.SessionManager.LangValueMap;
 
 /**
  * Created by user on 5/25/2016.
@@ -72,7 +74,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
     private CountryCodePicker mCcp;
     private String mUserGroup;
     Spinner languageSelect;
-    String[] languagesCodes = new String[4], languageNames = new String[4];
+    String[] languageNames = new String[LANGUAGE_COUNT];
     String selectedLanguage;
     String name, emergencyContact, eMailId;
 
@@ -110,7 +112,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
         mDB = FirebaseDatabase.getInstance();
         mRef = mDB.getReference(BuildConfig.DB_TYPE+"/users");
 
-        LangMap.keySet().toArray(languagesCodes);
         LangMap.keySet().toArray(languageNames);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         etName = findViewById(R.id.etName);
@@ -142,7 +143,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         languageSelect = findViewById(R.id.langSelectSpinner);
 
         ArrayAdapter<String> adapter_lan = new ArrayAdapter<String>(this,
-                R.layout.simple_spinner_item, shortLangNameForDisplay(languageNames));
+                R.layout.simple_spinner_item, languageNames);
 
         adapter_lan.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -150,7 +151,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
         languageSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedLanguage = languagesCodes[i];
+                selectedLanguage = languageNames[i];
             }
 
             @Override
@@ -392,27 +393,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
         {
             e.printStackTrace();
         }
-    }
-
-    private String[] shortLangNameForDisplay(String[] langNameToBeShorten) {
-        String[] shortenLanguageNames = new String[langNameToBeShorten.length];
-        for (int i=0; i < langNameToBeShorten.length; i++){
-            switch (langNameToBeShorten[i]){
-                case "English (India)":
-                    shortenLanguageNames[i] = "English (IN)";
-                    break;
-                case "English (United Kingdom)":
-                    shortenLanguageNames[i] = "English (UK)";
-                    break;
-                case "English (United States)":
-                    shortenLanguageNames[i] = "English (US)";
-                    break;
-                default:
-                    shortenLanguageNames[i] = langNameToBeShorten[i];
-                    break;
-            }
-        }
-        return shortenLanguageNames;
     }
 
     private String getBloodGroup(int bloodGroup) {

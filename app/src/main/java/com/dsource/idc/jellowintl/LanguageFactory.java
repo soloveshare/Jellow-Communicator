@@ -31,6 +31,8 @@ public class LanguageFactory {
                 return "05";
             case SessionManager.BN_IN:
                 return "06";
+            case SessionManager.BE_IN:
+                return "06";
             default:
                 return null;
 

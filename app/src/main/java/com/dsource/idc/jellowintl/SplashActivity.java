@@ -25,6 +25,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
+import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
 
@@ -181,6 +182,13 @@ public class SplashActivity extends AppCompatActivity {
             startJellow();//If no change in language then simply start the app.
     }
 
+    private void cacheLevel1Icons(){
+        IconFactory.getL1Icons(
+                getIconDirectory(this),
+                LanguageFactory.getCurrentLanguageCode(this)
+        );
+    }
+
     private void startApp() {
         final Timer timer=new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -188,6 +196,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 if(iconDatabase.getStatus()== AsyncTask.Status.FINISHED)
                 {
+                    cacheLevel1Icons();
                     startJellow();
                     timer.cancel();
                 }
