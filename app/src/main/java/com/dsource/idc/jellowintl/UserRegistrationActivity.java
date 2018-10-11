@@ -64,6 +64,7 @@ import static com.dsource.idc.jellowintl.utility.SessionManager.LangValueMap;
 public class UserRegistrationActivity extends AppCompatActivity {
     public static final String LCODE = "lcode";
     public static final String TUTORIAL = "tutorial";
+    public static final String TOPIC_NAME = "jellow_aac";
 
     final int GRID_3BY3 = 1;
     private Button bRegister;
@@ -82,7 +83,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_registration);
-        FirebaseMessaging.getInstance().subscribeToTopic("jellow_aac");
+        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC_NAME);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#F7F3C6'>"+getString(R.string.app_name)+"</font>"));
 
         mSession = new SessionManager(this);

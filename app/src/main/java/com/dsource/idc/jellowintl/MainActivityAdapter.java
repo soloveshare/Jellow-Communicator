@@ -84,29 +84,6 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
                     .into(holder.menuItemImage);
         }
 
-        /*GlideApp.with(mContext)
-                .load(getIconPath(mContext, icons[position]))
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .dontAnimate()
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        GlideApp.with(mContext)
-                                .load(getIconPath(mContext, icons[position]))
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(false)
-                                .dontAnimate()
-                                .into(holder.menuItemImage);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(holder.menuItemImage);*/
-
         holder.menuItemLinearLayout.setContentDescription(mBelowTextArray[position]);
         holder.menuItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
