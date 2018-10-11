@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -14,18 +17,25 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.target.Target;
 import com.dsource.idc.jellowintl.utility.EvaluateDisplayMetricsUtils;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
 import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
+import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
 
@@ -75,6 +85,8 @@ public class SplashActivity extends AppCompatActivity {
         mExit = getString(R.string.exit);
         mErrDialogMsg = getString(R.string.err_dialog_msg);
         mExitDialogMsg = getString(R.string.exit_dialog_msg);
+
+        cacheLevel1Icons();
      }
 
     @Override
@@ -183,10 +195,23 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void cacheLevel1Icons(){
-        IconFactory.getL1Icons(
+        String icons[] = IconFactory.getL1Icons(
                 getIconDirectory(this),
                 LanguageFactory.getCurrentLanguageCode(this)
         );
+
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+        final int cacheSize = maxMemory / 12;
+
+        MemoryCache.init(cacheSize);
+
+        String path = getIconPath(this);
+
+        for(String icon: icons){
+            Bitmap bitmap = BitmapFactory.decodeFile(path + icon);
+            MemoryCache.addBitmapToMemoryCache(icon,bitmap);
+        }
     }
 
     private void startApp() {
@@ -196,7 +221,6 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 if(iconDatabase.getStatus()== AsyncTask.Status.FINISHED)
                 {
-                    cacheLevel1Icons();
                     startJellow();
                     timer.cancel();
                 }

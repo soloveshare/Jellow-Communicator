@@ -422,7 +422,7 @@ public class LevelTwoActivity extends AppCompatActivity {
     /**
      * <p>This function will initialize the adapter for recycler view. In this level two
      * types of adapter are used:
-     *      a) {@link PeoplePlacesAdapter}
+     *      a) {@link SequenceAdapter}
      *      b) {@link LevelTwoAdapter}
      * As per the category icon selected in the {@link MainActivity}, an adapter is selected and hence
      * category icons are populated in this level.</p>
@@ -431,7 +431,7 @@ public class LevelTwoActivity extends AppCompatActivity {
         if(mLevelOneItemPos != CATEGORY_ICON_PEOPLE) {
             mRecyclerView.setAdapter(new LevelTwoAdapter(this, mLevelOneItemPos));
         }else{
-            mRecyclerView.setAdapter(new PeoplePlacesAdapter(this, mLevelOneItemPos,
+            mRecyclerView.setAdapter(new SequenceAdapter(this, mLevelOneItemPos,
                     mArrAdapterTxt, mArrSort));
         }
     }

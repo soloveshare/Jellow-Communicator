@@ -13,11 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,28 +26,30 @@ import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
 /**
  * Created by HP on 22/01/2017.
  */
-class PeoplePlacesAdapter extends android.support.v7.widget.RecyclerView.Adapter<PeoplePlacesAdapter.MyViewHolder> {
+class SequenceAdapter extends android.support.v7.widget.RecyclerView.Adapter<SequenceAdapter.MyViewHolder> {
     private Context mContext;
     private SessionManager mSession;
     private ArrayList<String> mIconNameList = new ArrayList<>();
     private ArrayList<String> mBelowTextList = new ArrayList<>();
+    private RequestManager glide;
 
 
-    PeoplePlacesAdapter(Context context, int levelOneItemPos, String[] mArrAdapterTxt, Integer[] arrSort) {
+    SequenceAdapter(Context context, int levelOneItemPos, String[] mArrAdapterTxt, Integer[] arrSort) {
         mContext = context;
+        glide = GlideApp.with(mContext);
         mSession = new SessionManager(mContext);
         loadArraysFromResources(levelOneItemPos, mArrAdapterTxt, arrSort);
     }
 
     @Override
-    public PeoplePlacesAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SequenceAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final int GRID_1BY3 = 0;
         View rowView;
         if (mSession.getGridSize() == GRID_1BY3)
             rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_3_icons, parent, false);
         else
             rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_9_icons, parent, false);
-        return new PeoplePlacesAdapter.MyViewHolder(rowView);
+        return new SequenceAdapter.MyViewHolder(rowView);
     }
 
     @Override
@@ -61,13 +63,10 @@ class PeoplePlacesAdapter extends android.support.v7.widget.RecyclerView.Adapter
         if (mSession.getPictureViewMode() == MODE_PICTURE_ONLY)
             holder.menuItemBelowText.setVisibility(View.INVISIBLE);
         holder.menuItemBelowText.setText(mBelowTextList.get(position));
-        GlideApp.with(mContext)
-                .load(getIconPath(mContext, mIconNameList.get(position)))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false)
-                .centerCrop()
-                .dontAnimate()
+
+       glide.load(getIconPath(mContext, mIconNameList.get(position)))
                 .into(holder.menuItemImage);
+
         holder.menuItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {}
         });

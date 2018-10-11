@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
@@ -37,9 +38,11 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
     private SessionManager mSession;
     private ArrayList<String> mIconList = new ArrayList<>();
     private ArrayList<String> mBelowTextList = new ArrayList<>();
+    private RequestManager glide;
 
     LevelThreeAdapter(Context context, int levelOneItemPos, int levelTwoItemPos, int sort[]){
         mContext = context;
+        glide = GlideApp.with(mContext);
         mSession = new SessionManager(mContext);
         loadArraysFromResources(levelOneItemPos, levelTwoItemPos, sort);
     }
@@ -66,31 +69,9 @@ class LevelThreeAdapter extends android.support.v7.widget.RecyclerView.Adapter<L
             holder.menuItemBelowText.setVisibility(View.INVISIBLE);
         holder.menuItemBelowText.setText(mBelowTextList.get(position));
 
-        GlideApp.with(mContext)
-                .load(getIconPath(mContext,mIconList.get(position)))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false)
-                .centerCrop()
-                .dontAnimate()
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        GlideApp.with(mContext)
-                                .load(getIconPath(mContext,mIconList.get(position)))
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(false)
-                                .centerCrop()
-                                .dontAnimate()
-                                .into(holder.menuItemImage);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
+        glide.load(getIconPath(mContext, mIconList.get(position)))
                 .into(holder.menuItemImage);
+
         holder.menuItemLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 ((LevelThreeActivity)mContext).tappedCategoryItemEvent(holder.menuItemLinearLayout, v, position);

@@ -1,10 +1,9 @@
 package com.dsource.idc.jellowintl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -15,11 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.RequestManager;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_RecyclerView;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
@@ -37,9 +32,11 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
     private SessionManager mSession;
     private String[] icons;
     private String[] mBelowTextArray;
+    private RequestManager glide;
 
     public MainActivityAdapter(Context context) {
         mContext = context;
+        glide = GlideApp.with(mContext);
         mSession = new SessionManager(mContext);
 
         icons = IconFactory.getL1Icons(
@@ -77,10 +74,19 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
         holder.menuItemBelowText.setAllCaps(true);
         holder.menuItemBelowText.setText(mBelowTextArray[position]);
 
-        GlideApp.with(mContext)
+        String path = getIconPath(mContext);
+        Bitmap iconBitmap = MemoryCache.getBitmapFromMemCache(icons[position]);
+
+        if (iconBitmap != null) {
+            holder.menuItemImage.setImageBitmap(iconBitmap);
+        } else {
+            glide.load(path + icons[position])
+                    .into(holder.menuItemImage);
+        }
+
+        /*GlideApp.with(mContext)
                 .load(getIconPath(mContext, icons[position]))
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .dontAnimate()
                 .listener(new RequestListener<Drawable>() {
                     @Override
@@ -99,7 +105,7 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
                         return false;
                     }
                 })
-                .into(holder.menuItemImage);
+                .into(holder.menuItemImage);*/
 
         holder.menuItemLinearLayout.setContentDescription(mBelowTextArray[position]);
         holder.menuItemLinearLayout.setOnClickListener(new View.OnClickListener() {

@@ -16,6 +16,12 @@ public class PathFactory {
         return path + "/" + iconName;
     }
 
+    public static String getIconPath(Context context){
+        String dirName = new SessionManager(context).getLanguage();
+        String path = context.getDir(dirName, Context.MODE_PRIVATE).getAbsolutePath();
+        return path + "/";
+    }
+
     public static File getIconDirectory(Context context){
         String dirName = new SessionManager(context).getLanguage();
         return context.getDir(dirName, Context.MODE_PRIVATE);
