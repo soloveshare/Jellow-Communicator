@@ -535,8 +535,8 @@ public class LanguageSelectActivity extends AppCompatActivity{
         mSession.setLanguageChange(1);
         clearIconCache();
         /*Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-        startActivity(intent);*/
-        finishAffinity();
+        startActivity(intent);
+        finishAffinity(); */
         triggerRebirth(getApplicationContext());
     }
 

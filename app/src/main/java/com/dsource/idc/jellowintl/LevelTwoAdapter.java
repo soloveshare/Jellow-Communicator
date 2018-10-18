@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,12 +81,11 @@ class LevelTwoAdapter extends android.support.v7.widget.RecyclerView.Adapter<Lev
 
     private void loadArraysFromResources(int levelTwoItemPos) {
 
-        icons = IconFactory.getL2Icons(
+        icons = IconFactory.getAllL2Icons(
                 PathFactory.getIconDirectory(mContext),
                 LanguageFactory.getCurrentLanguageCode(mContext),
                 getLevel2IconCode(levelTwoItemPos)
         );
-
 
         Icon[] iconObjects = TextFactory.getIconObjects(
                 PathFactory.getJSONFile(mContext),
@@ -93,6 +93,9 @@ class LevelTwoAdapter extends android.support.v7.widget.RecyclerView.Adapter<Lev
         );
 
         mBelowTextArray = TextFactory.getDisplayText(iconObjects);
+
+        for(String a:mBelowTextArray)
+            Log.d("lv12t",a);
 
     }
 

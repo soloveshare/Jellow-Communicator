@@ -83,6 +83,41 @@ public class IconFactory {
     }
 
 
+    public static String[] getAllL2Icons(@NonNull File dir, String langCode, String level1IconCode) {
+
+        if (!(IconCache.AllL2Icons == null || IconCache.AllL2Icons.isEmpty())) {
+            String key = langCode + level1IconCode;
+            if (IconCache.AllL2Icons.containsKey(key)) {
+                return IconCache.AllL2Icons.get(key);
+            }
+        }
+
+        String regex = langCode + level1IconCode +
+                "([1-9][1-9]|[0-9][1-9]|[1-9][0-9])" + "0{4}(GG|SS)" + EXTENSION;
+        ArrayList<String> iconNames = new ArrayList<>();
+        for (String fileName : dir.list()) {
+            if (fileName.matches(regex)) {
+                iconNames.add(fileName);
+            }
+        }
+
+        Collections.sort(iconNames);
+
+        String[] level2Icons = new String[iconNames.size()];
+
+        iconNames.toArray(level2Icons);
+
+        if (IconCache.AllL2Icons == null) {
+            IconCache.AllL2Icons = new HashMap<>();
+        }
+        String key = langCode + level1IconCode;
+        IconCache.AllL2Icons.put(key, level2Icons);
+
+        return level2Icons;
+    }
+
+
+
     public static String[] getL3Icons(@NonNull File dir, String langCode, String level1IconCode, String level2IconCode) {
 
         if (!(IconCache.L3Icons == null || IconCache.L3Icons.isEmpty())) {
@@ -119,7 +154,16 @@ public class IconFactory {
     }
 
 
-    /*public static String[] getL2SeqIcons(@NonNull File dir, String langCode, String level1IconCode) {
+    public static String[] getL2SeqIcons(@NonNull File dir, String langCode, String level1IconCode) {
+
+        if (!(IconCache.L2SeqIcons == null || IconCache.L2SeqIcons.isEmpty())) {
+            String key = langCode + level1IconCode;
+
+            if (IconCache.L2SeqIcons.containsKey(key)) {
+                return IconCache.L2SeqIcons.get(key);
+            }
+        }
+
         String regex = langCode + level1IconCode + "([1-9][1-9]|[0-9][1-9]|[1-9][0-9])" + "0{4}SS" + EXTENSION;
         ArrayList<String> iconNames = new ArrayList<>();
         for (String fileName : dir.list()) {
@@ -134,8 +178,17 @@ public class IconFactory {
 
         iconNames.toArray(level2SeqIcons);
 
+        if (IconCache.L2SeqIcons == null) {
+            IconCache.L2SeqIcons = new HashMap<>();
+        }
+
+        String key = langCode + level1IconCode;
+
+        IconCache.L2SeqIcons.put(key, level2SeqIcons);
+
         return level2SeqIcons;
-    }*/
+    }
+
 
     public static String[] getL3SeqIcons(@NonNull File dir, String langCode, String level1IconCode, String level2IconCode) {
 

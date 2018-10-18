@@ -1224,13 +1224,23 @@ public class SequenceActivity extends AppCompatActivity {
      * */
     private void loadArraysFromResources() {
 
+        int levelOne = mLevelOneItemPos;
+        int levelTwo = mLevelTwoItemPos;
+
+        /* Sequence activity Morning Routine (original index is 7 in level 2) has new index 3, and
+         * Bed time Routine (original index is 8 in level 2) has new index 4 */
+        // Fix for the above mentioned change
+        if(levelTwo == 3)
+            levelTwo = 7;
+        else if(levelTwo == 4)
+            levelTwo = 8;
+
         l3SeqIcons = IconFactory.getL3SeqIcons(
                 PathFactory.getIconDirectory(this),
                 LanguageFactory.getCurrentLanguageCode(this),
-                getLevel2_3IconCode(mLevelOneItemPos),
-                getLevel2_3IconCode(mLevelTwoItemPos)
+                getLevel2_3IconCode(levelOne),
+                getLevel2_3IconCode(levelTwo)
         );
-
 
         level3SeqIconObjects = TextFactory.getIconObjects(
                 PathFactory.getJSONFile(this),

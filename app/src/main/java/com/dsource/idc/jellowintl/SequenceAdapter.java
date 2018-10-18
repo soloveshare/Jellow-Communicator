@@ -86,7 +86,7 @@ class SequenceAdapter extends android.support.v7.widget.RecyclerView.Adapter<Seq
         ArrayList<String> tempIconList = new ArrayList<>();
         mBelowTextList.addAll(Arrays.asList(mArrAdapterTxt));
 
-        tempIconList.addAll(Arrays.asList(IconFactory.getL2Icons(
+        tempIconList.addAll(Arrays.asList(IconFactory.getAllL2Icons(
                     PathFactory.getIconDirectory(mContext),
                     LanguageFactory.getCurrentLanguageCode(mContext),
                     getLevel2IconCode(levelOneItemPos)

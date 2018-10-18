@@ -155,7 +155,7 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
     private String[] getIconLevel2(int pos,Context mContext)
     {
 
-        return IconFactory.getL2Icons(
+        return IconFactory.getAllL2Icons(
                 PathFactory.getIconDirectory(mContext),
                 LanguageFactory.getCurrentLanguageCode(mContext),
                 getLevel2_3IconCode(pos)

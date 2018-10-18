@@ -420,7 +420,7 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
     {
         Icon[] iconObjects = TextFactory.getIconObjects(
                 PathFactory.getJSONFile(mContext),
-                IconFactory.removeFileExtension(IconFactory.getL2Icons(
+                IconFactory.removeFileExtension(IconFactory.getAllL2Icons(
                         PathFactory.getIconDirectory(mContext),
                         LanguageFactory.getCurrentLanguageCode(mContext),
                         getLevel2_3IconCode(pos)

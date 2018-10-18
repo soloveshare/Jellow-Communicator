@@ -1923,7 +1923,7 @@ public class LevelTwoActivity extends AppCompatActivity {
 
         if(levelOneItemPos == 5){
 
-            String[] level2Icons = IconFactory.getL2Icons(
+            String[] level2Icons = IconFactory.getAllL2Icons(
                     PathFactory.getIconDirectory(this),
                     LanguageFactory.getCurrentLanguageCode(this),
                     getLevel2IconCode(levelOneItemPos)
@@ -1943,7 +1943,7 @@ public class LevelTwoActivity extends AppCompatActivity {
 
         } else {
 
-            String[] level2Icons = IconFactory.getL2Icons(
+            String[] level2Icons = IconFactory.getAllL2Icons(
                     PathFactory.getIconDirectory(this),
                     LanguageFactory.getCurrentLanguageCode(this),
                     getLevel2IconCode(levelOneItemPos)
