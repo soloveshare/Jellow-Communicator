@@ -94,9 +94,6 @@ class LevelTwoAdapter extends android.support.v7.widget.RecyclerView.Adapter<Lev
 
         mBelowTextArray = TextFactory.getDisplayText(iconObjects);
 
-        for(String a:mBelowTextArray)
-            Log.d("lv12t",a);
-
     }
 
     private String getLevel2IconCode(int level1Position){

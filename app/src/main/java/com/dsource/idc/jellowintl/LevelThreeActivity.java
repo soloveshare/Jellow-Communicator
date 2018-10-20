@@ -1351,9 +1351,6 @@ public class LevelThreeActivity extends AppCompatActivity {
                 LanguageFactory.getCurrentLanguageCode(this)
         );
 
-        for(String a: expressiveIcons)
-            Log.d("level3A",a);
-
         ExpressiveIcon[] expressiveIconObjects = TextFactory.getExpressiveIconObjects(
                 PathFactory.getJSONFile(this),
                 IconFactory.removeFileExtension(expressiveIcons)

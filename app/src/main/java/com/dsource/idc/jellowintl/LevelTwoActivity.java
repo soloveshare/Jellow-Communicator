@@ -1672,9 +1672,6 @@ public class LevelTwoActivity extends AppCompatActivity {
                 LanguageFactory.getCurrentLanguageCode(this)
         );
 
-        for(String a: expressiveIcons)
-            Log.d("level2A",a);
-
         ExpressiveIcon[] expressiveIconObjects = TextFactory.getExpressiveIconObjects(
                 PathFactory.getJSONFile(this),
                 IconFactory.removeFileExtension(expressiveIcons)
