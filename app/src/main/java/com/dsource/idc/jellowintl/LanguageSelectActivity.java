@@ -189,8 +189,6 @@ public class LanguageSelectActivity extends AppCompatActivity{
 
                                             if(isConnected)
                                             {
-                                                if(offlineLanguages.length < 3)
-                                                {
                                                     Bundle bundle = new Bundle();
                                                     bundle.putString(LCODE,LangMap.get(onlineLanguages[which]));
                                                     bundle.putBoolean(FINISH,false);
@@ -199,9 +197,6 @@ public class LanguageSelectActivity extends AppCompatActivity{
                                                     speakSpeech("");                              // Send empty string to TTS Engine to eliminate voice lag after user goes back without changing the language.
                                                     startActivity(new Intent(getBaseContext(),LanguageDownloadActivity.class).putExtras(bundle));
                                                     dialog.dismiss();
-                                                } else {
-                                                    Toast.makeText(LanguageSelectActivity.this, strLangLimitExceeded,Toast.LENGTH_SHORT).show();
-                                                }
 
                                             }else {
 
@@ -261,7 +256,7 @@ public class LanguageSelectActivity extends AppCompatActivity{
                                             {
                                                 deleteRecursive(file);
                                             }
-                                                file.delete();
+                                            file.delete();
                                             mSession.setRemoved(locale);
                                             onlineLanguages = getOnlineLanguages();
                                             offlineLanguages = getOfflineLanguages();
@@ -534,9 +529,6 @@ public class LanguageSelectActivity extends AppCompatActivity{
         Toast.makeText(this, mLangChanged, Toast.LENGTH_SHORT).show();
         mSession.setLanguageChange(1);
         clearIconCache();
-        /*Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-        startActivity(intent);
-        finishAffinity(); */
         triggerRebirth(getApplicationContext());
     }
 
