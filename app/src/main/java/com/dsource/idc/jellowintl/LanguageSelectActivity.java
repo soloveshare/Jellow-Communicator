@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static com.dsource.idc.jellowintl.IconCache.clearIconCache;
+import static com.dsource.idc.jellowintl.CacheManager.clearCache;
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
 import static com.dsource.idc.jellowintl.UserRegistrationActivity.LCODE;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
@@ -528,7 +528,7 @@ public class LanguageSelectActivity extends AppCompatActivity{
         setCrashlyticsCustomKey("UserLanguage",  LangMap.get(selectedLanguage));
         Toast.makeText(this, mLangChanged, Toast.LENGTH_SHORT).show();
         mSession.setLanguageChange(1);
-        clearIconCache();
+        clearCache();
         triggerRebirth(getApplicationContext());
     }
 
