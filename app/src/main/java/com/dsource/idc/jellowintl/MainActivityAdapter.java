@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,9 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
                 getIconDirectory(context),
                 LanguageFactory.getCurrentLanguageCode(context)
         );
+
+        for(String icon:icons)
+            Log.d("LVL1",icon);
 
         File map = getJSONFile(context);
         Icon[] iconObjects = TextFactory.getIconObjects(map, IconFactory.removeFileExtension(icons));

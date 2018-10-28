@@ -9,6 +9,7 @@ import java.io.File;
 public class PathFactory {
 
     public static final String JSON_FILE = "map.json";
+    public static final String AUDIO_FOLDER = "/audio/";
     public static String basePath;
     public static File iconDirectory;
     public static File jsonMap;
@@ -24,6 +25,10 @@ public class PathFactory {
             basePath = path + "/";
         }
         return basePath;
+    }
+
+    public static String getAudioPath(Context context){
+        return getIconPath(context) + AUDIO_FOLDER;
     }
 
     public static File getIconDirectory(Context context){

@@ -32,6 +32,7 @@ import com.crashlytics.android.Crashlytics;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
+import com.dsource.idc.jellowintl.utility.SpeechUtils;
 import com.rey.material.widget.Switch;
 
 import static com.dsource.idc.jellowintl.MainActivity.isDeviceReadyToCall;
@@ -447,9 +448,7 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     private void speakSpeech(String speechText){
-        Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_TEXT");
-        intent.putExtra("speechText", speechText);
-        sendBroadcast(intent);
+        SpeechUtils.speak(this,speechText);
     }
 
     private void setSpeechRate(float speechRate){

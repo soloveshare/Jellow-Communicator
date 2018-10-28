@@ -36,11 +36,6 @@ public class DownloadManager {
     FirebaseAuth mAuth;
 
 
-
-
-
-
-
     public DownloadManager(String localeCode, Context context, ProgressReciever progressReciever) {
         this.localeCode = localeCode;
         this.context = context;
@@ -85,6 +80,11 @@ public class DownloadManager {
         });
     }
 
+    /*// debug method
+    public void start(){
+        extractZip();
+        progressReciever.onComplete();
+    }*/
 
 
     private void startDownload(Uri url)

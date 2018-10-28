@@ -37,6 +37,7 @@ import com.dsource.idc.jellowintl.utility.IndexSorter;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
+import com.dsource.idc.jellowintl.utility.SpeechUtils;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -1649,9 +1650,7 @@ public class LevelTwoActivity extends AppCompatActivity {
      * The string in {@param speechText} is speech output request string.</p>
      * */
     private void speakSpeech(String speechText){
-        Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_TEXT");
-        intent.putExtra("speechText", speechText.toLowerCase());
-        sendBroadcast(intent);
+        SpeechUtils.speak(this,speechText);
     }
 
     /**
@@ -1952,9 +1951,6 @@ public class LevelTwoActivity extends AppCompatActivity {
                     IconFactory.removeFileExtension(level2Icons)
             );
 
-            for(Icon a:level2IconObjects)
-                Log.d("level2A",a.Display_Label);
-
             mArrAdapterTxt = TextFactory.getDisplayText(level2IconObjects);
             mArrSpeechText = TextFactory.getSpeechText(level2IconObjects);
 
@@ -2086,7 +2082,12 @@ public class LevelTwoActivity extends AppCompatActivity {
         contact = contact.substring(0, contact.length()-3);
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(contact));
-        startActivity(callIntent);
+        if (ContextCompat.checkSelfPermission(this,"android.permission.CALL_PHONE")
+                == PackageManager.PERMISSION_GRANTED) {
+            // Permission is granted
+            startActivity(callIntent);
+        }
+
     }
 
 

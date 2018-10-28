@@ -33,6 +33,7 @@ import com.crashlytics.android.Crashlytics;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
+import com.dsource.idc.jellowintl.utility.SpeechUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ import static com.dsource.idc.jellowintl.utility.Analytics.stopMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.validatePushId;
 import static com.dsource.idc.jellowintl.utility.SessionManager.LangMap;
 import static com.dsource.idc.jellowintl.utility.SessionManager.LangValueMap;
+import static com.dsource.idc.jellowintl.utility.SessionManager.NoTTSLang;
 
 public class LanguageSelectActivity extends AppCompatActivity{
 
@@ -135,25 +137,31 @@ public class LanguageSelectActivity extends AppCompatActivity{
                 Crashlytics.log("LanguageSelect Apply");
                 if(selectedLanguage != null)
                 {
-                    if(Build.VERSION.SDK_INT >= 21 &&
-                            mSession.getLanguage().equals(LangMap.get(selectedLanguage))) {
-                        Toast.makeText(LanguageSelectActivity.this,
-                                strDefaultLangEr, Toast.LENGTH_SHORT).show();
-                        return;
-                    }else if(Build.VERSION.SDK_INT >= 21){
-                        checkIfVoiceAvail(LangMap.get(selectedLanguage));
-                        return;
-                    }else if(shouldSaveLang) {
+                    if(NoTTSLang.contains(LangMap.get(selectedLanguage))){
                         saveLanguage();
                         mSession.setLangSettingIsCorrect(true);
-                        return;
+                    } else {
+                        if(Build.VERSION.SDK_INT >= 21 &&
+                                mSession.getLanguage().equals(LangMap.get(selectedLanguage))) {
+                            Toast.makeText(LanguageSelectActivity.this,
+                                    strDefaultLangEr, Toast.LENGTH_SHORT).show();
+                            return;
+                        }else if(Build.VERSION.SDK_INT >= 21){
+                            checkIfVoiceAvail(LangMap.get(selectedLanguage));
+                            return;
+                        }else if(shouldSaveLang) {
+                            saveLanguage();
+                            mSession.setLangSettingIsCorrect(true);
+                            return;
+                        }
+                        else if (mSession.getLanguage().equals(LangMap.get(selectedLanguage)) && !shouldSaveLang){
+                            Toast.makeText(LanguageSelectActivity.this,
+                                    strDefaultLangEr, Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        getSpeechLanguage(LangMap.get(selectedLanguage));
                     }
-                    else if (mSession.getLanguage().equals(LangMap.get(selectedLanguage)) && !shouldSaveLang){
-                        Toast.makeText(LanguageSelectActivity.this,
-                                strDefaultLangEr, Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    getSpeechLanguage(LangMap.get(selectedLanguage));
+
                 }
             }
         });
@@ -349,13 +357,16 @@ public class LanguageSelectActivity extends AppCompatActivity{
                 !current.equals(SessionManager.ENG_IN))
             lang.add(LangValueMap.get(SessionManager.ENG_IN));
 
-
         if( mSession.isDownloaded(SessionManager.HI_IN) &&
                 !current.equals(SessionManager.HI_IN))
             lang.add(LangValueMap.get(SessionManager.HI_IN));
 
-        if(( mSession.isDownloaded(SessionManager.BN_IN) && !current.equals(SessionManager.BN_IN)) ||
-                (mSession.isDownloaded(SessionManager.BE_IN) && !current.equals(SessionManager.BE_IN)))
+        if( mSession.isDownloaded(SessionManager.MR_IN) &&
+                !current.equals(SessionManager.MR_IN))
+            lang.add(LangValueMap.get(SessionManager.MR_IN));
+
+        if(( mSession.isDownloaded(SessionManager.BN_IN) &&
+                !current.equals(SessionManager.BN_IN)))
             lang.add(LangValueMap.get(SessionManager.BN_IN));
 
         if( mSession.isDownloaded(SessionManager.ENG_US) &&
@@ -367,17 +378,19 @@ public class LanguageSelectActivity extends AppCompatActivity{
             lang.add(LangValueMap.get(SessionManager.ENG_UK));
 
         return lang.toArray(new String[lang.size()]);
+
     }
 
     private String[] getOnlineLanguages()
     {
         List<String> lang = new ArrayList<>();
 
-
         if( !mSession.isDownloaded(SessionManager.ENG_IN))
             lang.add(LangValueMap.get(SessionManager.ENG_IN));
         if( !mSession.isDownloaded(SessionManager.HI_IN))
             lang.add(LangValueMap.get(SessionManager.HI_IN));
+        if( !mSession.isDownloaded(SessionManager.MR_IN))
+            lang.add(LangValueMap.get(SessionManager.MR_IN));
         if( !mSession.isDownloaded(SessionManager.BN_IN) &&
                 !mSession.isDownloaded(SessionManager.BE_IN))
             lang.add(LangValueMap.get(SessionManager.BN_IN));
@@ -550,9 +563,7 @@ public class LanguageSelectActivity extends AppCompatActivity{
     }
 
     private void speakSpeech(String speechText){
-        Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_TEXT");
-        intent.putExtra("speechText", speechText);
-        sendBroadcast(intent);
+        SpeechUtils.speak(this,speechText);
     }
 
     private void getSpeechLanguage(String saveLang){

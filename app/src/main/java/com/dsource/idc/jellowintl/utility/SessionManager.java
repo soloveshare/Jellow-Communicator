@@ -10,6 +10,7 @@ import android.content.SharedPreferences.Editor;
 
 import com.dsource.idc.jellowintl.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -28,6 +29,7 @@ public class SessionManager {
         {
             put("English (IN)", ENG_IN);
             put("हिंदी", HI_IN);
+            put("मराठी", MR_IN);
             put("ববাঙালি",BN_IN);
             put("English (UK)", ENG_UK);
             put("English (US)", ENG_US);
@@ -38,12 +40,17 @@ public class SessionManager {
         {
             put(ENG_IN,"English (IN)");
             put(HI_IN,"हिंदी");
+            put(MR_IN,"मराठी");
             put(BN_IN,"ববাঙালি");
             put(ENG_UK,"English (UK)");
             put(ENG_US,"English (US)");
         }
     };
 
+
+    public final static ArrayList<String> NoTTSLang = new ArrayList<String>(){{
+        add(MR_IN);
+    }};
 
     public final static int LANGUAGE_COUNT = LangMap.size();
 

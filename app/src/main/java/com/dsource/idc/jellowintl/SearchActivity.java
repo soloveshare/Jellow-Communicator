@@ -38,6 +38,7 @@ import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
 import static com.dsource.idc.jellowintl.utility.Analytics.startMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.stopMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.validatePushId;
+import static com.dsource.idc.jellowintl.utility.SpeechUtils.speak;
 
 
 /*
@@ -442,9 +443,7 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
      * */
 
     private void speakSpeech(String speechText){
-        Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_TEXT");
-        intent.putExtra("speechText", speechText.toLowerCase());
-        mContext.sendBroadcast(intent);
+        speak(mContext,speechText);
     }
 
     private String getLevel2_3IconCode(int level1Position){

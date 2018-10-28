@@ -39,6 +39,7 @@ import com.dsource.idc.jellowintl.models.LevelOneVerbiageModel;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
+import com.dsource.idc.jellowintl.utility.SpeechUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1479,9 +1480,7 @@ public class MainActivity extends AppCompatActivity {
      * The string in {@param speechText} is speech output request string.</p>
      */
     private void speakSpeech(String speechText) {
-        Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_TEXT");
-        intent.putExtra("speechText", speechText.toLowerCase());
-        sendBroadcast(intent);
+        SpeechUtils.speak(this,speechText);
     }
 
     /**
@@ -1506,7 +1505,6 @@ public class MainActivity extends AppCompatActivity {
         mSpeechTxt = TextFactory.getSpeechText(level1IconObjects);
 
         mActionBarTitle = TextFactory.getDisplayText(level1IconObjects);
-
 
         String[] miscellaneousIcons = IconFactory.getMiscellaneousIcons(
                 PathFactory.getIconDirectory(this),
