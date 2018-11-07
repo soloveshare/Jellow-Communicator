@@ -56,7 +56,6 @@ import static com.dsource.idc.jellowintl.utility.Analytics.maskNumber;
 import static com.dsource.idc.jellowintl.utility.Analytics.setUserProperty;
 import static com.dsource.idc.jellowintl.utility.SessionManager.LANGUAGE_COUNT;
 import static com.dsource.idc.jellowintl.utility.SessionManager.LangMap;
-import static com.dsource.idc.jellowintl.utility.SessionManager.LangValueMap;
 
 /**
  * Created by user on 5/25/2016.

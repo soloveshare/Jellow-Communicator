@@ -7,13 +7,11 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.dsource.idc.jellowintl.Icon;
 import com.dsource.idc.jellowintl.IconFactory;
 import com.dsource.idc.jellowintl.LanguageFactory;
 import com.dsource.idc.jellowintl.PathFactory;
-import com.dsource.idc.jellowintl.R;
 import com.dsource.idc.jellowintl.TextFactory;
 
 import java.util.ArrayList;

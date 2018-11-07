@@ -54,7 +54,6 @@ import static com.dsource.idc.jellowintl.utility.Analytics.startMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.stopMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.validatePushId;
 import static com.dsource.idc.jellowintl.utility.SpeechUtils.isKeyboardAvailable;
-import static com.dsource.idc.jellowintl.utility.SpeechUtils.isNoTTSLanguage;
 
 public class MainActivity extends AppCompatActivity {
     private final int REQ_HOME = 0;

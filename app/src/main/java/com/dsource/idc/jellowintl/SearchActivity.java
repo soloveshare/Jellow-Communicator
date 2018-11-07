@@ -3,7 +3,6 @@ package com.dsource.idc.jellowintl;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +26,6 @@ import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
@@ -152,9 +149,6 @@ public class SearchActivity extends AppCompatActivity {
                     firedEvent=false;
                 }
 
-
-
-
                 //List should have atleast one Item
                 if(iconList.size()>0)
                 adapter.notifyDataSetChanged();
@@ -165,12 +159,6 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
-
-
-
-
-
-
     }
 
     @Override
