@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="arrLevelOneActionBarTitle">
-        <item>Greet and Feel</item>
-        <item>Daily Activities</item>
-        <item>Eating</item>
-        <item>Fun</item>
-        <item>Learning</item>
-        <item>People</item>
-        <item>Places</item>
-        <item>Time and Weather</item>
-        <item>Help</item>
-    </string-array>
     <string-array name="arrSequenceActivityHeadingText">
         <item>brushing</item>
         <item>toilet</item>

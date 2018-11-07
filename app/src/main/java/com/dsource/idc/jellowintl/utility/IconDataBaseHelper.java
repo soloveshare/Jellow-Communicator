@@ -28,6 +28,7 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
     // Column names...
     public static final String ICON_ID = "_id";//Icon Primary key ID
     public static final String ICON_TITLE = "icon_title";//Icon Title
+    public static final String ICON_SPEECH = "icon_speech";//Icon Drawable
     public static final String ICON_DRAWABLE = "icon_drawable";//Icon Drawable
     public static final String KEY_P1 = "icon_p1";//First Level Parent
     public static final String KEY_P2 = "icon_p2";//Second Level Parent
@@ -39,11 +40,12 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "level3.db";
     // ... and a string array of columns.
     private static final String[] COLUMNS =
-            {ICON_ID, ICON_TITLE,ICON_DRAWABLE,KEY_P1,KEY_P2,KEY_P3};
+            {ICON_ID, ICON_TITLE,ICON_SPEECH,ICON_DRAWABLE,KEY_P1,KEY_P2,KEY_P3};
     // Build the SQL query that creates the table.
     private static final String ICON_LIST_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + ICON_LIST_TABLE + " (" + ICON_ID + " INTEGER PRIMARY KEY, "
                     + ICON_TITLE + " TEXT," //Icon Title
+                    + ICON_SPEECH + " TEXT," //Icon Speech
                     + ICON_DRAWABLE + " TEXT,"//Icon's Drawable resource
                     + KEY_P1 + " INTERGER,"//Level 1 parent
                     + KEY_P2 + " INTEGER, " //Level 2 parent
@@ -51,6 +53,7 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
     Context context;
     String[] thirdLevelIcons=null;
     String[] thirdLevelTitles=null;
+    String[] thirdLevelSpeech=null;
     private SQLiteDatabase mReadableDB;
     private boolean noChildInThird =false;
 
@@ -91,11 +94,13 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         );
 
         String[] levelOneTitles = TextFactory.getDisplayText(level1IconObjects);
+        String[] levelOneSpeech = TextFactory.getSpeechText(level1IconObjects);
 
         //Level 1 JellowIcon
         for (int i = 0; i < level1Icons.length; i++) {
             // Put column/value pairs into the container. put() overwrites existing values.
             values.put(ICON_TITLE, levelOneTitles[i]);
+            values.put(ICON_SPEECH,levelOneSpeech[i]);
             values.put(ICON_DRAWABLE, level1Icons[i]);
             values.put(KEY_P1, i);
             values.put(KEY_P2, -1);
@@ -106,9 +111,11 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         for (int i = 0; i < level1Icons.length; i++) {
             String[] levelTwoIcons = getIconLevel2(i,context);
             String[] levelTwoTitles = getIconTitleLevel2(i,context);
+            String[] levelTwoSpeech = getIconSpeechLevel2(i,context);
             for (int j = 0; j < levelTwoIcons.length; j++) {
                 // Put column/value pairs into the container. put() overwrites existing values.
                 values.put(ICON_TITLE, levelTwoTitles[j]);
+                values.put(ICON_SPEECH,levelTwoSpeech[j]);
                 values.put(ICON_DRAWABLE, levelTwoIcons[j]);
                 values.put(KEY_P1, i);
                 values.put(KEY_P2, j);
@@ -126,11 +133,13 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
                     if (thirdLevelTitles != null) {
                         String[] levelThreeIcons = thirdLevelIcons;
                         String[] levelThreeTitle = thirdLevelTitles;
+                        String[] levelThreeSpeech = thirdLevelSpeech;
                         for (int k = 0; k < thirdLevelTitles.length; k++) {
                             // Put column/value pairs into the container. put() overwrites existing values.
                             if (noChildInThird)
                                 break;
                             values.put(ICON_TITLE, levelThreeTitle[k]);
+                            values.put(ICON_SPEECH,levelThreeSpeech[k]);
                             values.put(ICON_DRAWABLE, levelThreeIcons[k]);
                             values.put(KEY_P1, i);
                             values.put(KEY_P2, j);
@@ -178,6 +187,17 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
         return TextFactory.getDisplayText(iconObjects);
     }
 
+    private String[] getIconSpeechLevel2(int pos,Context mContext)
+    {
+
+        Icon[] iconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(mContext),
+                IconFactory.removeFileExtension(getIconLevel2(pos,mContext))
+        );
+
+        return TextFactory.getSpeechText(iconObjects);
+    }
+
     /**
      * A function to return list of icon matching with query
      * Queries the database for an entry at a given position.
@@ -201,11 +221,12 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     if (cursor != null) {
                         String iconName = cursor.getString(cursor.getColumnIndex(ICON_TITLE));
+                        String iconSpeech = cursor.getString(cursor.getColumnIndex(ICON_SPEECH));
                         String icon_drawable = cursor.getString(cursor.getColumnIndex(ICON_DRAWABLE));
                         int iconP1 = cursor.getInt(cursor.getColumnIndex(KEY_P1));
                         int iconP2 = cursor.getInt(cursor.getColumnIndex(KEY_P2));
                         int iconP3 = cursor.getInt(cursor.getColumnIndex(KEY_P3));
-                        thisIcon = new JellowIcon(iconName, icon_drawable, iconP1, iconP2, iconP3);
+                        thisIcon = new JellowIcon(iconName, iconSpeech, icon_drawable, iconP1, iconP2, iconP3);
                         iconList.add(thisIcon);
                         cursor.moveToNext();
                     }
@@ -279,9 +300,11 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
                     IconFactory.removeFileExtension(icons)
             );
 
-            String[] iconsText = TextFactory.getDisplayText(iconObjects);
+            String[] level3DisplayText = TextFactory.getDisplayText(iconObjects);
 
-            loadAdapterMenuTextIconsWithoutSort(icons,iconsText);
+            String[] level3Speech = TextFactory.getSpeechText(iconObjects);
+
+            loadAdapterMenuTextIconsWithoutSort(icons,level3DisplayText,level3Speech);
         }
 
         return true;
@@ -289,10 +312,12 @@ public class IconDataBaseHelper extends SQLiteOpenHelper {
 
 
 
-    private void loadAdapterMenuTextIconsWithoutSort(String[] typeIconArray, String[] stringBelowTextArray)
+    private void loadAdapterMenuTextIconsWithoutSort(String[] typeIconArray, String[] displayText,String[] speechText)
     {
         thirdLevelIcons=typeIconArray;
-        thirdLevelTitles=stringBelowTextArray;
+        thirdLevelTitles=displayText;
+        thirdLevelSpeech=speechText;
+
     }
 
     private String getLevel2_3IconCode(int level1Position){

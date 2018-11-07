@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="arrLevelOneActionBarTitle">
-        <item>অভিবাদন এবং অনুভূতি</item>
-        <item>প্রতিদিনের কাজ</item>
-        <item>খাওয়া</item>
-        <item>মজা</item>
-        <item>শেখা</item>
-        <item>লোকজন </item>
-        <item>জায়গা</item>
-        <item>সময় ও আবহাওয়া </item>
-        <item>সাহায্য </item>
-    </string-array>
     <string-array name="arrSequenceActivityHeadingText">
         <item>দাঁত মাজা </item>
         <item>টইলেট</item>

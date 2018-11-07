@@ -11,14 +11,24 @@ public class SpeechUtils {
 
     public static void speak(Context context,String speechData){
         if(isNoTTSLang == null){
-            SessionManager sessionManager = new SessionManager(context);
-            isNoTTSLang = SessionManager.NoTTSLang.contains(sessionManager.getLanguage());
+            isNoTTSLang = isNoTTSLanguage(context);
         }
         if(isNoTTSLang)
             playAudio(context,getAudioPath(context)+speechData);
         else
             speakSpeech(context,speechData);
     }
+
+    public static boolean isNoTTSLanguage(Context context){
+        SessionManager sessionManager = new SessionManager(context);
+        return SessionManager.NoTTSLang.contains(sessionManager.getLanguage());
+    }
+
+    public static boolean isKeyboardAvailable(Context context){
+        return isNoTTSLanguage(context);
+    }
+
+
 
     private static void speakSpeech(Context context,String speechText) {
         Intent intent = new Intent("com.dsource.idc.jellowintl.SPEECH_TEXT");

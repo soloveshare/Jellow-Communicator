@@ -205,7 +205,7 @@
     -->
     <string name="search_title">आइकॉन्स शोधा…</string>
     <string name="search_hint">आइकॉन्स शोधा....</string>
-    <string name="home">Home</string>
+    <string name="home">होम</string>
     <string name="icon_not_found">आइकॉन सापडला नाही</string>
     <string name="no_internet">इंटरनेट कनेक्शन नाही</string>
     <string name="please_wait">कृपया प्रतीक्षा करा…</string>

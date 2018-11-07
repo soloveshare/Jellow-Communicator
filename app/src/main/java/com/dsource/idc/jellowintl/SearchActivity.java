@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -128,7 +130,7 @@ public class SearchActivity extends AppCompatActivity {
                 {
                     iconNotFound=true;
                     notFoundIconText=s.toString();
-                    JellowIcon noIconFound=new JellowIcon(getString(R.string.not_found),"NULL",-1,-1,-1);
+                    JellowIcon noIconFound=new JellowIcon(getString(R.string.not_found),"NULL","NULL",-1,-1,-1);
                     iconList.add(noIconFound);
                 }
 
@@ -241,7 +243,7 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
             speakIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    speakSpeech(mDataSource.get(getAdapterPosition()).IconTitle);
+                    speakSpeech(mDataSource.get(getAdapterPosition()).IconSpeech);
                     //Firebase event to log the "SearchBar" event with
                     // "IconSpeak" parameter.
                     Bundle bundle = new Bundle();
@@ -272,7 +274,7 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
                 bundle.putString("IconOpened", icon.IconTitle);
                 bundle.putString("IconNotFound", "");
                 bundleEvent("SearchBar", bundle);
-                target.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //target.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 mContext.startActivity(target);
                 
             }
@@ -327,18 +329,7 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
      * */
     private String getActionBarTitle(int position) {
 
-        String[] level1Icons =  IconFactory.getL1Icons(
-                getIconDirectory(mContext),
-                LanguageFactory.getCurrentLanguageCode(mContext)
-        );
-
-        Icon[] level1IconObjects = TextFactory.getIconObjects(
-                PathFactory.getJSONFile(mContext),
-                IconFactory.removeFileExtension(level1Icons)
-        );
-
-
-        String[] tempTextArr = TextFactory.getDisplayText(level1IconObjects);;
+        String[] tempTextArr = getLevel1IconLabels();;
         return tempTextArr[position]+"/";
     }
     public SearchViewIconAdapter(Context context, ArrayList<JellowIcon> items) {
@@ -390,7 +381,13 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
         * To this, we are using the function same as in menuSelected path used
         * */
 
-        String[] arr=mContext.getResources().getStringArray(R.array.arrLevelOneActionBarTitle);
+
+        String[] arr = getLevel1IconLabels();
+
+        for(int i=0;i<arr.length;i++){
+            arr[i] = arr[i].split("…")[0];
+        }
+
         String dir="";
         if(thisIcon.parent1==-1)
         {
@@ -411,6 +408,21 @@ class SearchViewIconAdapter extends RecyclerView.Adapter<SearchViewIconAdapter.V
 
         }
         holder.iconDir.setText(dir);
+    }
+
+    @NonNull
+    private String[] getLevel1IconLabels() {
+        String[] level1Icons = IconFactory.getL1Icons(
+                getIconDirectory(mContext),
+                LanguageFactory.getCurrentLanguageCode(mContext)
+        );
+
+        Icon[] level1IconObjects = TextFactory.getIconObjects(
+                PathFactory.getJSONFile(mContext),
+                IconFactory.removeFileExtension(level1Icons)
+        );
+
+        return TextFactory.getDisplayText(level1IconObjects);
     }
 
     /**

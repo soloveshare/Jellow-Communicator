@@ -53,6 +53,8 @@ import static com.dsource.idc.jellowintl.utility.Analytics.singleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.startMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.stopMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.validatePushId;
+import static com.dsource.idc.jellowintl.utility.SpeechUtils.isKeyboardAvailable;
+import static com.dsource.idc.jellowintl.utility.SpeechUtils.isNoTTSLanguage;
 
 public class MainActivity extends AppCompatActivity {
     private final int REQ_HOME = 0;
@@ -561,7 +563,12 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerViewListeners();
         initBackBtnListener();
         initHomeBtnListener();
-        initKeyboardBtnListener();
+        if(!isKeyboardAvailable(this)){
+            initKeyboardBtnListener();
+        } else {
+            mIvKeyboard.setAlpha(.5f);
+            mIvKeyboard.setEnabled(false);
+        }
         initTTsBtnListener();
         initTTsEditTxtListener();
         initLikeBtnListener();
@@ -1505,6 +1512,10 @@ public class MainActivity extends AppCompatActivity {
         mSpeechTxt = TextFactory.getSpeechText(level1IconObjects);
 
         mActionBarTitle = TextFactory.getDisplayText(level1IconObjects);
+
+        for(int i=0;i<mActionBarTitle.length;i++){
+            mActionBarTitle[i] = mActionBarTitle[i].split("…")[0];
+        }
 
         String[] miscellaneousIcons = IconFactory.getMiscellaneousIcons(
                 PathFactory.getIconDirectory(this),

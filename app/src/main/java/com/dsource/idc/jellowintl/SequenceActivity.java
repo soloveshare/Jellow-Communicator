@@ -48,6 +48,8 @@ import static com.dsource.idc.jellowintl.utility.Analytics.singleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.startMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.stopMeasuring;
 import static com.dsource.idc.jellowintl.utility.Analytics.validatePushId;
+import static com.dsource.idc.jellowintl.utility.SpeechUtils.isKeyboardAvailable;
+import static com.dsource.idc.jellowintl.utility.SpeechUtils.isNoTTSLanguage;
 
 
 /**
@@ -305,7 +307,12 @@ public class SequenceActivity extends AppCompatActivity {
         initCategoryIcon3Listener();
         initBackBtnListener();
         initHomeBtnListener();
-        initKeyboardBtnListener();
+        if(!isKeyboardAvailable(this)){
+            initKeyboardBtnListener();
+        } else {
+            mIvKeyboard.setAlpha(.5f);
+            mIvKeyboard.setEnabled(false);
+        }
         initLikeBtnListener();
         initDontLikeBtnListener();
         initYesBtnListener();

@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="arrLevelOneActionBarTitle">
-        <item>शुभेच्छा आणि भावना</item>
-        <item>रोजची कामे</item>
-        <item>खाणे</item>
-        <item>मजा</item>
-        <item>शिकणे</item>
-        <item>लोक</item>
-        <item>ठिकाणे</item>
-        <item>वेळ आणि हवामान</item>
-        <item>मदत</item>
-    </string-array>
     <string-array name="arrSequenceActivityHeadingText">
         <item>दात घासणे</item>
         <item>टॉयलेट</item>
