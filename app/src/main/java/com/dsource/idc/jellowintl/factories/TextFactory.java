@@ -1,8 +1,11 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.factories;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.dsource.idc.jellowintl.models.ExpressiveIcon;
+import com.dsource.idc.jellowintl.models.Icon;
+import com.dsource.idc.jellowintl.models.MiscellaneousIcon;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -25,7 +28,7 @@ public class TextFactory {
      *  Returns the JSON text from disk
      */
 
-    public static Icon[] getIconObjects(@NonNull File file,@NonNull String[] iconNames) {
+    public static Icon[] getIconObjects(@NonNull File file, @NonNull String[] iconNames) {
         if (JSON == null) {
             try {
                 JSON = new JSONObject(getStringFromFile(file));
@@ -55,7 +58,7 @@ public class TextFactory {
     }
 
 
-    public static ExpressiveIcon[] getExpressiveIconObjects(@NonNull File file,@NonNull String[] iconNames) {
+    public static ExpressiveIcon[] getExpressiveIconObjects(@NonNull File file, @NonNull String[] iconNames) {
         if (JSON == null) {
             try {
                 JSON = new JSONObject(getStringFromFile(file));
@@ -84,7 +87,7 @@ public class TextFactory {
         return expressiveIconsObjects;
     }
 
-    public static MiscellaneousIcon[] getMiscellaneousIconObjects(@NonNull File file,@NonNull String[] iconNames) {
+    public static MiscellaneousIcon[] getMiscellaneousIconObjects(@NonNull File file, @NonNull String[] iconNames) {
         if (JSON == null) {
             try {
                 JSON = new JSONObject(getStringFromFile(file));
@@ -138,7 +141,7 @@ public class TextFactory {
 
         ArrayList<String> displayText = new ArrayList<>();
         for(Icon icon : iconObjects){
-            displayText.add(icon.Display_Label);
+            displayText.add(icon.getDisplay_Label());
         }
 
         String[] displayTextArray = new String[displayText.size()];
@@ -150,7 +153,7 @@ public class TextFactory {
 
         ArrayList<String> title = new ArrayList<>();
         for(MiscellaneousIcon icon : iconObjects){
-            title.add(icon.Title);
+            title.add(icon.getTitle());
         }
 
         String[] titleArray = new String[title.size()];
@@ -162,8 +165,8 @@ public class TextFactory {
 
         ArrayList<String> title = new ArrayList<>();
         for(ExpressiveIcon icon : iconObjects){
-            title.add(icon.L);
-            title.add(icon.LL);
+            title.add(icon.getL());
+            title.add(icon.getLL());
         }
 
         String[] titleArray = new String[title.size()];
@@ -176,7 +179,7 @@ public class TextFactory {
 
         ArrayList<String> speechText = new ArrayList<>();
         for(Icon icon : iconObjects){
-            speechText.add(icon.Speech_Label);
+            speechText.add(icon.getSpeech_Label());
         }
 
         String[] speechTextArray = new String[speechText.size()];

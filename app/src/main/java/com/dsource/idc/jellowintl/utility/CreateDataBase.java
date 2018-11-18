@@ -1,14 +1,11 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.utility;
 
 
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.dsource.idc.jellowintl.utility.IconDataBaseHelper;
-import com.dsource.idc.jellowintl.utility.SessionManager;
-
 public class CreateDataBase extends AsyncTask {
-    Context mContext;
+    private Context mContext;
     public CreateDataBase(Context context) {
         mContext=context;
     }

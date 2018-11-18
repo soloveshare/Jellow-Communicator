@@ -29,9 +29,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.crashlytics.android.Crashlytics;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_DoubleClick;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
-import com.dsource.idc.jellowintl.models.SeqActivityVerbiageModel;
+import com.dsource.idc.jellowintl.models.ExpressiveIcon;
+import com.dsource.idc.jellowintl.models.Icon;
+import com.dsource.idc.jellowintl.models.MiscellaneousIcon;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
@@ -40,7 +46,7 @@ import com.dsource.idc.jellowintl.utility.SpeechUtils;
 import java.util.ArrayList;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
-import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconPath;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
@@ -842,15 +848,15 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyLike");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].LL);
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].LL);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getLL());
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getLL());
                         mFlgLike = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Like");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].L);
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].L);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getL());
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getL());
                         mFlgLike = 1;
                     }
                 }
@@ -899,17 +905,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyDon'tLike");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].DD);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getDD());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].DD);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getDD());
                         mFlgDontLike = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Don'tLike");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].D);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getD());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].D);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getD());
                         mFlgDontLike = 1;
                     }
                 }
@@ -959,17 +965,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyYes");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].YY);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getYY());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].YY);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getYY());
                         mFlgYes = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Yes");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].Y);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getY());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].Y);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getY());
                         mFlgYes = 1;
                     }
                 }
@@ -1018,18 +1024,18 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyNo");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].NN);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getNN());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].NN);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getNN());
 
                         mFlgNo = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","No");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].N);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getN());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].N);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getN());
 
                         mFlgNo = 1;
                     }
@@ -1079,17 +1085,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyMore");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].MM);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getMM());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].MM);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getMM());
                         mFlgMore = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","More");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].M);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getM());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].M);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getM());
                         mFlgMore = 1;
                     }
                 }
@@ -1138,17 +1144,17 @@ public class SequenceActivity extends AppCompatActivity {
                         //Firebase event
                         singleEvent("ExpressiveIcon","ReallyLess");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].SS);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getSS());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].SS);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getSS());
                         mFlgLess = 0;
                     } else {
                         //Firebase event
                         singleEvent("ExpressiveIcon","Less");
                         singleEvent("ExpressiveGridIcon",
-                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].S);
+                                level3SeqIconObjects[count + mFlgHideExpBtn - 1].getS());
 
-                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].S);
+                        speakSpeech(level3SeqIconObjects[count + mFlgHideExpBtn - 1].getS());
                         mFlgLess = 1;
                     }
                 }
@@ -1224,8 +1230,7 @@ public class SequenceActivity extends AppCompatActivity {
      * <p>This function will:
      *     a) Read speech text from arrays for expressive buttons.
      *     b) Read speech text from arrays for navigation buttons.
-     *     c) Read speech text from arrays for category  navigation buttons.
-     *     d) Read verbiage lines into {@link SeqActivityVerbiageModel} model.</p>
+     *     c) Read speech text from arrays for category  navigation buttons.</p>
      * */
     private void loadArraysFromResources() {
 

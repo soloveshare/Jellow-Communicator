@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.dsource.idc.jellowintl">
 
     <uses-feature
@@ -19,7 +20,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
@@ -27,7 +29,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name=".SimpleIME"
+            android:name=".utility.SimpleIME"
             android:label="@string/simple_ime"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
@@ -44,8 +46,8 @@
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -58,7 +60,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".Intro"
+            android:name=".IntroActivity"
             android:configChanges="keyboardHidden|orientation|screenLayout"
             android:label="Introduction to Jellow"
             android:screenOrientation="sensorLandscape" />

@@ -1,4 +1,4 @@
-package com.dsource.idc.jellowintl.utility;
+package com.dsource.idc.jellowintl.models;
 
 import android.support.annotation.Keep;
 

@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 
-import static com.dsource.idc.jellowintl.PathFactory.getAudioPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getAudioPath;
 import static com.dsource.idc.jellowintl.utility.SessionManager.BE_IN;
 import static com.dsource.idc.jellowintl.utility.SessionManager.BN_IN;
 import static com.dsource.idc.jellowintl.utility.SessionManager.ENG_IN;

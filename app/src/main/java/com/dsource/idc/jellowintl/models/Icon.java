@@ -1,4 +1,4 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.models;
 
 public class Icon {
 
@@ -16,21 +16,21 @@ public class Icon {
      S - Less
      SS - Really Less
      */
-
-    String Display_Label;
-    String Speech_Label;
-    String L;
-    String LL;
-    String Y;
-    String YY;
-    String M;
-    String MM;
-    String D;
-    String DD;
-    String N;
-    String NN;
-    String S;
-    String SS;
+    
+    private String Display_Label;
+    private String Speech_Label;
+    private String L;
+    private String LL;
+    private String Y;
+    private String YY;
+    private String M;
+    private String MM;
+    private String D;
+    private String DD;
+    private String N;
+    private String NN;
+    private String S;
+    private String SS;
 
     public String getDisplay_Label() {
         return Display_Label;

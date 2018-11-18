@@ -14,12 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
+import com.dsource.idc.jellowintl.models.Icon;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
 import java.util.ArrayList;
 
-import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconPath;
 
 /**
  * Created by Sumeet on 19-04-2016.

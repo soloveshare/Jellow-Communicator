@@ -18,6 +18,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
+import com.dsource.idc.jellowintl.cache.MemoryCache;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.utility.CreateDataBase;
+import com.dsource.idc.jellowintl.utility.DataBaseHelper;
 import com.dsource.idc.jellowintl.utility.EvaluateDisplayMetricsUtils;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
@@ -27,8 +33,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
-import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
-import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconDirectory;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
 
@@ -199,7 +204,7 @@ public class SplashActivity extends AppCompatActivity {
 
         MemoryCache.init(cacheSize);
 
-        String path = getIconPath(this);
+        String path = PathFactory.getBaseDirectoryPath(this);
 
         for(String icon: icons){
             Bitmap bitmap = BitmapFactory.decodeFile(path + icon);

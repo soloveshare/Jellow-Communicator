@@ -30,7 +30,7 @@ import static com.dsource.idc.jellowintl.utility.SessionManager.HI_IN;
 /**
  * Created by Shruti on 09-08-2016.
  */
-public class Intro extends AppIntro {
+public class IntroActivity extends AppIntro {
     private String mTTsDefaultLanguage, selectedLanguage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +134,7 @@ public class Intro extends AppIntro {
             if ((session.getLanguage().equals(ENG_IN) && mTTsDefaultLanguage.equals(HI_IN)) ||
                 (!session.getLanguage().equals(ENG_IN) && session.getLanguage().equals(mTTsDefaultLanguage))) {
                 session.setCompletedIntro(true);
-                Intent intent=new Intent(Intro.this, SplashActivity.class);
+                Intent intent=new Intent(IntroActivity.this, SplashActivity.class);
                 startActivity(intent);
                 finish();
             } else {
@@ -143,7 +143,7 @@ public class Intro extends AppIntro {
             }
         }else {
             session.setCompletedIntro(true);
-            Intent intent=new Intent(Intro.this, SplashActivity.class);
+            Intent intent=new Intent(IntroActivity.this, SplashActivity.class);
             startActivity(intent);
             finish();
         }

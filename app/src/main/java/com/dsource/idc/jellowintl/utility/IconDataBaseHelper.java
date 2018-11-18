@@ -8,15 +8,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 
-import com.dsource.idc.jellowintl.Icon;
-import com.dsource.idc.jellowintl.IconFactory;
-import com.dsource.idc.jellowintl.LanguageFactory;
-import com.dsource.idc.jellowintl.PathFactory;
-import com.dsource.idc.jellowintl.TextFactory;
+import com.dsource.idc.jellowintl.models.Icon;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
+import com.dsource.idc.jellowintl.models.JellowIcon;
 
 import java.util.ArrayList;
 
-import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconDirectory;
 
 /**
  * Created by Ayaz Alam on 31/05/2018.

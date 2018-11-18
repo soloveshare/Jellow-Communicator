@@ -1,4 +1,4 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.utility;
 
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
 
+import com.dsource.idc.jellowintl.R;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
 /**

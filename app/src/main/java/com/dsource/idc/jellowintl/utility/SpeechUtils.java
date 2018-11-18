@@ -3,7 +3,7 @@ package com.dsource.idc.jellowintl.utility;
 import android.content.Context;
 import android.content.Intent;
 
-import static com.dsource.idc.jellowintl.PathFactory.getAudioPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getAudioPath;
 
 public class SpeechUtils {
 
@@ -37,18 +37,8 @@ public class SpeechUtils {
     }
 
     private static void playAudio(Context context,String audioPath) {
-
         Intent intent = new Intent("com.dsource.idc.jellowintl.AUDIO_PATH");
         intent.putExtra("audioPath", audioPath);
-        context.sendBroadcast(intent);
-    }
-
-    private static void playAudioInQueue(Context context,String audioPaths) {
-        String filePath = getAudioPath(context);
-        audioPaths = filePath + audioPaths.split(",")[0]+".mp3," +
-                filePath + audioPaths.split(",")[1]+".mp3" ;
-        Intent intent = new Intent("com.dsource.idc.jellowintl.AUDIO_IN_QUEUE");
-        intent.putExtra("speechTextInQueue", audioPaths);
         context.sendBroadcast(intent);
     }
 

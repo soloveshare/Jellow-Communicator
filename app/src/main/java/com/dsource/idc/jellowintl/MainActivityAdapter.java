@@ -16,14 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.dsource.idc.jellowintl.cache.MemoryCache;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_RecyclerView;
+import com.dsource.idc.jellowintl.models.Icon;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
 import java.io.File;
 
-import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
-import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
-import static com.dsource.idc.jellowintl.PathFactory.getJSONFile;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconDirectory;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getJSONFile;
 
 /**
  * Created by ekalpa on 4/19/2016.
@@ -78,7 +83,7 @@ class MainActivityAdapter extends android.support.v7.widget.RecyclerView.Adapter
         holder.menuItemBelowText.setAllCaps(true);
         holder.menuItemBelowText.setText(mBelowTextArray[position]);
 
-        String path = getIconPath(mContext);
+        String path = PathFactory.getBaseDirectoryPath(mContext);
         Bitmap iconBitmap = MemoryCache.getBitmapFromMemCache(icons[position]);
 
         if (iconBitmap != null) {

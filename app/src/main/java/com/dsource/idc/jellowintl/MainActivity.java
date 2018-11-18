@@ -33,9 +33,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_DoubleClick;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
-import com.dsource.idc.jellowintl.models.LevelOneVerbiageModel;
+import com.dsource.idc.jellowintl.models.ExpressiveIcon;
+import com.dsource.idc.jellowintl.models.Icon;
+import com.dsource.idc.jellowintl.models.MiscellaneousIcon;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
@@ -45,7 +51,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconDirectory;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;
@@ -834,19 +840,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgLike is 1 then speak associated really like expression
                     // verbiage for selected category icon.
                     if (mFlgLike == 1) {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].LL);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getLL());
                         mFlgLike = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "ReallyLike");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].LL);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getLL());
                         // if value of mFlgLike is 0 then Speak associated like expression
                         // verbiage to selected category icon.
                     } else {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].L);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getL());
                         mFlgLike = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "Like");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].L);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getL());
                     }
                 }
             }
@@ -904,19 +910,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgDntLike is 1 then speak associated really don't like expression
                     // verbiage for selected category icon.
                     if (mFlgDntLike == 1) {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].DD);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getDD());
                         mFlgDntLike = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "ReallyDon'tLike");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].DD);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getDD());
                         // if value of mFlgDntLike is 0 then Speak associated don't like expression
                         // verbiage to selected category icon.
                     } else {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].D);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getD());
                         mFlgDntLike = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "Don'tLike");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].D);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getD());
                     }
                 }
             }
@@ -974,19 +980,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgYes is 1 then speak associated really yes expression
                     // verbiage for selected category icon.
                     if (mFlgYes == 1) {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].YY);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getYY());
                         mFlgYes = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "ReallyYes");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].YY);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getYY());
                         // if value of mFlgYes is 0 then speak associated yes expression
                         // verbiage for selected category icon.
                     } else {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].Y);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getY());
                         mFlgYes = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "Yes");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].Y);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getY());
                     }
                 }
             }
@@ -1044,19 +1050,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgNo is 1 then speak associated really no expression
                     // verbiage for selected category icon.
                     if (mFlgNo == 1) {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].NN);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getNN());
                         mFlgNo = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "ReallyNo");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].NN);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getNN());
                         // if value of mFlgNo is 0 then Speak associated no expression
                         // verbiage to selected category icon.
                     } else {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].N);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getN());
                         mFlgNo = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "No");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].N);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getN());
                     }
                 }
             }
@@ -1114,19 +1120,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgMore is 1, then should speak "really more" expression
                     // verbiage associated to selected category icon.
                     if (mFlgMore == 1) {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].MM);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getMM());
                         mFlgMore = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "ReallyMore");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].MM);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getMM());
                         // if value of mFlgMore is 0, then should speak "more" expression
                         // verbiage associated to selected category icon.
                     } else {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].M);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getM());
                         mFlgMore = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "More");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].M);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getM());
                     }
                 }
             }
@@ -1184,19 +1190,19 @@ public class MainActivity extends AppCompatActivity {
                     // if value of mFlgLess is 1 then speak associated really less expression
                     // verbiage for selected category icon.
                     if (mFlgLess == 1) {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].SS);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getSS());
                         mFlgLess = 0;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "ReallyLess");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].SS);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getSS());
                         // if value of mFlgLess is 0 then Speak associated less expression
                         // verbiage to selected category icon.
                     } else {
-                        speakSpeech(level1IconObjects[mLevelOneItemPos].S);
+                        speakSpeech(level1IconObjects[mLevelOneItemPos].getS());
                         mFlgLess = 1;
                         //Firebase event
                         singleEvent("ExpressiveIcon", "Less");
-                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].S);
+                        singleEvent("ExpressiveGridIcon", level1IconObjects[mLevelOneItemPos].getS());
                     }
                 }
             }
@@ -1491,10 +1497,9 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * <p>This function will:
-     * a) Read verbiage lines into {@link LevelOneVerbiageModel} model.
-     * b) Read speech text from arrays for category icons.
-     * c) Read speech text from arrays for expressive buttons.
-     * d) Read speech text from arrays for navigation buttons.</p>
+     * a) Read speech text from arrays for category icons.
+     * b) Read speech text from arrays for expressive buttons.
+     * c) Read speech text from arrays for navigation buttons.</p>
      */
     private void loadArraysFromResources() {
 

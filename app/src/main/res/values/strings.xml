@@ -50,7 +50,6 @@
         <item>9</item>
     </string-array>
 
-    <string name="change_language_line1">You can download upto 3 languages into the application</string>
     <string name="change_language_line2">Step 1: Select any downloaded language from the dropdown below:</string>
     <string name="change_language_line3">You can download new languages by clicking the \'Add Language\' button and remove already downloaded languages by clicking the \'Delete Language\' button</string>
     <string name="simple_ime">Jellow Keyboard</string>

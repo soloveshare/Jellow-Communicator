@@ -39,8 +39,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-import static com.dsource.idc.jellowintl.CacheManager.clearCache;
+import static com.dsource.idc.jellowintl.cache.CacheManager.clearCache;
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
 import static com.dsource.idc.jellowintl.UserRegistrationActivity.LCODE;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
@@ -542,17 +543,16 @@ public class LanguageSelectActivity extends AppCompatActivity{
         Toast.makeText(this, mLangChanged, Toast.LENGTH_SHORT).show();
         mSession.setLanguageChange(1);
         clearCache();
-        triggerRebirth(getApplicationContext());
+        triggerRebirth(this);
     }
 
     public static void triggerRebirth(Context context) {
         Intent intent = new Intent(context, SplashActivity.class);
-        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK|FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
         if (context instanceof Activity) {
             ((Activity) context).finish();
         }
-
         Runtime.getRuntime().exit(0);
     }
 

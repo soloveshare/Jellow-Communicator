@@ -14,13 +14,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconPath;
 
 /**
  * Created by HP on 22/01/2017.

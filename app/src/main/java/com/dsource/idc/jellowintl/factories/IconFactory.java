@@ -1,6 +1,8 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.factories;
 
 import android.support.annotation.NonNull;
+
+import com.dsource.idc.jellowintl.cache.IconCache;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,14 +22,14 @@ public class IconFactory {
     // L1 : "[0-9]{4}0{6}GG"
 
     /**
-     * @param dir
-     * @param langCode
+     * @param dir - directory where icons are located
+     * @param langCode - language code
      */
 
     public static String[] getL1Icons(@NonNull File dir, String langCode) {
 
-        if (IconCache.L1Icons != null && IconCache.L1Icons.length != 0) {
-            return IconCache.L1Icons;
+        if (IconCache.getL1Icons() != null && IconCache.getL1Icons().length != 0) {
+            return IconCache.getL1Icons();
         }
 
         String regex = langCode + "[0-9]{2}" + "0{6}GG" + EXTENSION;
@@ -44,17 +46,17 @@ public class IconFactory {
 
         iconNames.toArray(level1Icons);
 
-        IconCache.L1Icons = level1Icons;
-        return IconCache.L1Icons;
+        IconCache.setL1Icons(level1Icons);
+        return IconCache.getL1Icons();
     }
 
 
     public static String[] getAllL2Icons(@NonNull File dir, String langCode, String level1IconCode) {
 
-        if (!(IconCache.AllL2Icons == null || IconCache.AllL2Icons.isEmpty())) {
+        if (!(IconCache.getAllL2Icons() == null || IconCache.getAllL2Icons().isEmpty())) {
             String key = langCode + level1IconCode;
-            if (IconCache.AllL2Icons.containsKey(key)) {
-                return IconCache.AllL2Icons.get(key);
+            if (IconCache.getAllL2Icons().containsKey(key)) {
+                return IconCache.getAllL2Icons().get(key);
             }
         }
 
@@ -73,11 +75,11 @@ public class IconFactory {
 
         iconNames.toArray(level2Icons);
 
-        if (IconCache.AllL2Icons == null) {
-            IconCache.AllL2Icons = new HashMap<>();
+        if (IconCache.getAllL2Icons() == null) {
+            IconCache.setAllL2Icons(new HashMap<String, String[]>());
         }
         String key = langCode + level1IconCode;
-        IconCache.AllL2Icons.put(key, level2Icons);
+        IconCache.getAllL2Icons().put(key, level2Icons);
 
         return level2Icons;
     }
@@ -86,10 +88,10 @@ public class IconFactory {
 
     public static String[] getL3Icons(@NonNull File dir, String langCode, String level1IconCode, String level2IconCode) {
 
-        if (!(IconCache.L3Icons == null || IconCache.L3Icons.isEmpty())) {
+        if (!(IconCache.getL3Icons() == null || IconCache.getL3Icons().isEmpty())) {
             String key = langCode + level1IconCode + level2IconCode;
-            if (IconCache.L3Icons.containsKey(key)) {
-                return IconCache.L3Icons.get(key);
+            if (IconCache.getL3Icons().containsKey(key)) {
+                return IconCache.getL3Icons().get(key);
             }
         }
 
@@ -108,13 +110,13 @@ public class IconFactory {
 
         iconNames.toArray(level3Icons);
 
-        if (IconCache.L3Icons == null) {
-            IconCache.L3Icons = new HashMap<>();
+        if (IconCache.getL3Icons() == null) {
+            IconCache.setL3Icons(new HashMap<String, String[]>());
         }
 
         String key = langCode + level1IconCode + level2IconCode;
 
-        IconCache.L3Icons.put(key, level3Icons);
+        IconCache.getL3Icons().put(key, level3Icons);
 
         return level3Icons;
     }
@@ -192,11 +194,11 @@ public class IconFactory {
 
     public static String[] getL3SeqIcons(@NonNull File dir, String langCode, String level1IconCode, String level2IconCode) {
 
-        if (!(IconCache.L3SeqIcons == null || IconCache.L3SeqIcons.isEmpty())) {
+        if (!(IconCache.getL3SeqIcons() == null || IconCache.getL3SeqIcons().isEmpty())) {
             String key = langCode + level1IconCode + level2IconCode;
 
-            if (IconCache.L3SeqIcons.containsKey(key)) {
-                return IconCache.L3SeqIcons.get(key);
+            if (IconCache.getL3SeqIcons().containsKey(key)) {
+                return IconCache.getL3SeqIcons().get(key);
             }
         }
 
@@ -215,21 +217,21 @@ public class IconFactory {
 
         iconNames.toArray(level3SeqIcons);
 
-        if (IconCache.L3SeqIcons == null) {
-            IconCache.L3SeqIcons = new HashMap<>();
+        if (IconCache.getL3SeqIcons() == null) {
+            IconCache.setL3SeqIcons(new HashMap<String, String[]>());
         }
 
         String key = langCode + level1IconCode + level2IconCode;
 
-        IconCache.L3SeqIcons.put(key, level3SeqIcons);
+        IconCache.getL3SeqIcons().put(key, level3SeqIcons);
 
         return level3SeqIcons;
     }
 
     public static String[] getExpressiveIcons(@NonNull File dir, String langCode) {
 
-        if (IconCache.ExpressiveIcons != null && IconCache.ExpressiveIcons.length != 0) {
-            return IconCache.ExpressiveIcons;
+        if (IconCache.getExpressiveIcons() != null && IconCache.getExpressiveIcons().length != 0) {
+            return IconCache.getExpressiveIcons();
         }
 
         String regex = langCode + "[0-9]{2}" + "EE" + EXTENSION;
@@ -245,15 +247,15 @@ public class IconFactory {
         String[] expressiveIcons = new String[iconNames.size()];
 
         iconNames.toArray(expressiveIcons);
-        IconCache.ExpressiveIcons = expressiveIcons;
-        return IconCache.ExpressiveIcons;
+        IconCache.setExpressiveIcons(expressiveIcons);
+        return IconCache.getExpressiveIcons();
     }
 
 
     public static String[] getMiscellaneousIcons(@NonNull File dir, String langCode) {
 
-        if (IconCache.MiscellaneousIcons != null && IconCache.MiscellaneousIcons.length != 0) {
-            return IconCache.MiscellaneousIcons;
+        if (IconCache.getMiscellaneousIcons() != null && IconCache.getMiscellaneousIcons().length != 0) {
+            return IconCache.getMiscellaneousIcons();
         }
 
         String regex = langCode + "[0-9]{2}" + "MS" + EXTENSION;
@@ -269,8 +271,8 @@ public class IconFactory {
         String[] miscellaneousIcons = new String[iconNames.size()];
 
         iconNames.toArray(miscellaneousIcons);
-        IconCache.MiscellaneousIcons = miscellaneousIcons;
-        return IconCache.MiscellaneousIcons;
+        IconCache.setMiscellaneousIcons(miscellaneousIcons);
+        return IconCache.getMiscellaneousIcons();
     }
 
 

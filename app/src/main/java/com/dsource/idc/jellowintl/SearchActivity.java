@@ -20,8 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
+import com.dsource.idc.jellowintl.models.Icon;
 import com.dsource.idc.jellowintl.utility.IconDataBaseHelper;
-import com.dsource.idc.jellowintl.utility.JellowIcon;
+import com.dsource.idc.jellowintl.models.JellowIcon;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
@@ -29,8 +34,8 @@ import com.dsource.idc.jellowintl.utility.SessionManager;
 import java.util.ArrayList;
 
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
-import static com.dsource.idc.jellowintl.PathFactory.getIconDirectory;
-import static com.dsource.idc.jellowintl.PathFactory.getIconPath;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconDirectory;
+import static com.dsource.idc.jellowintl.factories.PathFactory.getIconPath;
 import static com.dsource.idc.jellowintl.utility.Analytics.bundleEvent;
 import static com.dsource.idc.jellowintl.utility.Analytics.isAnalyticsActive;
 import static com.dsource.idc.jellowintl.utility.Analytics.resetAnalytics;

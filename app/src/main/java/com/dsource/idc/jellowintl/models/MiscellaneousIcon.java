@@ -1,8 +1,8 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.models;
 
 public class MiscellaneousIcon {
 
-    String Title;
+    private String Title;
 
     public String getTitle() {
         return Title;

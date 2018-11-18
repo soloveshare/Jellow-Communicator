@@ -1,4 +1,4 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.factories;
 
 import android.content.Context;
 
@@ -9,16 +9,16 @@ import java.io.File;
 public class PathFactory {
 
     public static final String JSON_FILE = "map.json";
-    public static final String AUDIO_FOLDER = "/audio/";
+    public static final String AUDIO_FOLDER = "audio";
     public static String basePath;
     public static File iconDirectory;
     public static File jsonMap;
 
     public static String getIconPath(Context context, String iconName){
-        return getIconPath(context) + iconName;
+        return getBaseDirectoryPath(context) + iconName;
     }
 
-    public static String getIconPath(Context context){
+    public static String getBaseDirectoryPath(Context context){
         if(basePath == null){
             String dirName = new SessionManager(context).getLanguage();
             String path = context.getDir(dirName, Context.MODE_PRIVATE).getAbsolutePath();
@@ -28,7 +28,7 @@ public class PathFactory {
     }
 
     public static String getAudioPath(Context context){
-        return getIconPath(context) + AUDIO_FOLDER;
+        return getBaseDirectoryPath(context) + AUDIO_FOLDER + "/";
     }
 
     public static File getIconDirectory(Context context){

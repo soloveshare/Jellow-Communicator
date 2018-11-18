@@ -1,4 +1,4 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.cache;
 
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;

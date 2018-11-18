@@ -77,7 +77,7 @@ public class LanguageDownloadActivity extends AppCompatActivity {
                     Toast.makeText(LanguageDownloadActivity.this, strLanguageDownloaded
                             .replace("_", LangValueMap.get(langCode)),
                             Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LanguageDownloadActivity.this, Intro.class));
+                    startActivity(new Intent(LanguageDownloadActivity.this, IntroActivity.class));
                 }else if(finish)
                 {
                     Intent intent=new Intent(LanguageDownloadActivity.this,SplashActivity.class);

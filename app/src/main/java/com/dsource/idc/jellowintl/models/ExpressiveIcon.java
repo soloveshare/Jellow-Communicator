@@ -1,10 +1,10 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.models;
 
 public class ExpressiveIcon {
 
-    String L;
-    String LL;
-    String Title;
+    private String L;
+    private String LL;
+    private String Title;
 
     public String getL() {
         return L;

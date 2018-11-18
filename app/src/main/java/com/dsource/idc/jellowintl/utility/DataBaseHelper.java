@@ -1,4 +1,4 @@
-package com.dsource.idc.jellowintl;
+package com.dsource.idc.jellowintl.utility;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.crashlytics.android.Crashlytics;
+import com.dsource.idc.jellowintl.BuildConfig;
 import com.dsource.idc.jellowintl.utility.SessionManager;
 
 import java.io.FileOutputStream;
@@ -38,7 +39,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    DataBaseHelper(Context context) {
+    public DataBaseHelper(Context context) {
         super(context, DB_NAME, null, 1);
         this.myContext = context;
         mSession = new SessionManager(this.myContext);

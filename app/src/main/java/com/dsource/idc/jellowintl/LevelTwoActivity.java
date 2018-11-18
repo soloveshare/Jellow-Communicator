@@ -28,9 +28,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.dsource.idc.jellowintl.factories.IconFactory;
+import com.dsource.idc.jellowintl.factories.LanguageFactory;
+import com.dsource.idc.jellowintl.factories.PathFactory;
+import com.dsource.idc.jellowintl.factories.TextFactory;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_DoubleClick;
 import com.dsource.idc.jellowintl.TalkBack.TalkbackHints_SingleClick;
-import com.dsource.idc.jellowintl.models.LevelTwoVerbiageModel;
+import com.dsource.idc.jellowintl.models.ExpressiveIcon;
+import com.dsource.idc.jellowintl.models.Icon;
+import com.dsource.idc.jellowintl.models.MiscellaneousIcon;
 import com.dsource.idc.jellowintl.utility.CustomGridLayoutManager;
 import com.dsource.idc.jellowintl.utility.IndexSorter;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
@@ -815,22 +821,22 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].LL);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getLL());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].LL);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getLL());
                         // If Help -> About me category icon is selected,
                         // "really like" expression will speak child's name
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].LL
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getLL()
                                     + mSession.getName() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].LL
+                                    level2IconObjects[mLevelTwoItemPos].getLL()
                                             + mSession.getName() + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].LL
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getLL()
                                     + mSession.getName() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].LL
+                                    level2IconObjects[mLevelTwoItemPos].getLL()
                                             + mSession.getName() + end);
                         }
                         //reset mFlgLike to speak "like" expression
@@ -843,21 +849,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].L);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getL());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].L);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getL());
                             // If Help -> About me category icon is selected,
                             // "really like" expression will speak child's name
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].L
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getL()
                                     + mSession.getName() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].L
+                                    level2IconObjects[mLevelTwoItemPos].getL()
                                             + mSession.getName() + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].L);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getL());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].L);
+                                    level2IconObjects[mLevelTwoItemPos].getL());
                         }
                         //reset mFlgLike to speak "really like" expression
                         mFlgLike = 1;
@@ -929,21 +935,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].DD);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getDD());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].DD);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getDD());
                         // If Help -> About me category icon is selected,
                         // "really don't like" expression will speak child's caregiver's name
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].DD
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getDD()
                                     + mSession.getCaregiverName() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].DD
+                                    level2IconObjects[mLevelTwoItemPos].getDD()
                                             + mSession.getCaregiverName() + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].DD);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getDD());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].DD);
+                                    level2IconObjects[mLevelTwoItemPos].getDD());
                         }
                         //reset mFlgDntLike to speak "don't like" expression
                         mFlgDntLike = 0;
@@ -955,21 +961,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To get correct speech text sort
                         // is applied.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE){
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].D);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getD());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].D);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getD());
                         // If Help -> About me category icon is selected,
                         // "really don't like" expression will speak child's caregiver name
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                                speakSpeech(level2IconObjects[mLevelTwoItemPos].D
+                                speakSpeech(level2IconObjects[mLevelTwoItemPos].getD()
                                         + mSession.getCaregiverName() + end);
                                 singleEvent("ExpressiveGridIcon",
-                                        level2IconObjects[mLevelTwoItemPos].D
+                                        level2IconObjects[mLevelTwoItemPos].getD()
                                                 + mSession.getCaregiverName() + end);
                         }else {
-                                speakSpeech(level2IconObjects[mLevelTwoItemPos].D);
+                                speakSpeech(level2IconObjects[mLevelTwoItemPos].getD());
                                 singleEvent("ExpressiveGridIcon",
-                                        level2IconObjects[mLevelTwoItemPos].D);
+                                        level2IconObjects[mLevelTwoItemPos].getD());
                         }
                         //reset mFlgDntLike to speak "really don't like" expression
                         mFlgDntLike = 1;
@@ -1040,21 +1046,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].YY);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getYY());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].YY);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getYY());
                         // If Help -> About me category icon is selected,
                         // "really yes" expression will speak caregivers email id
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].YY
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getYY()
                                     + mSession.getEmailId() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].YY
+                                    level2IconObjects[mLevelTwoItemPos].getYY()
                                             + mSession.getEmailId() + end);
                         }else{
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].YY);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getYY());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].YY);
+                                    level2IconObjects[mLevelTwoItemPos].getYY());
                         }
                         //reset mFlgYes to speak "yes" expression
                         mFlgYes = 0;
@@ -1066,21 +1072,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].Y);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getY());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].Y);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getY());
                         // If Help -> About me category icon is selected,
                         // "yes" expression will speak caregivers email id
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].Y
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getY()
                                     + mSession.getEmailId() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].Y
+                                    level2IconObjects[mLevelTwoItemPos].getY()
                                             + mSession.getEmailId() + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].Y);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getY());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].Y);
+                                    level2IconObjects[mLevelTwoItemPos].getY());
                         }
                         //reset mFlgYes to speak "really yes" expression
                         mFlgYes = 1;
@@ -1151,21 +1157,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].NN);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getNN());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].NN);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getNN());
                             // If Help -> About me category icon is selected,
                             // "really no" expression will speak child's address
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].NN
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getNN()
                                     + mSession.getAddress() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].NN
+                                    level2IconObjects[mLevelTwoItemPos].getNN()
                                             + mSession.getAddress() + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].NN);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getNN());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].NN);
+                                    level2IconObjects[mLevelTwoItemPos].getNN());
                         }
                         //reset mFlgNo to speak "no" expression
                         mFlgNo = 0;
@@ -1177,21 +1183,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].N);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getN());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].N);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getN());
                             // If Help -> About me category icon is selected,
                             // "really no" expression will speak child's address
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].N
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getN()
                                     + mSession.getAddress() + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].N
+                                    level2IconObjects[mLevelTwoItemPos].getN()
                                             + mSession.getAddress() + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].N);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getN());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].N);
+                                    level2IconObjects[mLevelTwoItemPos].getN());
                         }
                         //reset mFlgLike to speak "really no" expression
                         mFlgNo = 1;
@@ -1262,24 +1268,24 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].MM);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getMM());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].MM);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getMM());
                         // If Help -> About me category icon is selected,
                         // "really more" expression will speak caregivers number
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
                             String contact = mSession.getCaregiverNumber();
                             contact = contact.substring(0, contact.length()-3);
                             contact = contact.replaceAll("\\B", " ");
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].MM
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getMM()
                                     + contact + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].MM +
+                                    level2IconObjects[mLevelTwoItemPos].getMM() +
                                     maskNumber(mSession.getCaregiverNumber().substring(1)) + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].MM);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getMM());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].MM);
+                                    level2IconObjects[mLevelTwoItemPos].getMM());
                         }
                         //reset mFlgMore to speak "more" expression
                         mFlgMore = 0;
@@ -1291,24 +1297,24 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].M);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getM());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].M);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getM());
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1) {
                             // If Help -> About me category icon is selected,
                             // "really more" expression will speak caregivers number
                             String contact = mSession.getCaregiverNumber();
                             contact = contact.substring(0, contact.length()-3);
                             contact = contact.replaceAll("\\B", " ");
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].MM
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getMM()
                                     + contact + end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].MM +
+                                    level2IconObjects[mLevelTwoItemPos].getMM() +
                                         maskNumber(mSession.getCaregiverNumber().substring(1)) + end);
                         }else {
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].M);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getM());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].M);
+                                    level2IconObjects[mLevelTwoItemPos].getM());
                         }
                         //reset mFlgMore to speak "really more" expression
                         mFlgMore = 1;
@@ -1380,21 +1386,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].SS);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getSS());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].SS);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getSS());
                         // If Help -> About me category icon is selected,
                         // "really less" expression will speak child's blood group
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1){
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].S
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getS()
                                     + getBloodGroup() +end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].S
+                                    level2IconObjects[mLevelTwoItemPos].getS()
                                             + getBloodGroup() +end);
                         } else
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].SS);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getSS());
                         singleEvent("ExpressiveGridIcon",
-                                level2IconObjects[mLevelTwoItemPos].SS);
+                                level2IconObjects[mLevelTwoItemPos].getSS());
                         //reset mFlgLess to speak "less" expression
                         mFlgLess = 0;
                     // if value of mFlgLess is 0 then Speak associated less expression
@@ -1405,21 +1411,21 @@ public class LevelTwoActivity extends AppCompatActivity {
                         // People and places will have preferences. To speak the correct speech text
                         // preference sort array is used.
                         if (mLevelOneItemPos == CATEGORY_ICON_PEOPLE) {
-                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].S);
+                            speakSpeech(level2IconObjects[mArrSort[mLevelTwoItemPos]].getS());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].S);
+                                    level2IconObjects[mArrSort[mLevelTwoItemPos]].getS());
                         // If Help -> About me category icon is selected,
                         // "really less" expression will speak child's blood group
                         }else if(mLevelOneItemPos == 8 && mLevelTwoItemPos == 1){
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].S
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getS()
                                     + getBloodGroup()+end);
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].S
+                                    level2IconObjects[mLevelTwoItemPos].getS()
                                             + getBloodGroup()+end);
                         } else
-                            speakSpeech(level2IconObjects[mLevelTwoItemPos].S);
+                            speakSpeech(level2IconObjects[mLevelTwoItemPos].getS());
                             singleEvent("ExpressiveGridIcon",
-                                    level2IconObjects[mLevelTwoItemPos].S);
+                                    level2IconObjects[mLevelTwoItemPos].getS());
                         //reset mFlgLess to speak "really less" expression
                         mFlgLess = 1;
                     }
@@ -1662,7 +1668,6 @@ public class LevelTwoActivity extends AppCompatActivity {
      * <p>This function will:
      *     a) Read speech text from arrays for navigation buttons.
      *     b) Read speech text from arrays for expressive buttons.
-     *     c) Read verbiage lines into {@link LevelTwoVerbiageModel} model.
      *     d) Read speech and adapter text from arrays for category icons
      *        for People/Places if in {@link MainActivity } mArrIcon/places
      *        category is selected.
