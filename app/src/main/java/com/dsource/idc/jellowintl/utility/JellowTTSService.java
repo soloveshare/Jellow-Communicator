@@ -117,7 +117,9 @@ public class JellowTTSService extends Service{
             case SessionManager.HI_IN:
                 tts.setLanguage(new Locale("hi","IN"));
                 break;
-            case ENG_IN:
+            case SessionManager.ENG_IN:
+                tts.setLanguage(new Locale("en","IN"));
+                break;
             default:
                 tts.setLanguage(new Locale("hi","IN"));
                 break;
