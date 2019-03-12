@@ -45,7 +45,7 @@ public class CustomDialog extends Dialog {
 
     private void prepareIconEditDialog() {
         final LayoutInflater dialogLayout = LayoutInflater.from(context);
-        View dialogContainerView = dialogLayout.inflate(R.layout.icon_edit_dialog, null);
+        View dialogContainerView = dialogLayout.inflate(R.layout.edit_board_dialog, null);
         dialog = new Dialog(context,R.style.MyDialogBox);
         dialog.applyStyle(R.style.MyDialogBox);
         dialog.backgroundColor(context.getResources().getColor(R.color.transparent));

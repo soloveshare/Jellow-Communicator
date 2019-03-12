@@ -27,7 +27,7 @@
     <ImageView
         android:layout_width="@dimen/my_board_edit_icon_size"
         android:layout_height="@dimen/my_board_edit_icon_size"
-        android:layout_marginLeft="-6dp"
+        android:layout_marginLeft="-4dp"
         android:id="@+id/edit_board"
         android:src="@drawable/ic_edit_icon_red_back"
         />

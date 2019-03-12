@@ -129,27 +129,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_9_icons, parent, false);
         }
         return new ViewHolder(rowView);
-
-        /*switch (GridSize){
-            case 1: //1 by 1
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_1x1_icons, parent, false);
-                break;
-            case 2: // 1 by 2
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_1x2_icons, parent, false);
-                break;
-            case 3: // 1 by 3
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_3_icons, parent, false);break;
-            case 6:// 3 by 3
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_9_icons, parent, false);
-            default:
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_9_icons, parent, false);
-        }
-        return new ViewHolder(itemView);*/
     }
 
     private void setMenuImageBorder(GradientDrawable gd, boolean setBorder,int pos) {
