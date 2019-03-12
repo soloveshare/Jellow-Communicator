@@ -11,7 +11,8 @@
     android:layout_marginBottom="@dimen/threeIcon_parentVertical">
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/frame_layout">
         <ImageView
             android:layout_width="28dp"
             android:layout_height="28dp"

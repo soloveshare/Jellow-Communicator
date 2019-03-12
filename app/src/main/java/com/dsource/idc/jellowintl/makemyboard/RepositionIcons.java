@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.dsource.idc.jellowintl.MainActivity.isNotchDevice;
 import static com.dsource.idc.jellowintl.makemyboard.utility.BoardConstants.DELETE_MODE;
 import static com.dsource.idc.jellowintl.makemyboard.utility.BoardConstants.NORMAL_MODE;
 import static com.dsource.idc.jellowintl.makemyboard.utility.ImageStorageHelper.deleteAllCustomImage;
@@ -69,7 +70,10 @@ public class RepositionIcons extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_board_layout);
+        if (isNotchDevice(this))
+            setContentView(R.layout.activity_levelx_layout_notch);
+        else
+            setContentView(R.layout.activity_levelx_layout);
         //Disable Expressive Icons for this activity
         findViewById(R.id.expressiveOne).setAlpha(.5f);
         findViewById(R.id.expressiveTwo).setAlpha(.5f);
@@ -189,7 +193,8 @@ public class RepositionIcons extends AppCompatActivity {
 
     private void initFields(){
 
-        (findViewById(R.id.save_button)).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.save_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentBoard.setBoardCompleted();
@@ -201,6 +206,10 @@ public class RepositionIcons extends AppCompatActivity {
 
             }
         });
+
+        findViewById(R.id.et).setVisibility(View.GONE);
+        findViewById(R.id.ttsbutton).setVisibility(View.GONE);
+
 
         (findViewById(R.id.ivback)).setOnClickListener(new View.OnClickListener() {
             @Override

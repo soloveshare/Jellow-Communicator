@@ -183,10 +183,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             iconImage=v.findViewById(R.id.icon1);
             iconTitle=v.findViewById(R.id.te1);
             backGround = (GradientDrawable)v.findViewById(R.id.borderView).getBackground();
-            v.findViewById(R.id.delete_icons).setVisibility(View.VISIBLE);
-            v.findViewById(R.id.edit_icons).setVisibility(View.VISIBLE);
-            v.findViewById(R.id.delete_icons).bringToFront();
-            v.findViewById(R.id.edit_icons).bringToFront();
             v.setOnClickListener(this);
         }
 

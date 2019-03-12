@@ -32,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.dsource.idc.jellowintl.MainActivity.isNotchDevice;
 import static com.dsource.idc.jellowintl.makemyboard.utility.BoardConstants.DELETE_MODE;
 import static com.dsource.idc.jellowintl.makemyboard.utility.BoardConstants.NORMAL_MODE;
 
@@ -78,9 +79,9 @@ public class RepositionIconAdapter extends RecyclerView.Adapter<RepositionIconAd
         public MyViewHolder(View v) {
             super(v);
             mContainer = v.findViewById(R.id.frame_layout);
-            iconTitle = v.findViewById(R.id.icon_title);
-            iconImage = v.findViewById(R.id.icon_image_view);
-            removeIcon =itemView.findViewById(R.id.icon_remove_button);
+            iconTitle = v.findViewById(R.id.te1);
+            iconImage = v.findViewById(R.id.icon1);
+            removeIcon =itemView.findViewById(R.id.delete_icons);
             backGround = (GradientDrawable)v.findViewById(R.id.borderView).getBackground();
             removeIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,27 +128,27 @@ public class RepositionIconAdapter extends RecyclerView.Adapter<RepositionIconAd
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView;
-        switch (gridSize){
-            case 1: //1 by 1
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_1x1_icons, parent, false);
-                break;
-            case 2: // 1 by 2
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_1x2_icons, parent, false);
-                break;
-            case 3: // 1 by 3
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_3_icons, parent, false);break;
-            case 6:// 3 by 3
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_9_icons, parent, false);
-            default:
-                itemView = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.custom_layout_9_icons, parent, false);
+
+        final int GRID_1BY1 = 1, GRID_1BY2 = 2, GRID_1BY3 = 3;
+        View rowView;
+        if(isNotchDevice(mContext) && gridSize == GRID_1BY1) {
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_1_icon_notch, parent, false);
+        }else if(!isNotchDevice(mContext) && gridSize == GRID_1BY1){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_1_icon, parent, false);
+        }else if(isNotchDevice(mContext) && gridSize == GRID_1BY2){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_2_icons_notch, parent, false);
+        }else if(!isNotchDevice(mContext) && gridSize == GRID_1BY2){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_2_icons, parent, false);
+        }else if(isNotchDevice(mContext) && gridSize == GRID_1BY3){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_3_icons_notch, parent, false);
+        }else if(!isNotchDevice(mContext) && gridSize == GRID_1BY3){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_3_icons, parent, false);
+        }else if(isNotchDevice(mContext)){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_9_icons_notch, parent, false);
+        }else{
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_9_icons, parent, false);
         }
-        return new MyViewHolder(itemView);
+        return new MyViewHolder(rowView);
     }
 
     @Override
@@ -214,12 +215,13 @@ public class RepositionIconAdapter extends RecyclerView.Adapter<RepositionIconAd
     public void onViewAttachedToWindow(@NonNull MyViewHolder holder) {
         super.onViewAttachedToWindow(holder);
         if(mode==NORMAL_MODE)
-            holder.itemView.findViewById(R.id.icon_remove_button).setVisibility(View.GONE);
+            holder.removeIcon.setVisibility(View.GONE);
         else if(mode==DELETE_MODE)
         {
-            holder.itemView.findViewById(R.id.icon_remove_button).setVisibility(View.VISIBLE);
+            holder.removeIcon.setVisibility(View.VISIBLE);
+            holder.removeIcon.bringToFront();
             Animation jiggle = AnimationUtils.loadAnimation(mContext, R.anim.jiggle);
-            holder.itemView.findViewById(R.id.icon_image_view).startAnimation(jiggle);
+            holder.iconImage.startAnimation(jiggle);
         }
     }
     @Override
