@@ -203,4 +203,5 @@
     <dimen name="dialog_width_verbiage">220dp</dimen>
     <dimen name="dialog_edit_text">12sp</dimen>
     <dimen name="reg_button_height">38dp</dimen>
+    <dimen name="def_margin_flt">-3dp</dimen>
 </resources>

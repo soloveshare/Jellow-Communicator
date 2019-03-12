@@ -11,10 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.dsource.idc.jellowintl.R;
 import com.dsource.idc.jellowintl.makemyboard.adapters.HomeAdapter;
 import com.dsource.idc.jellowintl.makemyboard.models.Board;
@@ -35,9 +35,11 @@ import com.dsource.idc.jellowintl.utility.SessionManager;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.dsource.idc.jellowintl.MainActivity.isNotchDevice;
 import static com.dsource.idc.jellowintl.MainActivity.isTTSServiceRunning;
 import static com.dsource.idc.jellowintl.makemyboard.utility.BoardConstants.BOARD_ID;
 
@@ -62,17 +64,23 @@ public class Home extends AppCompatActivity {
     private ArrayList<MiscellaneousIcons> expIconVerbiage;
     private RecyclerView.OnScrollListener scrollListener;
     private ViewGroup.LayoutParams defaultRecyclerParams;
+    private EditText editText;
+    private ImageView speakerButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_board_layout);
+        if (isNotchDevice(this))
+            setContentView(R.layout.activity_levelx_layout_notch);
+        else
+            setContentView(R.layout.activity_levelx_layout);
         findViewById(R.id.save_button).setVisibility(View.GONE);
 
         mContext=this;
         verbiageDatabase=new VerbiageDatabaseHelper(this);
 
         database=new BoardDatabase(this);
+
         if(getSupportActionBar()!=null) {
             getSupportActionBar().setTitle("Home");
             getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.yellow_bg));
@@ -151,6 +159,12 @@ public class Home extends AppCompatActivity {
     }
 
     private void initViews(){
+        editText = findViewById(R.id.et);
+        editText.setVisibility(View.GONE);
+        speakerButton = findViewById(R.id.ttsbutton);
+        speakerButton.setVisibility(View.GONE);
+
+
         mRecycler=findViewById(R.id.recycler_view);
         changeGridSize();
         home=findViewById(R.id.ivhome);
@@ -188,28 +202,17 @@ public class Home extends AppCompatActivity {
     private void changeGridSize()
     {
         adapter=new HomeAdapter(displayList,this,currentBoard.getGridSize());
-        //Parameters for centering the recycler view in the layout.
-        RelativeLayout.LayoutParams centeredRecyclerParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        centeredRecyclerParams.addRule(RelativeLayout.ABOVE,findViewById(R.id.relativeLayoutNavigation).getId());
-        centeredRecyclerParams.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
-        centeredRecyclerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP,RelativeLayout.TRUE);
-
-        int GridSize  = currentBoard.getGridSize();
-        if(GridSize<4)
-        {
-
-            switch (GridSize)
-            {
-                case 1:mRecycler.setLayoutParams(centeredRecyclerParams);break;
-                case 2:mRecycler.setLayoutParams(centeredRecyclerParams);break;
-                case 3:mRecycler.setLayoutParams(defaultRecyclerParams);break;
-            }
-            mRecycler.setLayoutManager(new CustomGridLayoutManager(this,currentBoard.getGridSize(),3));
-        }
-        else
-        {
-            mRecycler.setLayoutParams(defaultRecyclerParams);
-            mRecycler.setLayoutManager(new CustomGridLayoutManager(this,3,9));
+        switch (currentBoard.getGridSize()){
+            case 1:
+                mRecycler.setLayoutManager(new GridLayoutManager(this, 1));
+                break;
+            case 2:
+                mRecycler.setLayoutManager(new GridLayoutManager(this, 2));
+                break;
+            case 3:
+            default :
+                mRecycler.setLayoutManager(new GridLayoutManager(this, 3));
+                break;
         }
         adapter.setOnDoubleTapListner(new HomeAdapter.onDoubleTapListener() {
             @Override

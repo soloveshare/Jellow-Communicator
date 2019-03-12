@@ -22,6 +22,8 @@ import java.util.List;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.dsource.idc.jellowintl.MainActivity.isNotchDevice;
+
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
 
@@ -106,8 +108,29 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView;
-        switch (GridSize){
+
+        final int GRID_1BY1 = 1, GRID_1BY2 = 2, GRID_1BY3 = 3;
+        View rowView;
+        if(isNotchDevice(mContext) && GridSize == GRID_1BY1) {
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_1_icon_notch, parent, false);
+        }else if(!isNotchDevice(mContext) && GridSize == GRID_1BY1){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_1_icon, parent, false);
+        }else if(isNotchDevice(mContext) && GridSize == GRID_1BY2){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_2_icons_notch, parent, false);
+        }else if(!isNotchDevice(mContext) && GridSize == GRID_1BY2){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_2_icons, parent, false);
+        }else if(isNotchDevice(mContext) && GridSize == GRID_1BY3){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_3_icons_notch, parent, false);
+        }else if(!isNotchDevice(mContext) && GridSize == GRID_1BY3){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_3_icons, parent, false);
+        }else if(isNotchDevice(mContext)){
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_9_icons_notch, parent, false);
+        }else{
+            rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_level_xadapter_9_icons, parent, false);
+        }
+        return new ViewHolder(rowView);
+
+        /*switch (GridSize){
             case 1: //1 by 1
                 itemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.custom_layout_1x1_icons, parent, false);
@@ -126,7 +149,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                 itemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.custom_layout_9_icons, parent, false);
         }
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView);*/
     }
 
     private void setMenuImageBorder(GradientDrawable gd, boolean setBorder,int pos) {
@@ -157,9 +180,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         public ViewHolder(final View v) {
             super(v);
-            iconImage=v.findViewById(R.id.icon_image_view);
-            iconTitle=v.findViewById(R.id.icon_title);
+            iconImage=v.findViewById(R.id.icon1);
+            iconTitle=v.findViewById(R.id.te1);
             backGround = (GradientDrawable)v.findViewById(R.id.borderView).getBackground();
+            v.findViewById(R.id.delete_icons).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.edit_icons).setVisibility(View.VISIBLE);
+            v.findViewById(R.id.delete_icons).bringToFront();
+            v.findViewById(R.id.edit_icons).bringToFront();
             v.setOnClickListener(this);
         }
 
