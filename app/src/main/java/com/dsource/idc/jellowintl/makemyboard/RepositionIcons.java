@@ -119,31 +119,17 @@ public class RepositionIcons extends AppCompatActivity {
         mRecyclerView.setAdapter(mWrappedAdapter);
         mRecyclerView.setItemAnimator(animator);
         mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
-        //Parameters for centering the recycler view in the layout.
-        RelativeLayout.LayoutParams centeredRecyclerParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        centeredRecyclerParams.addRule(RelativeLayout.ABOVE,findViewById(R.id.relativeLayoutNavigation).getId());
-        centeredRecyclerParams.addRule(RelativeLayout.ALIGN_PARENT_TOP,RelativeLayout.TRUE);
-        centeredRecyclerParams.addRule(RelativeLayout.CENTER_HORIZONTAL,RelativeLayout.TRUE);
-
-        int GridSize  = currentBoard.getGridSize();
-        if(GridSize<4)
-        {
-
-            switch (GridSize)
-            {
-                case 1:
-                    mRecyclerView.setLayoutParams(centeredRecyclerParams);break;
-                case 2:
-                    mRecyclerView.setLayoutParams(centeredRecyclerParams);break;
-                case 3:
-                    mRecyclerView.setLayoutParams(defaultRecyclerParams);break;
-            }
-            mRecyclerView.setLayoutManager(new CustomGridLayoutManager(this,currentBoard.getGridSize(),3));
-        }
-        else
-        {
-            mRecyclerView.setLayoutParams(defaultRecyclerParams);
-            mRecyclerView.setLayoutManager(new CustomGridLayoutManager(this,3,9));
+        switch (currentBoard.getGridSize()){
+            case 1:
+                mRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+                break;
+            case 2:
+                mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                break;
+            case 3:
+            default :
+                mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+                break;
         }
         adapter.setOnItemClickListener(new onRecyclerItemClick() {
             @Override
