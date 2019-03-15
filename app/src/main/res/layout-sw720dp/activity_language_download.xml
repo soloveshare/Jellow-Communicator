@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             style="@style/defaultTextViewStyle"
             android:paddingBottom="4dp"
+            android:id ="@+id/progress_text"
             android:text="@string/downloadErrorMsg"/>
     </LinearLayout>
 </RelativeLayout>
