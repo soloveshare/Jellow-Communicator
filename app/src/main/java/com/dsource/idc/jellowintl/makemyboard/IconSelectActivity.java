@@ -405,8 +405,11 @@ public class IconSelectActivity extends AppCompatActivity {
      */
     private void prepareLevelSelectPane() {
         ArrayList<String> levelSelectList=new ArrayList<>();
-        if(isEditMode)
+        if(isEditMode) {
             levelSelectList.add("Current Board");
+            showCheckBox(false);
+
+        }
         levelSelectList.addAll(iconDatabase.getLevelOneIconsTitles());
 
         levelSelectorRecycler.hasFixedSize();
@@ -416,6 +419,9 @@ public class IconSelectActivity extends AppCompatActivity {
         levelSelectorAdapter.setOnItemClickListner(new LevelSelectorAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                if(isEditMode&&position==0)
+                    showCheckBox(false);
+                else showCheckBox(true);
                 if(previousSelection!=position) {
                     previousSelection = position;
                     iconRecycler.getViewTreeObserver().removeOnGlobalLayoutListener(scrollingPopulationListener);
@@ -551,9 +557,10 @@ public class IconSelectActivity extends AppCompatActivity {
         scrollCount = 0;
         if(isEditMode)
             category++;
+        showCheckBox(true);
         previousSelection = category;
         prepareIconPane(category,-1);
-        levelSelectorAdapter.selectedPosition = icon.parent0;
+        levelSelectorAdapter.selectedPosition = category;
         levelSelectorAdapter.notifyDataSetChanged();
         selectedIconList.add(icon);
         dropDownList = getCurrentChildren();
@@ -573,6 +580,19 @@ public class IconSelectActivity extends AppCompatActivity {
         }
         iconSelectorAdapter.notifyDataSetChanged();
     }
+
+    private void showCheckBox(boolean show)
+    {
+        if(show) {
+            selectionCheckBox.setVisibility(View.VISIBLE);
+            findViewById(R.id.icon_count).setVisibility(View.VISIBLE);
+        }
+        else {
+            selectionCheckBox.setVisibility(View.INVISIBLE);
+            findViewById(R.id.icon_count).setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     //TODO Make it screen independent
     private int numberOfRows() {
