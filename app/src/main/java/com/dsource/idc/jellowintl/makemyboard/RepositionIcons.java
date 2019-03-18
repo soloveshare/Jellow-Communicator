@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -60,6 +61,8 @@ public class RepositionIcons extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
+    private ImageView home;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,8 @@ public class RepositionIcons extends AppCompatActivity {
         initFields();
         defaultRecyclerParams =(RelativeLayout.LayoutParams)findViewById(R.id.recycler_view).getLayoutParams();
         updateList(NORMAL_MODE);
+        ActivateView(home,true);
+        ActivateView(back,false);
     }
 
 
@@ -129,6 +134,8 @@ public class RepositionIcons extends AppCompatActivity {
         adapter.setOnItemClickListener(new onRecyclerItemClick() {
             @Override
             public void onClick(int pos) {
+                home.setImageDrawable(getResources().getDrawable(R.drawable.home));
+                ActivateView(back,true);
                 if(previousSelection==pos) {
                     notifyItemClicked(pos,currentMode);
                 }
@@ -175,6 +182,7 @@ public class RepositionIcons extends AppCompatActivity {
     private void initFields(){
 
         findViewById(R.id.save_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.keyboard).setAlpha(.5f);
         findViewById(R.id.save_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,15 +200,19 @@ public class RepositionIcons extends AppCompatActivity {
         findViewById(R.id.ttsbutton).setVisibility(View.GONE);
 
 
-        (findViewById(R.id.ivback)).setOnClickListener(new View.OnClickListener() {
+        back = findViewById(R.id.ivback);
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        (findViewById(R.id.ivhome)).setOnClickListener(new View.OnClickListener() {
+        home = findViewById(R.id.ivhome);
+        home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ActivateView(back,false);
+                home.setImageDrawable(getResources().getDrawable(R.drawable.home_pressed));
                 if(Level!=0) {
                     displayList = modelManager.getLevelOneFromModel();
                     updateList(currentMode);
@@ -211,6 +223,19 @@ public class RepositionIcons extends AppCompatActivity {
         });
 
 
+    }
+
+    private void ActivateView(ImageView view, boolean activate) {
+        if(activate)
+        {
+            view.setAlpha(1f);
+            view.setClickable(true);
+        }
+        else
+        {
+            view.setAlpha(.5f);
+            view.setClickable(false);
+        }
     }
 
     private void notifyItemClicked(int position,int mode) {
@@ -264,6 +289,7 @@ public class RepositionIcons extends AppCompatActivity {
             LevelOneParent=-1;
             updateList(currentMode);
             Level--;
+            ActivateView(back,false);
         }
         else if(Level==0)
         {
