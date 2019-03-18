@@ -319,6 +319,8 @@ public class IconSelectActivity extends AppCompatActivity {
     private void prepareIconPane(int level_1,int level_2) {
         invalidateOptionsMenu();
         if(isEditMode&&level_1==0) {
+            if(currentBoard.getBoardIconModel()==null)
+                currentBoard.setBoardIconModel(new ModelManager(new ArrayList<JellowIcon>(),this).getModel());
             iconList = new ModelManager(this,currentBoard.getBoardIconModel()).getAllIconsOfModel();
             iconSelectorAdapter = new IconSelectorAdapter(this, iconList,ADD_EDIT_ICON_MODE);
             iconRecycler.setAdapter(iconSelectorAdapter);

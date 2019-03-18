@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 public class ImageStorageHelper {
 
     public static void deleteAllCustomImage(Context context, IconModel iconModel){
+        if(iconModel==null) return;
         //if parent node itself is a custom icon
         if(iconModel.getIcon()!=null)
         if(iconModel.getIcon().isCustomIcon())
