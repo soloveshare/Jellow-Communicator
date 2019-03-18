@@ -32,6 +32,7 @@ import com.dsource.idc.jellowintl.factories.IconFactory;
 import com.dsource.idc.jellowintl.factories.LanguageFactory;
 import com.dsource.idc.jellowintl.factories.PathFactory;
 import com.dsource.idc.jellowintl.factories.TextFactory;
+import com.dsource.idc.jellowintl.makemyboard.utility.SetupMMB;
 import com.dsource.idc.jellowintl.models.ExpressiveIcon;
 import com.dsource.idc.jellowintl.models.Icon;
 import com.dsource.idc.jellowintl.models.MiscellaneousIcon;
@@ -322,6 +323,9 @@ public class LevelThreeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case R.id.my_boards:
+                startActivity(new Intent(this, SetupMMB.class));
+                break;
             case R.id.search:
                 startActivity(new Intent(this, SearchActivity.class));
                 break;
