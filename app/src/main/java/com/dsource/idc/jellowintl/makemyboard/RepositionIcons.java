@@ -1,16 +1,12 @@
 package com.dsource.idc.jellowintl.makemyboard;
 
-import android.content.Context;
 import android.content.Intent;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -25,12 +21,10 @@ import com.dsource.idc.jellowintl.makemyboard.utility.BoardDatabase;
 import com.dsource.idc.jellowintl.makemyboard.utility.CustomDialog;
 import com.dsource.idc.jellowintl.makemyboard.utility.ModelManager;
 import com.dsource.idc.jellowintl.utility.CustomGridLayoutManager;
-import com.dsource.idc.jellowintl.utility.SessionManager;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-import java.io.File;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,6 +71,7 @@ public class RepositionIcons extends AppCompatActivity {
         //Disable Expressive Icons for this activity
         findViewById(R.id.expressiveOne).setAlpha(.5f);
         findViewById(R.id.expressiveTwo).setAlpha(.5f);
+
         //Instantiating the board database object
         database=new BoardDatabase(this);
         getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.yellow_bg));

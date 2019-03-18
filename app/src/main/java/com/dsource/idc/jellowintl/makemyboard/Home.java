@@ -27,7 +27,6 @@ import com.dsource.idc.jellowintl.makemyboard.utility.Nomenclature;
 import com.dsource.idc.jellowintl.makemyboard.verbiage_model.JellowVerbiageModel;
 import com.dsource.idc.jellowintl.makemyboard.verbiage_model.MiscellaneousIcons;
 import com.dsource.idc.jellowintl.makemyboard.verbiage_model.VerbiageDatabaseHelper;
-import com.dsource.idc.jellowintl.utility.CustomGridLayoutManager;
 import com.dsource.idc.jellowintl.utility.JellowTTSService;
 import com.dsource.idc.jellowintl.utility.LanguageHelper;
 import com.dsource.idc.jellowintl.utility.SessionManager;
@@ -472,8 +471,8 @@ public class Home extends AppCompatActivity {
         return scrollListener;
     }
     private boolean itemDisplayed(int index) {
-        int firstVisiblePos = ((CustomGridLayoutManager)mRecycler.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-        int lastVisiblePos = ((CustomGridLayoutManager)mRecycler.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+        int firstVisiblePos = ((GridLayoutManager)mRecycler.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        int lastVisiblePos = ((GridLayoutManager)mRecycler.getLayoutManager()).findLastCompletelyVisibleItemPosition();
         if(lastVisiblePos==(index-1))
             return true;
         return index >= firstVisiblePos && index <= lastVisiblePos;
