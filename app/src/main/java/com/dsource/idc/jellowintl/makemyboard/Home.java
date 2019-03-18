@@ -171,17 +171,15 @@ public class Home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 speakSpeech(getString(R.string.home));
-                if(Level!=0) {
-                    ActivateView(home,true);
-                    ActivateView(back,false);
-                    LevelOneParent = -1;
-                    LevelTwoParent = -1;
-                    adapter.selectedPosition = -1;
-                    adapter.expIconPos = -1;
-                    displayList = modelManager.getLevelOneFromModel();
-                    Level = 0;
-                    updateList();
-                }
+                ActivateView(home,true);
+                ActivateView(back,false);
+                LevelOneParent = -1;
+                LevelTwoParent = -1;
+                adapter.selectedPosition = -1;
+                adapter.expIconPos = -1;
+                displayList = modelManager.getLevelOneFromModel();
+                Level = 0;
+                updateList();
                 home.setImageDrawable(getResources().getDrawable(R.drawable.home_pressed));
             }
         });
@@ -224,6 +222,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onItemSelected(View view, int position) {
                 adapter.expIconPos =-1;
+                home.setImageDrawable(getResources().getDrawable(R.drawable.home));
                 adapter.selectedPosition = position;
                 adapter.notifyDataSetChanged();
                 prepareSpeech(displayList.get(position));
