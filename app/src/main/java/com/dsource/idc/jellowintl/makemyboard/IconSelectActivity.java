@@ -116,9 +116,6 @@ public class IconSelectActivity extends AppCompatActivity {
         prepareIconPane(0,-1);
         dropDownList= getCurrentChildren();
         initNavBarButtons();
-        if(!isEditMode)
-            disableNextAndResetButtons(true);
-        else disableNextAndResetButtons(false);
     }
 
     private void initNavBarButtons() {
@@ -163,7 +160,6 @@ public class IconSelectActivity extends AppCompatActivity {
                 selectedIconList.clear();
                 selectionCheckBox.setChecked(false);
                 iconSelectorAdapter.notifyDataSetChanged();
-                disableNextAndResetButtons(true);
                 ((TextView)(findViewById(R.id.icon_count))).setText("("+selectedIconList.size()+")");
             }
         });
@@ -275,9 +271,6 @@ public class IconSelectActivity extends AppCompatActivity {
                 if(selectionCheckBox.isChecked())
                     selectAll(0);
                 else selectAll(1);
-                if(selectedIconList.size()>0)
-                disableNextAndResetButtons(false);
-                else disableNextAndResetButtons(true);
             }
         });
     }
@@ -373,32 +366,7 @@ public class IconSelectActivity extends AppCompatActivity {
 
         Log.d("Selection: ","Selection List: "+selectedIconList.size()+" IconList: "+iconList.size()+" Selection: "+UtilFunctions.getSelection(selectedIconList,iconList));
         selectionCheckBox.setChecked(UtilFunctions.getSelection(selectedIconList,iconList));
-
-        if (selectedIconList.size()>0)
-            disableNextAndResetButtons(false);
-        else disableNextAndResetButtons(true);
     }
-
-    private void disableNextAndResetButtons(boolean disable)
-    {
-        if(!disable)
-        {
-            nextButton.setAlpha(1f);
-            nextButton.setEnabled(true);
-            resetButton.setEnabled(true);
-            resetButton.setAlpha(1f);
-        }
-        else {
-
-            nextButton.setEnabled(false);
-            nextButton.setAlpha(.5f);
-            resetButton.setEnabled(false);
-            resetButton.setAlpha(.5f);
-        }
-
-    }
-
-
 
     /**
      * Creates and fetches the left pane for icon select
@@ -564,9 +532,6 @@ public class IconSelectActivity extends AppCompatActivity {
         levelSelectorAdapter.notifyDataSetChanged();
         selectedIconList.add(icon);
         dropDownList = getCurrentChildren();
-        if(selectedIconList.size()>0)
-        disableNextAndResetButtons(false);
-
         ((TextView) (findViewById(R.id.icon_count))).setText("(" + selectedIconList.size() + ")");
         selectionCheckBox.setChecked(UtilFunctions.getSelection(selectedIconList, iconList));
         scrollListener =null;

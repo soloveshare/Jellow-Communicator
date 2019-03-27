@@ -126,6 +126,7 @@ public class AddEditIconAndCategory extends AppCompatActivity implements View.On
                     findViewById(R.id.touch_area).setVisibility(View.GONE);
                 }
 
+                if(currentBoard.getBoardIconModel().getAllIcons().size()>0) {
                     CustomDialog dialog = new CustomDialog(AddEditIconAndCategory.this, CustomDialog.GRID_SIZE);
                     dialog.show();
                     dialog.setCancelable(true);
@@ -141,7 +142,8 @@ public class AddEditIconAndCategory extends AppCompatActivity implements View.On
                             finish();
                         }
                     });
-
+                }
+                else Toast.makeText(AddEditIconAndCategory.this,"Please make atleast one icon",Toast.LENGTH_LONG).show();
             }
         });
         findViewById(R.id.select_deselect_check_box).setVisibility(View.GONE);
