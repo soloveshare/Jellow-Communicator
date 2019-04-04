@@ -55,7 +55,6 @@ public class IconSelectActivity extends AppCompatActivity {
     //Private Constants, to be used inside this class only
     private static final String LIST_OF_ICON = "selected_icon_list";
     private static final String CURRENT_POSITION = "current_postion";
-
     private RecyclerView levelSelectorRecycler;
     private RecyclerView iconRecycler;
     private IconSelectorAdapter iconSelectorAdapter;
@@ -67,7 +66,6 @@ public class IconSelectActivity extends AppCompatActivity {
     private CheckBox selectionCheckBox;
     int previousSelection=0;
     private String boardId;
-    private Button nextButton;
     private Button resetButton;
     private RecyclerView.OnScrollListener scrollListener;
     private boolean isEditMode =false;
@@ -120,7 +118,7 @@ public class IconSelectActivity extends AppCompatActivity {
 
     private void initNavBarButtons() {
 
-        nextButton = findViewById(R.id.next_step);
+        Button nextButton = findViewById(R.id.next_step);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
