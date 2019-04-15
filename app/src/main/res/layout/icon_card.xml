@@ -2,6 +2,8 @@
 <RelativeLayout android:layout_width="match_parent"
     android:background="#f9f5d9"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="1dp"
+    android:layout_marginRight="1dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
@@ -43,6 +45,5 @@
         android:buttonTint="@color/light_grey"
         android:gravity="top"
         android:visibility="gone"
-
         />
 </RelativeLayout>

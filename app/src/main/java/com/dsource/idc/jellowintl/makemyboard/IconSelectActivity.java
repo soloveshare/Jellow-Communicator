@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.dsource.idc.jellowintl.factories.PathFactory;
 import com.dsource.idc.jellowintl.factories.TextFactory;
 import com.dsource.idc.jellowintl.makemyboard.adapters.IconSelectorAdapter;
 import com.dsource.idc.jellowintl.makemyboard.adapters.LevelSelectorAdapter;
+import com.dsource.idc.jellowintl.makemyboard.interfaces.DatabaseInterface;
 import com.dsource.idc.jellowintl.makemyboard.models.Board;
 import com.dsource.idc.jellowintl.makemyboard.models.IconModel;
 import com.dsource.idc.jellowintl.models.Icon;
@@ -329,18 +331,25 @@ public class IconSelectActivity extends AppCompatActivity {
         else{
             if(isEditMode)
                 level_1--;
-            iconList = iconDatabase.myBoardQuery(level_1, level_2);
-            iconSelectorAdapter = new IconSelectorAdapter(this, iconList,ICON_SELECT_MODE);
-            iconRecycler.setAdapter(iconSelectorAdapter);
-            iconSelectorAdapter.notifyDataSetChanged();
-            selectionCheckBox.setChecked(UtilFunctions.getSelection(selectedIconList, iconList));
-            iconSelectorAdapter.setOnItemClickListner(new IconSelectorAdapter.OnItemClickListener() {
+            DatabaseThread databaseThread = new DatabaseThread();
+            databaseThread.setOnTransactionCompleteListener(new DatabaseInterface() {
                 @Override
-                public void onItemClick(View view, int position, boolean checked) {
-                    scrollCount = 0;
-                    updateSelectionList(position, checked);
+                public void getIconsForQuery(ArrayList<JellowIcon> list) {
+                    iconList = list;
+                    iconSelectorAdapter = new IconSelectorAdapter(IconSelectActivity.this, iconList,ICON_SELECT_MODE);
+                    iconRecycler.setAdapter(iconSelectorAdapter);
+                    iconSelectorAdapter.notifyDataSetChanged();
+                    selectionCheckBox.setChecked(UtilFunctions.getSelection(selectedIconList, iconList));
+                    iconSelectorAdapter.setOnItemClickListner(new IconSelectorAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position, boolean checked) {
+                            scrollCount = 0;
+                            updateSelectionList(position, checked);
+                        }
+                    });
                 }
             });
+            databaseThread.execute(level_1,level_2);
         }
 
     }
@@ -701,4 +710,35 @@ public class IconSelectActivity extends AppCompatActivity {
         }
 
     }
+
+
+
+    private class DatabaseThread extends AsyncTask<Integer,Context,ArrayList<JellowIcon>> {
+        String p1,p2,p3;
+        DatabaseInterface listener;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<JellowIcon> list) {
+            super.onPostExecute(list);
+            if(listener!=null)
+            listener.getIconsForQuery(list);
+        }
+
+        public void setOnTransactionCompleteListener(DatabaseInterface databaseInterface){
+            this.listener = databaseInterface;
+
+        }
+
+        @Override
+        protected ArrayList<JellowIcon> doInBackground(Integer... integers) {
+            IconDatabase database = new IconDatabase(IconSelectActivity.this);
+            return database.myBoardQuery(integers[0],integers[1]);
+        }
+    }
+
 }
